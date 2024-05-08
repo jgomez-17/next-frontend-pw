@@ -1,0 +1,196 @@
+.site-form-in-drawer-wrapper {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    padding: 10px 16px;
+    text-align: right;
+    background: #fff;
+    border-top: 1px solid #e9e9e9;
+  }
+
+  /* FORMULARIO */
+  /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap'); */
+
+
+form {
+    /* font-family: 'Poppins', sans-serif; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+/* secciones */
+fieldset {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+legend {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.7rem;
+}
+
+form label {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 0.7rem;
+}
+form label span {
+    margin: 0 0 3px 3px ;
+}
+
+form label .input, .selectform {
+    height: 35px;
+}
+/* .selectform {
+    width: 8rem;
+} */
+
+
+.menu-servicios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* boton de agregar servicio */
+ .button {
+    background-color: black;
+    color: whitesmoke;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    padding: 8px 20px 8px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.445);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+ .button:hover {
+    box-shadow: 0 0 0 5px rgba(0, 140, 255, 0.256);
+}
+
+ .button:focus {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 4px rgba(0, 140, 255, 0.97);
+}
+
+/* SECCION DATOS DEL VEHICULO */
+
+
+/* SECCION DATOS DEL SERVICIO */
+.datos-servicio {
+    display: flex;
+    flex-direction: column;
+}
+
+.datos-servicio span {
+    margin-left: 5px;
+}
+
+/* ESCOGER SERVICIOS Y DESCUENTO */
+
+.escoger-servicios {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    right: 0;
+    padding: 12px;
+    margin-top: 0;
+    border-radius: 10px;
+}
+
+.escoger-servicios label {
+    margin: 0;    
+}
+
+.agregar-servicio {
+    padding: 8px;
+    border-radius: 15%;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+.agregar-servicio:hover {
+    background-color: rgba(60, 72, 82, 0.057);
+    border: 1px solid rgb(0, 70, 220);
+}
+.agregar-servicio:focus {
+    border: 1px solid rgb(43, 101, 226);
+}
+
+/* DETALLES DE LA ORDEN Y TOTALES */
+.servicios-seleccionados {
+    /* background-color: rgba(190, 190, 190, 0.089); */
+    display: flex;
+    width: max-content;
+    padding: 12px;
+    margin-top: 0;
+    flex-direction: column;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    /* box-shadow: 0 0 7px rgba(0, 0, 0, 0.128); */
+    transition: 0.3s ease-in-out;
+}
+.servicios-seleccionados label {
+    margin: 0;
+}
+.servicios-seleccionados input {
+    background-color: transparent;
+    width: 300px; 
+    cursor: default;
+ }
+
+.servicios-seleccionados .servicio {
+    color: rgb(94, 94, 94);
+    padding: 7px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.servicios-seleccionados .servicio:hover {
+    border: 2px solid rgba(255, 0, 0, 0.338);
+    color: black;
+}
+    
+.costo-servicios, .costo-con-descuentos {
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 740px) {
+    fieldset {
+      width: 100%;
+    }
+    .datos-servicio {
+        display: flex;
+        flex-direction: column;
+    }
+    .escoger-servicios {
+        margin: 0;
+    }
+    .servicios-seleccionados .servicio {
+        width: 250px;
+    }
+  }
+  
+
+
+
+
