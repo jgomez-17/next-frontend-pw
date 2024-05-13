@@ -75,6 +75,10 @@ const Modalbutton: React.FC = () => {
     setError('');
   };
 
+  const handleOrderCreated = () => {
+    setIsModalOpen(false); // Cierra el modal
+  };
+
 
   return (
     <>
@@ -124,7 +128,7 @@ const Modalbutton: React.FC = () => {
                 type='default'>
                 Verificar placa
               </Button>
-              <Drawerform />
+              <Drawerform onOrderCreated={handleOrderCreated}/>
           </section>
           {error && <p className='my-3 mx-1'>{error}</p>}
           {ordenes.length > 0 && (

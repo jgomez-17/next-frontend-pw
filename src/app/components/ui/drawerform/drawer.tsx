@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, message } from 'antd';
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { GrNext } from "react-icons/gr";
@@ -22,7 +22,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
 
-const Drawerform: React.FC = () => {
+  const Drawerform: React.FC<{ onOrderCreated: () => void }> = ({ onOrderCreated }) => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -224,8 +224,10 @@ const Drawerform: React.FC = () => {
 
         console.log('orden generada')
         console.log(dataOrdens)
-        alert('orden generada')
+        message.success('Orden generada')
+        onOrderCreated();
         onClose();
+        
 
     } catch (error) {
       console.error('Error en la solicitud:', error);
