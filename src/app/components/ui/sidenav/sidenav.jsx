@@ -24,7 +24,7 @@ const Sidenav = ({ isOpen, toggle }) => {
         </button>
         <ul className={styles.lista}>
           <li className='flex py-1 px-4 transition-all'> 
-            <a href="#" className='w-full p-2 text-3xl rounded-lg flex items-center gap-3 transition-all text-slate-600 hover:bg-sky-500/15 hover:text-sky-700'> 
+            <a href="#" className='w-full p-2 text-[40px] rounded-lg flex items-center gap-3 transition-all text-slate-600 hover:bg-sky-500/15 hover:text-sky-700'> 
               <IoLogOut />
               <span className='text-lg'> Cierre </span>
             </a>
