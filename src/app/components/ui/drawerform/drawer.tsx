@@ -39,7 +39,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
 
   const avanzarSeccion = () => {
     if (seccion === 1 && !tipo) {
-      alert("Por favor selecciona un tipo de vehículo.");
+      message.warning("Por favor selecciona un tipo de vehículo.");
       return;
     }
     setSeccion(seccion + 1);
@@ -143,7 +143,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     const serviciosFiltrados = servicios.filter(servicio => servicio.nombre !== nombre);
     setServicios(serviciosFiltrados);
     // setServicios(servicios.filter(servicio => servicio.nombre !== nombre));
-    const nuevosNombres = serviciosFiltrados.map(servicio => servicio.nombre).join('+');
+    const nuevosNombres = serviciosFiltrados.map(servicio => servicio.nombre).join(',');
     setNombresServicios(nuevosNombres);
   };
 
@@ -153,25 +153,30 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
 
       // Validar que los campos obligatorios estén llenos
   if (!placa || !marca || !tipo || !color || !nombre || !celular) {
-    alert("Por favor completa los campos obligatorios.");
+    message.warning("Por favor completa los campos obligatorios.");
     return;
   }
 
     // Validar que la placa sea valida
     if (placa.length !== 7) {
-      alert("Por favor ingresa una placa válida");
+      message.warning("Por favor ingresa una placa válida");
       return;
     }
 
   // Validar si al menos un servicio está seleccionado
   if (servicios.length === 0) {
-    alert("Por favor selecciona al menos un servicio.");
+    message.warning("Por favor selecciona al menos un servicio.");
+    return;
+  }
+
+  if (llaves.length === 0) {
+    message.warning("Por favor selecciona si deja llaves o no");
     return;
   }
 
     // Validar que el número de teléfono tenga exactamente 10 dígitos
   if (celular.length !== 10) {
-    alert("Por favor ingresa un número de teléfono válido");
+    message.warning("Por favor ingresa un número de teléfono válido");
     return;
   }
   
@@ -195,7 +200,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     };
     
       try {
-         const responseVehiculos = await fetch('http://localhost:4000/api/ordenes', {
+         const responseOrdenes = await fetch('http://localhost:4000/api/ordenes', {
            method: 'POST',
            headers: {
              'Content-Type': 'application/json'
@@ -203,8 +208,8 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
            body: JSON.stringify({ data: dataOrdens })
          });
     
-         if (!responseVehiculos.ok) {
-           console.error('Error en la petición:', responseVehiculos.statusText);
+         if (!responseOrdenes.ok) {
+           console.error('Error en la petición:', responseOrdenes.statusText);
          }
          
     
@@ -231,6 +236,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
 
     } catch (error) {
       console.error('Error en la solicitud:', error);
+      message.error('Error en la solicitud')
     }
   };
 
@@ -586,13 +592,9 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                   </label>
                 </fieldset>
                   <div className='flex max-w-min m-auto gap-4'>
-                    {/* <a 
-                      href='/dashboard'
-                      className='button m-auto w-max'>
-                      Ir al dashboard
-                    </a> */}
-                    <button 
-                      className='button m-auto gap-4' 
+
+                    <button
+                      className='button m-auto gap-4 bg-black' 
                       type="button" 
                       onClick={avanzarSeccion}>
                       Siguiente

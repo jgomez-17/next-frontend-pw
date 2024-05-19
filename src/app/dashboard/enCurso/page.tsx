@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { message } from "antd";
-import {Table, TableBody, TableCell, TableHeader, TableRow} from "@/components/ui/table";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { message, Select } from "antd";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { FaCircle } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
 import { FaCarSide } from "react-icons/fa6";
 import { AiOutlineFrown } from "react-icons/ai";
 import { MdAttachMoney } from "react-icons/md";
-import { IoPlay } from "react-icons/io5";
+import io from "socket.io-client";
 
+const { Option } = Select;
 
 interface Orden {
   id: number;
@@ -24,52 +24,29 @@ interface Orden {
   estado: string;
 }
 
+const OPTIONS = ['Jose', 'Josue', 'Luis', 'Camilo', 'Eduardo', 'Pedro'];
+
 const OrdenesEnCurso = () => {
   const [ordenesEnCurso, setOrdenesEnCurso] = useState<Orden[]>([]);
-  const [selectedEmployee, setSelectedEmployee] = useState<{
-    [key: number]: string;
-  }>({});
-  const [buttonStates, setButtonStates] = useState<{ [key: number]: boolean }>(
-    {}
-  );
-
-  useEffect(() => {
-    const storedButtonStates = JSON.parse(
-      localStorage.getItem("buttonStates") || "{}"
-    );
-    setButtonStates(storedButtonStates);
-  }, []);
-
-  useEffect(() => {
-    const storedSelectedEmployee = JSON.parse(
-      localStorage.getItem("selectedEmployee") || "{}"
-    );
-    setSelectedEmployee(storedSelectedEmployee);
-  }, []);
+  const [selectedEmployees, setSelectedEmployees] = useState<{ [key: number]: string[] }>({});
+  const [buttonStates, setButtonStates] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     fetch('http://localhost:4000/api/estados/encurso')
       .then(response => response.json())
       .then(data => {
         setOrdenesEnCurso(data.ordenes);
-        // Restaurar estados de los botones solo para órdenes en curso
-        const storedButtonStates = JSON.parse(localStorage.getItem('buttonStates') || '{}');
-        const filteredButtonStates = data.ordenes.reduce((acc: { [key: number]: boolean }, ord: Orden) => {
-          if (ord.estado === 'en curso' && storedButtonStates[ord.id] !== undefined) {
-            acc[ord.id] = storedButtonStates[ord.id];
-          }
-          return acc;
-        }, {});
-        setButtonStates(prevState => ({ ...prevState, ...filteredButtonStates }));
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  const actualizarEstadoOrden = (orderId: number, selectedEmployee: string) => {
-    if (!selectedEmployee) {
-      message.error("Por favor selecciona un empleado");
+  const actualizarEstadoOrden = (orderId: number, selectedEmployees: string[]) => {
+    if (!selectedEmployees || selectedEmployees.length === 0) {
+      message.error("Por favor selecciona al menos un empleado");
       return;
     }
+
+    const employeesString = selectedEmployees.join(", ");
 
     fetch("http://localhost:4000/api/ordenes/actualizarestado", {
       method: "POST",
@@ -79,13 +56,12 @@ const OrdenesEnCurso = () => {
       body: JSON.stringify({
         orderId: orderId,
         newStatus: "por pagar",
-        employee: selectedEmployee,
+        employee: employeesString,
       }),
     })
       .then((response) => {
         if (response.ok) {
           message.success("Estado de la orden actualizado correctamente");
-          // Actualiza las órdenes después de actualizar el estado
           fetch("http://localhost:4000/api/estados/encurso")
             .then((response) => response.json())
             .then((data) => {
@@ -102,22 +78,21 @@ const OrdenesEnCurso = () => {
       });
   };
 
-  const handleEmpleadoChange = (orderId: number, value: string) => {
-    // Verifica si la orden está iniciada (botón presionado)
+  const handleEmpleadoChange = (orderId: number, value: string[]) => {
     if (buttonStates[orderId]) {
       message.warning("No puedes cambiar el empleado de una orden iniciada");
       return;
     }
-  
-    setSelectedEmployee((prevState) => ({
+
+    setSelectedEmployees((prevState) => ({
       ...prevState,
       [orderId]: value,
     }));
   };
 
   const handleButtonStateChange = (orderId: number) => {
-    if (!selectedEmployee[orderId]) {
-      message.error("Por favor selecciona un empleado");
+    if (!selectedEmployees[orderId] || selectedEmployees[orderId].length === 0) {
+      message.error("Por favor selecciona al menos un empleado");
       return;
     }
 
@@ -127,40 +102,30 @@ const OrdenesEnCurso = () => {
     }));
 
     if (buttonStates[orderId]) {
-      actualizarEstadoOrden(orderId, selectedEmployee[orderId]);
+      actualizarEstadoOrden(orderId, selectedEmployees[orderId]);
     }
   };
-  
-  useEffect(() => {
-    localStorage.setItem("buttonStates", JSON.stringify(buttonStates));
-  }, [buttonStates]);
-  
-  useEffect(() => {
-    localStorage.setItem("selectedEmployee", JSON.stringify(selectedEmployee));
-  }, [selectedEmployee]);
-  
-  
-    const numeroOrdenes =
-      ordenesEnCurso && ordenesEnCurso.length > 0 ? ordenesEnCurso.length : 0;
-      
+
+  const numeroOrdenes =
+    ordenesEnCurso && ordenesEnCurso.length > 0 ? ordenesEnCurso.length : 0;
+
   return (
     <>
-      <article className="body z-10 w-11/12 m-auto mb-8">
-        <ul className="cards flex flex-wrap justify-between items-center">
-          <li className="transition-all w-[270px] h-32 p-2 shadow rounded">
-            <a href="" className="flex flex-col gap-14">
+      <article className="z-10 w-11/12 m-auto mb-8">
+        <ul className="flex flex-wrap justify-between items-center">
+          <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
+            <a href="" className="flex flex-col gap-14 md:gap-16">
               En curso
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold">
-                  {" "}
-                  {numeroOrdenes}{" "}
+                  {numeroOrdenes}
                 </span>
                 <FaCarSide className="card-icon text-gray-800/60 text-3xl" />
               </article>
             </a>
           </li>
-          <li className="transition-all w-[270px] h-32 p-2 shadow rounded">
-            <a href="" className="flex flex-col gap-14">
+          <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
+            <a href="/porPagar" className="flex flex-col gap-14 md:gap-16">
               Pendientes
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold"> 2 </span>
@@ -168,8 +133,8 @@ const OrdenesEnCurso = () => {
               </article>
             </a>
           </li>
-          <li className="transition-all w-[270px] h-32 p-2 shadow rounded">
-            <a href="" className="flex flex-col gap-14">
+          <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
+            <a href="" className="flex flex-col gap-14 md:gap-16">
               Nose
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold"> 7 </span>
@@ -177,8 +142,8 @@ const OrdenesEnCurso = () => {
               </article>
             </a>
           </li>
-          <li className="transition-all w-[270px] h-32 p-2 shadow rounded">
-            <a href="" className="flex flex-col gap-14">
+          <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
+            <a href="" className="flex flex-col gap-14 md:gap-16">
               Total hoy
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold"> 400.000 </span>
@@ -188,26 +153,26 @@ const OrdenesEnCurso = () => {
           </li>
         </ul>
       </article>
-      <h1 className="w-11/12 pl-3 m-auto text-sm font-semibold items-center flex gap-2">
+      <h1 className="w-11/12 py-2 text-green-700 cursor-default px-3 rounded bg-green-600/5 m-auto text-sm font-semibold items-center flex gap-2">
         Ordenes en curso
         <FaCircle className="text-green-600 top-0 text-xs" />
       </h1>
-      <Table className="w-11/12 m-auto mt-6">
-        <TableHeader className="bg-slate-100/30 rounded-xl">
+      <Table className="w-11/12 m-auto mt-4">
+        <TableHeader className="bg-slate-100/30 rounded-xl font-medium">
           <TableRow>
-            <TableCell className="w-24">Nro Orden</TableCell>
+            <TableCell className="hidden md:block w-24">Nro Orden</TableCell>
             <TableCell className="w-40">Cliente</TableCell>
-            <TableCell className=" w-56">Vehículo</TableCell>
-            <TableCell className=" w-72">Servicio</TableCell>
+            <TableCell className="w-56">Vehículo</TableCell>
+            <TableCell className="md:w-72 max-md:w-80">Servicio</TableCell>
             <TableCell className=""></TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
-              <TableRow key={orden.id}>
-                <TableCell>{orden.id}</TableCell>
-                <TableCell className=" p-2">
+              <TableRow key={orden.id} className="text-[13px]">
+                <TableCell className="max-md:hidden">{orden.id}</TableCell>
+                <TableCell className="p-2">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -220,11 +185,11 @@ const OrdenesEnCurso = () => {
                     {orden.vehiculo.placa}
                   </span>
                   <section className="gap-4">
-                    <span> {orden.vehiculo.tipo} </span>
+                    <span className="max-md:hidden"> {orden.vehiculo.tipo} </span>
                     <span> {orden.vehiculo.marca} </span>
-                    <span> {orden.vehiculo.color} </span>
+                    <span className="max-md:hidden"> {orden.vehiculo.color} </span>
                   </section>
-                  <span>
+                  <span className="max-md:hidden">
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
@@ -237,47 +202,40 @@ const OrdenesEnCurso = () => {
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span>{orden.servicio.nombre_servicios}</span>
+                    <span className="max-md:text-[0.8rem]">{orden.servicio.nombre_servicios}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-2 gap-2 items-center flex">
+                <TableCell className="p-2 gap-2 items-center flex max-md:flex-col max-md:items-start text-xs">
                   <Select
-                    value={selectedEmployee[orden.id]}
-                    onValueChange={(value) =>
-                      handleEmpleadoChange(orden.id, value)
-                    }
+                    mode="multiple"
+                    placeholder="Asignar empleados"
+                    value={selectedEmployees[orden.id] || []}
+                    onChange={(values) => handleEmpleadoChange(orden.id, values)}
+                    style={{ width: 160 }}
                   >
-                    <SelectTrigger className="w-[160px]">
-                      <SelectValue placeholder="Asignar empleado" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Jose">Jose</SelectItem>
-                        <SelectItem value="Josue">Josue</SelectItem>
-                        <SelectItem value="Luis">Luis</SelectItem>
-                        <SelectItem value="Camilo">Camilo</SelectItem>
-                        <SelectItem value="Eduardo">Eduardo</SelectItem>
-                        <SelectItem value="Pedro">Pedro</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
+                    {OPTIONS.filter((o) => !(selectedEmployees[orden.id] || []).includes(o)).map((item) => (
+                      <Option key={item} value={item}>
+                        {item}
+                      </Option>
+                    ))}
                   </Select>
                   {orden.estado === "en curso" ? (
                     <Button
                       variant={"secondary"}
-                      className={`px-3 py-1 rounded-lg text-xs ${
+                      className={`px-3 h-8 rounded-lg text-xs ${
                         buttonStates[orden.id]
                           ? "text-red-700 bg-red-700/10"
                           : "text-green-700 bg-green-700/10"
                       }`}
                       onClick={() => {
-                        if (!selectedEmployee[orden.id]) {
-                          message.error("Por favor selecciona un empleado");
+                        if (!selectedEmployees[orden.id] || selectedEmployees[orden.id].length === 0) {
+                          message.error("Por favor selecciona al menos un empleado");
                           return;
                         }
                         handleButtonStateChange(orden.id);
                       }}
                     >
-                      {buttonStates[orden.id] ? "Terminar" : "Iniciar" }
+                      {buttonStates[orden.id] ? "Terminar" : "Iniciar"}
                     </Button>
                   ) : (
                     <span>La orden está en otro estado</span>

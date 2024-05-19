@@ -82,7 +82,7 @@ const Modalbutton: React.FC = () => {
 
   return (
     <>
-        <Button className='hover:bg-sky-600 my-5 p-5 rounded-lg flex items-center bg-slate-600 text-slate-200 z-10' 
+        <Button className='my-5 border-none p-5 rounded-xs flex items-center bg-sky-600/15 font-medium text-sky-700 z-10' 
           onClick={showModal}>
           Crear orden
         </Button>
