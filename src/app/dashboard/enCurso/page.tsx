@@ -1,9 +1,11 @@
+'use client'
+
 import React, { useEffect, useState } from "react";
 import { message, Select } from "antd";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { FaCircle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { FaCarSide } from "react-icons/fa6";
+import { IoCarSportSharp } from "react-icons/io5";
 import { AiOutlineFrown } from "react-icons/ai";
 import { MdAttachMoney } from "react-icons/md";
 import io from "socket.io-client";
@@ -111,7 +113,7 @@ const OrdenesEnCurso = () => {
 
   return (
     <>
-      <article className="z-10 w-11/12 m-auto mb-8">
+      <article className="z-10 w-11/12 mt-2 m-auto mb-8">
         <ul className="flex flex-wrap justify-between items-center">
           <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
             <a href="" className="flex flex-col gap-14 md:gap-16">
@@ -120,22 +122,22 @@ const OrdenesEnCurso = () => {
                 <span className="text-3xl font-semibold">
                   {numeroOrdenes}
                 </span>
-                <FaCarSide className="card-icon text-gray-800/60 text-3xl" />
+                <IoCarSportSharp className="card-icon text-gray-800/60 text-3xl" />
               </article>
             </a>
           </li>
           <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
-            <a href="/porPagar" className="flex flex-col gap-14 md:gap-16">
-              Pendientes
+            <a href="/dashboard/porPagar" className="flex flex-col gap-14 md:gap-16">
+              Por Pagar
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold"> 2 </span>
-                <FaCarSide className="card-icon text-gray-800/60 text-3xl" />
+                <IoCarSportSharp className="card-icon text-gray-800/60 text-3xl" />
               </article>
             </a>
           </li>
           <li className="md:font-medium text-[0.95rem] transition-all w-1/2 md:w-1/4 md:h-[160px] h-[130px] p-2 md:p-4 shadow rounded">
             <a href="" className="flex flex-col gap-14 md:gap-16">
-              Nose
+              Cancelados
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl font-semibold"> 7 </span>
                 <AiOutlineFrown className="card-icon text-gray-800/60 text-3xl" />
@@ -153,17 +155,17 @@ const OrdenesEnCurso = () => {
           </li>
         </ul>
       </article>
-      <h1 className="w-11/12 py-2 text-green-700 cursor-default px-3 rounded bg-green-600/5 m-auto text-sm font-semibold items-center flex gap-2">
+      <h1 className="w-11/12 py-2 text-green-700 cursor-default px-1 rounded bg-green-600/5 m-auto text-sm font-semibold items-center flex gap-2">
         Ordenes en curso
         <FaCircle className="text-green-600 top-0 text-xs" />
       </h1>
       <Table className="w-11/12 m-auto mt-4">
         <TableHeader className="bg-slate-100/30 rounded-xl font-medium">
           <TableRow>
-            <TableCell className="hidden md:block w-24">Nro Orden</TableCell>
-            <TableCell className="w-40">Cliente</TableCell>
-            <TableCell className="w-56">Vehículo</TableCell>
-            <TableCell className="md:w-72 max-md:w-80">Servicio</TableCell>
+            <TableCell className="hidden md:block w-24 px-1">Nro Orden</TableCell>
+            <TableCell className="w-36 px-1">Cliente</TableCell>
+            <TableCell className="w-52 px-1">Vehículo</TableCell>
+            <TableCell className="md:w-72 px-1 max-md:w-80">Servicio</TableCell>
             <TableCell className=""></TableCell>
           </TableRow>
         </TableHeader>
@@ -171,8 +173,8 @@ const OrdenesEnCurso = () => {
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[13px]">
-                <TableCell className="max-md:hidden">{orden.id}</TableCell>
-                <TableCell className="p-2">
+                <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
+                <TableCell className="p-1">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -180,7 +182,7 @@ const OrdenesEnCurso = () => {
                     <span>{orden.cliente.celular}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-2">
+                <TableCell className="p-1">
                   <span className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </span>
@@ -193,7 +195,7 @@ const OrdenesEnCurso = () => {
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
-                <TableCell className="p-2">
+                <TableCell className="px-1 py-3 ">
                   <section>
                     <span className="font-semibold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
@@ -205,10 +207,10 @@ const OrdenesEnCurso = () => {
                     <span className="max-md:text-[0.8rem]">{orden.servicio.nombre_servicios}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-2 gap-2 items-center flex max-md:flex-col max-md:items-start text-xs">
+                <TableCell className="p-2 gap-2 flex items-center max-md:flex-col max-md:items-start text-xs">
                   <Select
                     mode="multiple"
-                    placeholder="Asignar empleados"
+                    placeholder="Asignar lavadores"
                     value={selectedEmployees[orden.id] || []}
                     onChange={(values) => handleEmpleadoChange(orden.id, values)}
                     style={{ width: 160 }}

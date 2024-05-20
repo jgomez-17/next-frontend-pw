@@ -1,14 +1,12 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
-import { message, Checkbox } from 'antd';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { message, Radio } from 'antd';
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from '@/components/ui/button';
 import { FaCircle } from "react-icons/fa";
+import { BsCashCoin } from "react-icons/bs";
+import { DaviplataIcon, NequiIcon } from '@/app/components/ui/iconos'
 
 interface Orden {
   id: number;
@@ -18,39 +16,36 @@ interface Orden {
   estado: string;
 }
 
+
 const OrdenesPorPagar = () => {
   const [ordenesPorPagar, setOrdenesPorPagar] = useState<Orden[]>([]);
-  const [metodosPago, setMetodosPago] = useState<string[]>([]);
-
+  const [metodosPago, setMetodosPago] = useState<{ [key: number]: string }>({});
+  
   useEffect(() => {
     fetchOrdenesPorPagar();
   }, []);
-
+  
   const fetchOrdenesPorPagar = () => {
     fetch('http://localhost:4000/api/estados/porpagar')
-      .then(response => response.json())
-      .then(data => {
-        setOrdenesPorPagar(data.ordenes);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    .then(response => response.json())
+    .then(data => {
+      setOrdenesPorPagar(data.ordenes);
+    })
+    .catch(error => console.error('Error fetching data:', error));
   };
-
-  const handleMetodoPagoChange = (value: string) => {
-    const isSelected = metodosPago.includes(value);
-    if (isSelected) {
-      setMetodosPago(metodosPago.filter(item => item !== value));
-    } else {
-      setMetodosPago([...metodosPago, value]);
-    }
+  
+  const handleMetodoPagoChange = (orderId: number, value: string) => {
+    setMetodosPago({ ...metodosPago, [orderId]: value });
   };
-
+  
   const actualizarEstadoOrden = (orderId: number) => {
-    if (metodosPago.length === 0) {
-      message.error('Por favor selecciona al menos un método de pago');
+    const metodoPago = metodosPago[orderId];
+    if (!metodoPago) {
+      message.error('Por favor selecciona un método de pago');
       return;
     }
-
-    fetch('http://localhost:4000/api/ordenes/actualizarestado', {
+    
+    fetch('http://localhost:4000/api/ordenes/actualizarestado2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,13 +53,13 @@ const OrdenesPorPagar = () => {
       body: JSON.stringify({
         orderId: orderId,
         newStatus: 'terminado',
-        metodosPago: metodosPago,
+        metodoPago: metodoPago,
       }),
     })
-      .then(response => {
-        if (response.ok) {
-          message.success('Estado de la orden actualizado correctamente');
-          fetchOrdenesPorPagar(); // Actualiza las órdenes después de actualizar el estado
+    .then(response => {
+      if (response.ok) {
+        message.success('Estado de la orden actualizado correctamente');
+        fetchOrdenesPorPagar();
         } else {
           throw new Error('Error al actualizar el estado de la orden');
         }
@@ -73,64 +68,96 @@ const OrdenesPorPagar = () => {
         console.error('Error al actualizar el estado de la orden:', error);
         message.error('Error al actualizar el estado de la orden');
       });
-  };
+    };
+    
 
   return (
-    <section className=' mt-20'>
-      <h1 className='w-11/12 pl-3 m-auto text-sm font-semibold items-center flex gap-2'>
+    <section className='mt-4'>
+      <h1 className='w-11/12 bg-red-600/5 py-2 rounded text-red-600 pl-3 m-auto text-sm font-semibold items-center flex gap-2'>
         Ordenes por pagar
         <FaCircle className='text-red-600 top-0 text-xs' />
       </h1>
       <Table className='w-11/12 m-auto mt-6'>
-        <TableHeader>
+        <TableHeader className="bg-slate-100/30 rounded-xl font-medium">
           <TableRow>
-            <TableCell># Orden</TableCell>
-            <TableCell>Cliente</TableCell>
-            <TableCell>Vehículo</TableCell>
-            <TableCell>Servicio</TableCell>
-            <TableCell>Acciones</TableCell>
+          <TableCell className="hidden md:block w-24 px-1">Nro Orden</TableCell>
+            <TableCell className="w-36 px-1">Cliente</TableCell>
+            <TableCell className="w-52 px-1">Vehículo</TableCell>
+            <TableCell className="md:w-72 px-1 max-md:w-80">Servicio</TableCell>
+            <TableCell className=""></TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
           {ordenesPorPagar && ordenesPorPagar.map((orden: Orden) => (
-            <TableRow key={orden.id}>
-              <TableCell>{orden.id}</TableCell>
-              <TableCell>
-                <section>
-                  <span className='font-semibold flex flex-col capitalize'>{orden.cliente.nombre}</span>
-                  <span>{orden.cliente.celular}</span>
-                </section>
-              </TableCell>
-              <TableCell>
-                <span className='w-full font-semibold'>{orden.vehiculo.placa}</span>
-                <section className='gap-4'>
-                  <span> {orden.vehiculo.tipo} </span>
-                  <span> {orden.vehiculo.marca} </span>
-                  <span> {orden.vehiculo.color} </span>
-                </section>
-                <span>{orden.vehiculo.llaves} <span>dejó llaves</span></span>
-              </TableCell>
-              <TableCell>
-                <section>
-                  <span className='font-semibold flex flex-col'>{new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(Number(orden.servicio.costo))}</span>
-                  <span>{orden.servicio.nombre_servicios}</span>
-                </section>
-              </TableCell>
-              <TableCell>
-                <Checkbox onChange={() => handleMetodoPagoChange('efectivo')} checked={metodosPago.includes('efectivo')}>Efectivo</Checkbox>
-                <Checkbox onChange={() => handleMetodoPagoChange('tarjeta')} checked={metodosPago.includes('tarjeta')}>Tarjeta</Checkbox>
-                {orden.estado === 'por pagar' && (
-                  <Button variant={'outline'} className='bg-slate-500 p-1 rounded-lg text-xs text-red-700 bg-red-700/10' onClick={() => actualizarEstadoOrden(orden.id)}>
-                    Terminar
-                  </Button>
-                )}
+            <TableRow key={orden.id} className="text-[13px]">
+              <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
+              <TableCell className="p-1">
+                  <section>
+                    <span className="font-semibold flex flex-col capitalize">
+                      {orden.cliente.nombre}
+                    </span>
+                    <span>{orden.cliente.celular}</span>
+                  </section>
+                </TableCell>
+                <TableCell className="p-1">
+                  <span className="w-full font-semibold">
+                    {orden.vehiculo.placa}
+                  </span>
+                  <section className="gap-4">
+                    <span className="max-md:hidden"> {orden.vehiculo.tipo} </span>
+                    <span> {orden.vehiculo.marca} </span>
+                    <span className="max-md:hidden"> {orden.vehiculo.color} </span>
+                  </section>
+                  <span className="max-md:hidden">
+                    {orden.vehiculo.llaves} <span>dejó llaves</span>
+                  </span>
+                </TableCell>
+                <TableCell className="p-1">
+                  <section>
+                    <span className="font-semibold flex flex-col">
+                      {new Intl.NumberFormat("es-CO", {
+                        style: "currency",
+                        currency: "COP",
+                        minimumFractionDigits: 0,
+                      }).format(Number(orden.servicio.costo))}
+                    </span>
+                    <span className="max-md:text-[0.8rem]">{orden.servicio.nombre_servicios}</span>
+                  </section>
+                </TableCell>
+                <TableCell className="p-2 gap-y-1 items-start flex flex-col max-md:items-start text-xs">
+                <Radio.Group 
+                  value={metodosPago[orden.id] || ''}
+                  buttonStyle="solid"
+                  className='flex items-center mb-3'
+                  onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
+                >
+                  <Radio.Button title='Efectivo' className='flex items-center' value="Efectivo">
+                    <BsCashCoin className=' text-[18px]' />
+                  </Radio.Button>
+                  <Radio.Button title='Nequi' className='' value="Nequi">
+                    <NequiIcon />
+                  </Radio.Button>
+                  <Radio.Button title='Daviplata' value="Daviplata">
+                    <DaviplataIcon />
+                  </Radio.Button>
+                  <Radio.Button title='Otro' value="Otro">
+                    Otro
+                  </Radio.Button>
+                </Radio.Group>
+                <Button
+                  variant={'secondary'}
+                  className='h-8 text-xs bg-slate-500/15 text-slate-800'
+                  onClick={() => actualizarEstadoOrden(orden.id)}
+                >
+                  Pagar
+                </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </section>
-  )
-}
+  );
+};
 
 export default OrdenesPorPagar;

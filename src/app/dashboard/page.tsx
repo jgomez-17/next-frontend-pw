@@ -17,7 +17,7 @@ import Table from "@/app/components/ui/table/table"
 import Encurso from '@/app/dashboard/enCurso/page'
 import Porpagar from '@/app/dashboard/porPagar/page'
 import Prueba from '@/app/prueba/page'
-import Multiselect from '../components/ui/multiselect/multiselect'
+import Ratio from '../components/ui/ratio/ratio'
 
 
 const Dashboard = () => {
@@ -39,7 +39,7 @@ const Dashboard = () => {
     <section className=''>
       <Sidenav isOpen={isOpen} toggle={toggleSidebar} />
 
-          <nav className='text-[1.3rem] font-bold z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center shadow-sm bg-white-500/30' style={{ marginLeft: isOpen ? '200px' : '0', transition: 'margin 0.3s ease' }}>
+          {/* <nav className='text-[1.3rem] font-bold z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center shadow-sm bg-white-500/30' style={{ marginLeft: isOpen ? '200px' : '0', transition: 'margin 0.3s ease' }}>
             <button onClick={toggleSidebar} className='sidenav-button'>
               <CgRowFirst className='text-[2rem]' />
             </button> 
@@ -51,14 +51,14 @@ const Dashboard = () => {
             <button className=' h-7 px-4 py-4 border border-slate-200 flex items-center rounded-md transition text-black hover:bg-white hover:text-blue-700 hover:border-blue-700' onClick={handleRecargarPagina}>
               <GrUpdate />
             </button> 
-          </nav>
+          </nav> */}
 
         
 
         {/* Contenido de tu página */}
         <article className='mt-2'>
           {/* <Prueba /> */}
-          {/* <Multiselect /> */}
+          {/* <Ratio /> */}
           <Encurso />
           {/* <Porpagar /> */}
           
