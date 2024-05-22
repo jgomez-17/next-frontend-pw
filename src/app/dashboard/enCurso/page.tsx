@@ -36,6 +36,8 @@ const OPTIONS = ['Jose', 'Josue', 'Luis', 'Camilo', 'Eduardo', 'Pedro'];
 
 const OrdenesEnCurso = () => {
   const [ordenesEnCurso, setOrdenesEnCurso] = useState<Orden[]>([]);
+  const [ordenesTerminadas, setOrdenesTerminadas] = useState<Orden[]>([]);
+  const [ordenesPorPagar, setOrdenesPorPagar] = useState<Orden[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<{ [key: number]: string[] }>({});
   const [buttonStates, setButtonStates] = useState<{ [key: number]: boolean }>({});
 
@@ -90,6 +92,7 @@ const OrdenesEnCurso = () => {
         if (response.ok) {
           message.success("Estado de la orden actualizado correctamente");
           fetchOrdenesEnCurso();
+          fetchOrdenesPorPagar();
         } else {
           throw new Error("Error al actualizar el estado de la orden");
         }
@@ -155,10 +158,95 @@ const OrdenesEnCurso = () => {
     }
   };
 
+  const numeroOrdenes =
+  ordenesEnCurso && ordenesEnCurso.length > 0 ? ordenesEnCurso.length : 0;
+
+
+  //fech de las ordenes por pagar
+  const fetchOrdenesPorPagar = () => {
+    fetch('http://localhost:4000/api/estados/porpagar')
+    .then(response => response.json())
+    .then(data => {
+      setOrdenesPorPagar(data.ordenes);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  };
+
+  useEffect(() => {
+    fetchOrdenesPorPagar();
+  }, []);
+
+  const numeroOrdenesPorPagar =
+  ordenesPorPagar && ordenesPorPagar.length > 0 ? ordenesPorPagar.length : 0;
+
+  const fetchOrdenesTerminadas = () => {
+    fetch('http://localhost:4000/api/estados/terminado')
+      .then(response => response.json())
+      .then(data => {
+        setOrdenesTerminadas(data.ordenes);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  };
+
+  useEffect(() => {
+    fetchOrdenesTerminadas();  // Fetch initial data
+  }, []);
+
+  const numeroOrdenesTerminadas =
+  ordenesTerminadas && ordenesTerminadas.length > 0 ? ordenesTerminadas.length : 0;
+
   return (
     <> 
-      <CardsStates />
-      <Drawerform onOrderCreated={fetchOrdenesEnCurso} /> 
+      <nav className=" gap-3 w-11/12 m-auto flex mt-20 mb-6 ">
+        <VerificarPlaca />
+        <Drawerform onOrderCreated={fetchOrdenesEnCurso} />
+      </nav>
+      <article className="z-10 w-11/12 mt-2 m-auto mb-8">
+        <ul className="flex flex-wrap justify-between items-center gap-2">
+          <li className="text-[0.95rem] bg-slate-50 transition-all max-md:w-[48.5%] w-[24%] md:h-[160px] h-[130px] p-2 md:p-4 rounded">
+            <a href="" className=" font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+              En curso
+              <article className="flex items-center justify-between bottom-0">
+                <span className="text-3xl max-md:text-2xl font-semibold">
+                  {numeroOrdenes}
+                </span>
+                <IoCarSportSharp className="card-icon text-gray-800/60 text-3xl" />
+              </article>
+            </a>
+          </li>
+          <li className=" text-[0.95rem] bg-slate-50 transition-all max-md:w-[48.5%] w-[24%] md:h-[160px] h-[130px] p-2 md:p-4 rounded">
+            <a href="/dashboard/porPagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+              Por pagar
+              <article className="flex items-center justify-between bottom-0">
+                <span className="text-3xl max-md:text-2xl font-semibold">
+                 {numeroOrdenesPorPagar} 
+                </span>
+                <IoCarSportSharp className="card-icon text-gray-800/60 text-3xl" />
+              </article>
+            </a>
+          </li>
+          <li className="text-[0.95rem] bg-slate-50 transition-all max-md:w-[48.5%] w-[24%] md:h-[160px] h-[130px] p-2 md:p-4 rounded">
+            <a href="" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+              Terminadas
+              <article className="flex items-center justify-between bottom-0">
+                <span className="text-3xl max-md:text-2xl font-semibold">
+                   {numeroOrdenesTerminadas} 
+                </span>
+                <AiOutlineFrown className="card-icon text-gray-800/60 text-3xl" />
+              </article>
+            </a>
+          </li>
+          <li className="text-[0.95rem] bg-slate-50 transition-all max-md:w-[48.5%] w-[24%] md:h-[160px] h-[130px] p-2 md:p-4 rounded">
+            <a href="" className=" font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+              Total hoy
+              <article className="flex items-center justify-between bottom-0">
+                <span className="text-3xl max-md:text-2xl font-semibold"> 400.000 </span>
+                <MdAttachMoney className="card-icon text-gray-800/60 text-3xl" />
+              </article>
+            </a>
+          </li>
+        </ul>
+      </article>
       <Table className=" w-11/12 m-auto mt-4">
         <TableHeader className="rounded-xl font-medium">
           <TableRow>

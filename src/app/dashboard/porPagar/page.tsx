@@ -72,8 +72,12 @@ const OrdenesPorPagar = () => {
     
 
   return (
-
-      <Table className='w-full m-auto mt-6'>
+    <section className='mt-[10%]'>
+      <h1 className='w-11/12 bg-slate-600/5 py-2 rounded text-red-600 pl-3 m-auto text-sm font-semibold items-center flex gap-2'>
+        Ordenes por pagar
+        <FaCircle className='text-red-600 top-0 text-xs' />
+      </h1>
+      <Table className='w-11/12 m-auto mt-6'>
         <TableHeader className="bg-slate-100/30 rounded-xl font-medium">
           <TableRow>
           <TableCell className="hidden md:block w-24 px-1">Nro Orden</TableCell>
@@ -152,6 +156,7 @@ const OrdenesPorPagar = () => {
           ))}
         </TableBody>
       </Table>
+    </section>
   );
 };
 

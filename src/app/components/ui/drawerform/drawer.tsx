@@ -272,332 +272,332 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
               {seccion === 1 && (
                 <>
                   <fieldset className='datos-vehiculo w-9/12 max-md:w-full'>
-                    <legend>Datos del Vehículo</legend>
+                      <legend>Datos del Vehículo</legend>
+                      <label>
+                        <span>Placa
+                        {/* <span className='text-red-500'>*</span> */}
+                        </span>
+                        
+                        <Input 
+                          className='input uppercase w-28' 
+                          type="text" 
+                          value={placa} 
+                          onChange={(e) => {
+
+                          let inputValue = e.target.value.toUpperCase();
+              
+                            inputValue = inputValue.replace(/[^A-Z, 0-9]/g, '');
+
+                            if (inputValue.length > 3) {
+                            inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
+                            }
+
+                            inputValue = inputValue.replace(/[^A-Z0-9\-]/g, '');
+
+                            if (inputValue.includes('-')) {
+                              const parts = inputValue.split('-');
+                              parts[1] = parts[1].replace(/[^0-9]/g, '');
+                              inputValue = parts.join('-');
+                            }
+
+                            inputValue = inputValue.slice(0, 7);
+
+                            setPlaca(inputValue);
+                          }} 
+                          maxLength={7}
+                          required 
+                        />
+
+                      </label>
+                      <label>
+                        <span>Marca</span>
+                        <Select
+                          className='selectform w-32'
+                          showSearch
+                          placeholder='$'
+                          optionFilterProp="children"
+                          onChange={(value) => setMarca(value)}
+                          value={marca}
+                          onSearch={onSearch}
+                          filterOption={filterOption}
+                          options={[
+                            {
+                              value: 'Audi',
+                              label: 'Audi',
+                            },
+                            {
+                              value: 'BMW',
+                              label: 'BMW',
+                            },
+                            {
+                              value: 'Cadillac',
+                              label: 'Cadillac',
+                            },
+                            {
+                              value: 'Citroen',
+                              label: 'Citroen',
+                            },
+                            {
+                              value: 'Chery',
+                              label: 'Chery',
+                            },
+                            {
+                              value: 'Chevrolet',
+                              label: 'Chevrolet',
+                            },
+                            {
+                              value: 'Dodge',
+                              label: 'Dodge',
+                            },
+                            {
+                              value: 'Fiat',
+                              label: 'Fiat',
+                            },
+                            {
+                              value: 'Ford',
+                              label: 'Ford',
+                            },
+                            {
+                              value: 'Honda',
+                              label: 'Honda',
+                            },
+                            {
+                              value: 'Hyundai',
+                              label: 'Hyundai',
+                            },
+                            {
+                              value: 'Jeep',
+                              label: 'Jeep',
+                            },
+                            {
+                              value: 'Jaguar',
+                              label: 'Jaguar',
+                            },
+                            {
+                              value: 'Kia',
+                              label: 'Kia',
+                            },
+                            {
+                              value: 'Land Rover',
+                              label: 'Land Rover',
+                            },
+                            {
+                              value: 'Lexus',
+                              label: 'Lexus',
+                            },
+                            {
+                              value: 'Mazda',
+                              label: 'Mazda',
+                            },
+                            {
+                              value: 'Mercedes',
+                              label: 'Mercedes',
+                            },
+                            {
+                              value: 'Mitsubishi',
+                              label: 'Mitsubishi',
+                            },
+                            {
+                              value: 'Mini Cooper',
+                              label: 'Mini Cooper',
+                            },
+                            {
+                              value: 'Nissan',
+                              label: 'Nissan',
+                            },
+                            {
+                              value: 'Toyota',
+                              label: 'Toyota',
+                            },
+                            {
+                              value: 'Volkswagen',
+                              label: 'Volkswagen',
+                            },
+                            {
+                              value: 'Peugeot',
+                              label: 'Peugeot',
+                            },
+                            {
+                              value: 'Porsche',
+                              label: 'Porsche',
+                            },
+                            {
+                              value: 'Renault',
+                              label: 'Renault',
+                            },
+                            {
+                              value: 'Rolls Royce',
+                              label: 'Rolls Royce',
+                            },
+                            {
+                              value: 'Subaru',
+                              label: 'Subaru',
+                            },
+                            {
+                              value: 'Suzuki',
+                              label: 'Suzuki',
+                            },
+                            {
+                              value: 'Volvo',
+                              label: 'Volvo',
+                            },
+                            {
+                              value: 'Otro',
+                              label: 'Otro',
+                            },
+                          ]}
+                        />
+                      </label>
+                      <label>
+                        <span>Tipo</span>
+                        <Select
+                          className='selectform w-28'
+                          aria-required
+                          showSearch
+                          placeholder='$'
+                          optionFilterProp="children"
+                          onChange={(value) => setTipo(value)}
+                          value={tipo}
+                          onSearch={onSearch}
+                          filterOption={filterOption}
+                          options={[
+                            {
+                              value: 'Automovil',
+                              label: 'Automovil',
+                            },
+                            {
+                              value: 'Camioneta',
+                              label: 'Camioneta',
+                            }
+                          ]}
+                        />
+                      </label>
+
+                      <label>
+                        <span>Color</span>
+                        <Select
+                          className='selectform w-28'
+                          aria-required
+                          showSearch
+                          placeholder="Select a color"
+                          optionFilterProp="children"
+                          onChange={(value) => setColor(value)}
+                          value={color}
+                          onSearch={onSearch}
+                          filterOption={filterOption}
+                          options={[
+                            {
+                              value: 'Negro',
+                              label: 'Negro',
+                            },
+                            {
+                              value: 'Blanco',
+                              label: 'Blanco',
+                            },
+                            {
+                              value: 'Azul',
+                              label: 'Azul',
+                            },
+                            {
+                              value: 'Amarillo',
+                              label: 'Amarillo',
+                            },
+                            {
+                              value: 'Beige',
+                              label: 'Beige',
+                            },
+                            {
+                              value: 'Gris',
+                              label: 'Gris',
+                            },
+                            {
+                              value: 'Morado',
+                              label: 'Morado',
+                            },
+                            {
+                              value: 'Plateado',
+                              label: 'Plateado',
+                            },
+                            {
+                              value: 'Rojo',
+                              label: 'Rojo',
+                            },
+                            {
+                              value: 'Vinotinto',
+                              label: 'Vinotinto',
+                            },
+                            {
+                              value: 'Verde',
+                              label: 'Verde',
+                            },
+                          ]}
+                        />
+                      </label>
+
+                      <label>
+                        <span>Deja llaves?</span>
+                        <Select
+                          className='selectform w-22'
+                          aria-required
+                          showSearch
+                          placeholder='$'
+                          optionFilterProp="children"
+                          onChange={(value) => setLlaves(value)}
+                          value={llaves}
+                          onSearch={onSearch}
+                          filterOption={filterOption}
+                          options={[
+                            {
+                              value: 'Si',
+                              label: 'Si',
+                            },
+                            {
+                              value: 'No',
+                              label: 'No',
+                            }                          
+                          ]}
+                        />
+                      </label>
+
+                      <label>
+                      <span>Observaciones</span>
+                        <TextArea rows={2} value={observaciones} onChange={(e) => setObservaciones(e.target.value)}/>
+                      </label>
+                  </fieldset>
+
+                  <fieldset className='w-9/12 max-md:w-full'>
+                    <legend>Datos del cliente</legend>
                     <label>
-                      <span>Placa
-                      {/* <span className='text-red-500'>*</span> */}
-                      </span>
-                      
+                      <span>Nombre</span>
+                      <Input className='input capitalize max-md:w-40 ' 
+                        type="text" value={nombre} 
+                        onChange={(e) => setNombre(e.target.value)} 
+                        required
+                      />
+                    </label>
+                    <label>
+                      <span>Celular</span>
                       <Input 
-                        className='input uppercase w-28' 
+                        className='input max-md:w-40'
                         type="text" 
-                        value={placa} 
+                        value={celular} 
                         onChange={(e) => {
-
-                        let inputValue = e.target.value.toUpperCase();
-            
-                          inputValue = inputValue.replace(/[^A-Z, 0-9]/g, '');
-
-                          if (inputValue.length > 3) {
-                          inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
-                          }
-
-                          inputValue = inputValue.replace(/[^A-Z0-9\-]/g, '');
-
-                          if (inputValue.includes('-')) {
-                            const parts = inputValue.split('-');
-                            parts[1] = parts[1].replace(/[^0-9]/g, '');
-                            inputValue = parts.join('-');
-                          }
-
-                          inputValue = inputValue.slice(0, 7);
-
-                          setPlaca(inputValue);
+                          const formattedValue = e.target.value.replace(/\D/g, '');
+                          const trimmedValue = formattedValue.slice(0, 10);
+                          setCelular(trimmedValue);
                         }} 
-                        maxLength={7}
-                        required 
-                      />
-
+                        maxLength={10}             />
                     </label>
                     <label>
-                      <span>Marca</span>
-                      <Select
-                        className='selectform w-32'
-                        showSearch
-                        placeholder='$'
-                        optionFilterProp="children"
-                        onChange={(value) => setMarca(value)}
-                        value={marca}
-                        onSearch={onSearch}
-                        filterOption={filterOption}
-                        options={[
-                          {
-                            value: 'Audi',
-                            label: 'Audi',
-                          },
-                          {
-                            value: 'BMW',
-                            label: 'BMW',
-                          },
-                          {
-                            value: 'Cadillac',
-                            label: 'Cadillac',
-                          },
-                          {
-                            value: 'Citroen',
-                            label: 'Citroen',
-                          },
-                          {
-                            value: 'Chery',
-                            label: 'Chery',
-                          },
-                          {
-                            value: 'Chevrolet',
-                            label: 'Chevrolet',
-                          },
-                          {
-                            value: 'Dodge',
-                            label: 'Dodge',
-                          },
-                          {
-                            value: 'Fiat',
-                            label: 'Fiat',
-                          },
-                          {
-                            value: 'Ford',
-                            label: 'Ford',
-                          },
-                          {
-                            value: 'Honda',
-                            label: 'Honda',
-                          },
-                          {
-                            value: 'Hyundai',
-                            label: 'Hyundai',
-                          },
-                          {
-                            value: 'Jeep',
-                            label: 'Jeep',
-                          },
-                          {
-                            value: 'Jaguar',
-                            label: 'Jaguar',
-                          },
-                          {
-                            value: 'Kia',
-                            label: 'Kia',
-                          },
-                          {
-                            value: 'Land Rover',
-                            label: 'Land Rover',
-                          },
-                          {
-                            value: 'Lexus',
-                            label: 'Lexus',
-                          },
-                          {
-                            value: 'Mazda',
-                            label: 'Mazda',
-                          },
-                          {
-                            value: 'Mercedes',
-                            label: 'Mercedes',
-                          },
-                          {
-                            value: 'Mitsubishi',
-                            label: 'Mitsubishi',
-                          },
-                          {
-                            value: 'Mini Cooper',
-                            label: 'Mini Cooper',
-                          },
-                          {
-                            value: 'Nissan',
-                            label: 'Nissan',
-                          },
-                          {
-                            value: 'Toyota',
-                            label: 'Toyota',
-                          },
-                          {
-                            value: 'Volkswagen',
-                            label: 'Volkswagen',
-                          },
-                          {
-                            value: 'Peugeot',
-                            label: 'Peugeot',
-                          },
-                          {
-                            value: 'Porsche',
-                            label: 'Porsche',
-                          },
-                          {
-                            value: 'Renault',
-                            label: 'Renault',
-                          },
-                          {
-                            value: 'Rolls Royce',
-                            label: 'Rolls Royce',
-                          },
-                          {
-                            value: 'Subaru',
-                            label: 'Subaru',
-                          },
-                          {
-                            value: 'Suzuki',
-                            label: 'Suzuki',
-                          },
-                          {
-                            value: 'Volvo',
-                            label: 'Volvo',
-                          },
-                          {
-                            value: 'Otro',
-                            label: 'Otro',
-                          },
-                        ]}
-                      />
+                        <span>Correo</span>
+                        <Input 
+                          className='input'
+                          type="email" 
+                          value={correoCliente} 
+                          onChange={(e) => setCorreoCliente(e.target.value)} 
+                        />
                     </label>
-                    <label>
-                      <span>Tipo</span>
-                      <Select
-                        className='selectform w-28'
-                        aria-required
-                        showSearch
-                        placeholder='$'
-                        optionFilterProp="children"
-                        onChange={(value) => setTipo(value)}
-                        value={tipo}
-                        onSearch={onSearch}
-                        filterOption={filterOption}
-                        options={[
-                          {
-                            value: 'Automovil',
-                            label: 'Automovil',
-                          },
-                          {
-                            value: 'Camioneta',
-                            label: 'Camioneta',
-                          }
-                        ]}
-                      />
-                    </label>
-
-                    <label>
-                      <span>Color</span>
-                      <Select
-                        className='selectform w-28'
-                        aria-required
-                        showSearch
-                        placeholder="Select a color"
-                        optionFilterProp="children"
-                        onChange={(value) => setColor(value)}
-                        value={color}
-                        onSearch={onSearch}
-                        filterOption={filterOption}
-                        options={[
-                          {
-                            value: 'Negro',
-                            label: 'Negro',
-                          },
-                          {
-                            value: 'Blanco',
-                            label: 'Blanco',
-                          },
-                          {
-                            value: 'Azul',
-                            label: 'Azul',
-                          },
-                          {
-                            value: 'Amarillo',
-                            label: 'Amarillo',
-                          },
-                          {
-                            value: 'Beige',
-                            label: 'Beige',
-                          },
-                          {
-                            value: 'Gris',
-                            label: 'Gris',
-                          },
-                          {
-                            value: 'Morado',
-                            label: 'Morado',
-                          },
-                          {
-                            value: 'Plateado',
-                            label: 'Plateado',
-                          },
-                          {
-                            value: 'Rojo',
-                            label: 'Rojo',
-                          },
-                          {
-                            value: 'Vinotinto',
-                            label: 'Vinotinto',
-                          },
-                          {
-                            value: 'Verde',
-                            label: 'Verde',
-                          },
-                        ]}
-                      />
-                    </label>
-
-                    <label>
-                      <span>Deja llaves?</span>
-                      <Select
-                        className='selectform w-22'
-                        aria-required
-                        showSearch
-                        placeholder='$'
-                        optionFilterProp="children"
-                        onChange={(value) => setLlaves(value)}
-                        value={llaves}
-                        onSearch={onSearch}
-                        filterOption={filterOption}
-                        options={[
-                          {
-                            value: 'Si',
-                            label: 'Si',
-                          },
-                          {
-                            value: 'No',
-                            label: 'No',
-                          }                          
-                        ]}
-                      />
-                    </label>
-
-                    <label>
-                    <span>Observaciones</span>
-                      <TextArea rows={2} value={observaciones} onChange={(e) => setObservaciones(e.target.value)}/>
-                    </label>
-                </fieldset>
-
-                <fieldset className='w-9/12 max-md:w-full'>
-                  <legend>Datos del cliente</legend>
-                  <label>
-                    <span>Nombre</span>
-                    <Input className='input capitalize max-md:w-40 ' 
-                      type="text" value={nombre} 
-                      onChange={(e) => setNombre(e.target.value)} 
-                      required
-                    />
-                  </label>
-                  <label>
-                    <span>Celular</span>
-                    <Input 
-                      className='input max-md:w-40'
-                      type="text" 
-                      value={celular} 
-                      onChange={(e) => {
-                        const formattedValue = e.target.value.replace(/\D/g, '');
-                        const trimmedValue = formattedValue.slice(0, 10);
-                        setCelular(trimmedValue);
-                      }} 
-                      maxLength={10}             />
-                  </label>
-                  <label>
-                      <span>Correo</span>
-                      <Input 
-                        className='input'
-                        type="email" 
-                        value={correoCliente} 
-                        onChange={(e) => setCorreoCliente(e.target.value)} 
-                      />
-                  </label>
-                </fieldset>
+                  </fieldset>
                   <article className='flex max-w-min m-auto gap-4'>
                     <button
                       className='flex rounded gap-4 p-2 px-3 justify-center items-center bg-black text-white hover:bg-sky-700 ' 
@@ -614,7 +614,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                 <>
                   <fieldset className='flex max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
-                      <section className='w-max m-auto mt-0 rounded-md flex flex-col md:bg-slate-50'>
+                      <section className='w-max m-auto mt-0 rounded-md flex flex-col'>
                       <label>
                       <span>Escoge tus servicios</span>
                         <article className='flex w-max flex-row items-center gap-3'>
@@ -673,7 +673,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                       </label>
                     </section>
                 
-                    <section className="md:bg-slate-50 m-auto items-start flex flex-col w-2/5 max-md:w-full rounded p-2">
+                    <section className="md:bg-slate-50/50 m-auto items-start flex flex-col w-2/5 max-md:w-full rounded p-2">
                       <span className='font-semibold my-3'>
                         Detalles de la orden
                       </span>
@@ -692,7 +692,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                             Total
                           </span>
                           <Input 
-                              className='costo-servicios' 
+                              className='costo-servicios bg-transparent' 
                               type="text" 
                               name="costo" 
                               value={`$ ${costoServicios.toLocaleString('es-CO')}`} 
@@ -705,7 +705,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                             Total con descuento
                           </span>
                           <Input 
-                              className='costo-con-descuentos' 
+                              className='costo-con-descuentos bg-transparent' 
                               type="text" 
                               name="costo" 
                               value={`$ ${costoConDescuento.toLocaleString('es-CO')}`} 
