@@ -4,6 +4,7 @@ import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, messa
 import { IoChevronBackSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { GrNext } from "react-icons/gr";
+import Modal from '@/app/components/ui/modal2/butonmodal'
 import './drawer.css'
 
 //TEXT AREA
@@ -21,8 +22,12 @@ const onSearch = (value: string) => {
 const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-
-  const Drawerform: React.FC<{ onOrderCreated: () => void }> = ({ onOrderCreated }) => {
+  interface DrawerformProps {
+    onOrderCreated: () => void;
+    showButton?: boolean;
+  }
+  // const Drawerform: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = true }) => {
+  const Drawerform: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = true  }) => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -242,12 +247,14 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
 
   return (
     <>
-      <Button className='float-end' type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
-        New orden
-      </Button>
+      {showButton && (
+        <Button className='float-end' type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+          Nueva orden
+        </Button>
+      )}
       <Drawer
         title="Crear nueva orden"
-        width={720}
+        width={1260}
         onClose={onClose}
         open={open}
         styles={{
@@ -257,14 +264,14 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
         }}
         extra={
           <Space >
-
+            <Modal />
           </Space>
         }
       >
-        <form id='orden' onSubmit={handleSubmit}>
+        <form id='orden' onSubmit={handleSubmit} className='flex flex-col gap-4 items-center'>
               {seccion === 1 && (
                 <>
-                  <fieldset className='datos-vehiculo'>
+                  <fieldset className='datos-vehiculo w-9/12 max-md:w-full'>
                     <legend>Datos del Vehículo</legend>
                     <label>
                       <span>Placa
@@ -272,7 +279,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                       </span>
                       
                       <Input 
-                        className='input uppercase w-32' 
+                        className='input uppercase w-28' 
                         type="text" 
                         value={placa} 
                         onChange={(e) => {
@@ -444,7 +451,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                     <label>
                       <span>Tipo</span>
                       <Select
-                        className='selectform w-32'
+                        className='selectform w-28'
                         aria-required
                         showSearch
                         placeholder='$'
@@ -558,11 +565,11 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                     </label>
                 </fieldset>
 
-                <fieldset className='datos-cliente'>
+                <fieldset className='w-9/12 max-md:w-full'>
                   <legend>Datos del cliente</legend>
                   <label>
                     <span>Nombre</span>
-                    <Input className='input capitalize' 
+                    <Input className='input capitalize max-md:w-40 ' 
                       type="text" value={nombre} 
                       onChange={(e) => setNombre(e.target.value)} 
                       required
@@ -571,7 +578,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                   <label>
                     <span>Celular</span>
                     <Input 
-                      className='input'
+                      className='input max-md:w-40'
                       type="text" 
                       value={celular} 
                       onChange={(e) => {
@@ -591,29 +598,28 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                       />
                   </label>
                 </fieldset>
-                  <div className='flex max-w-min m-auto gap-4'>
-
+                  <article className='flex max-w-min m-auto gap-4'>
                     <button
-                      className='button m-auto gap-4 bg-black' 
+                      className='flex rounded gap-4 p-2 px-3 justify-center items-center bg-black text-white hover:bg-sky-700 ' 
                       type="button" 
                       onClick={avanzarSeccion}>
                       Siguiente
                       <GrNext />
                     </button>
-                  </div>
+                  </article>
                 </>
               )}
               
               {seccion === 2 &&(
                 <>
-                  <fieldset className='datos-servicio'>
+                  <fieldset className='flex max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
-                      <div className='escoger-servicios'>
+                      <section className='w-max m-auto mt-0 rounded-md flex flex-col md:bg-slate-50'>
                       <label>
                       <span>Escoge tus servicios</span>
-                        <article className='flex flex-row items-center gap-2'>
+                        <article className='flex w-max flex-row items-center gap-3'>
                             <Select
-                              className='selectform w-96'
+                              className='selectform w-[21rem]'
                               showSearch  
                               placeholder='Seleccionar'
                               onChange={(value) => setServicioSeleccionado(value)}
@@ -626,13 +632,14 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                                 </Select.Option>
                               ))}
                             </Select>
-                            <button 
-                              className='agregar-servicio' 
-                              type="button" 
+                            <Button 
+                              className=' bg-white border-slate-200 rounded-lg border' 
+                              type="text" 
+                              title='Agregar'
                               onClick={handleAgregarServicio}
                             >
                               <FaPlus />
-                            </button>
+                            </Button>
                         </article>
                       </label>
 
@@ -641,7 +648,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                             Aplicar descuento
                           </span>
                           <Input 
-                            className='input'
+                            className='w-36'
                             placeholder='$'
                             type="number" 
                             value={descuento || ''} 
@@ -664,24 +671,24 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                             hidden 
                           />
                       </label>
-                    </div>
+                    </section>
                 
-                    <div className="servicios-seleccionados shadow">
-                      <span className='mb-4 font-semibold'>
+                    <section className="md:bg-slate-50 m-auto items-start flex flex-col w-2/5 max-md:w-full rounded p-2">
+                      <span className='font-semibold my-3'>
                         Detalles de la orden
                       </span>
                           {servicios.map(servicio => (
-                              <div 
+                              <section 
                                 title='seleccione para eliminar servicio' 
                                 key={servicio.nombre} 
-                                className="servicio" 
+                                className="servicio py-1 transition cursor-pointer hover:text-red-500 text-gray-600" 
                                 onClick={() => handleRemoveServicio(servicio.nombre)}>
                                 {servicio.nombre}
-                              </div>
+                              </section>
                             ))}
 
-                        <label>
-                          <span className='mt-4'>
+                        <label className='ml-0 mt-5'>
+                          <span className=''>
                             Total
                           </span>
                           <Input 
@@ -693,7 +700,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                           />
                         </label>
 
-                        <label>
+                        <label className='ml-0'>
                           <span>
                             Total con descuento
                           </span>
@@ -705,11 +712,11 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                               readOnly 
                             />
                         </label>
-                    </div>
+                    </section>
               </fieldset>
-                    <div className='flex max-w-min m-auto gap-3'>
+                    <section className='flex max-w-min m-auto gap-3'>
                       <button 
-                          className='button gap-2' 
+                          className=' w-24 rounded justify-center flex items-center bg-black text-white hover:bg-sky-700 gap-4' 
                           type="button" 
                           onClick={retrocederSeccion}
                           >
@@ -717,12 +724,12 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                         Atras
                       </button>
                         <button 
-                            className='button' 
+                            className='flex p-2 w-32 items-center justify-center rounded bg-black text-white hover:bg-sky-700' 
                             type="submit"
                             >
                             Generar orden
                         </button>
-                    </div>
+                    </section>
                 </>
               )}
             </form>

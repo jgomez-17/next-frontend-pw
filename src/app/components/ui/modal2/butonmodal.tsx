@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Input, Collapse } from 'antd';
 import Drawerform from '@/app/components/ui/drawerform/drawer'
+import OrdenesEnCurso from '@/app/dashboard/enCurso/page';
 
 const { Panel } = Collapse;
 
@@ -25,7 +26,7 @@ interface Orden {
   };
 }
 
-const Modalbutton: React.FC = () => {
+const Modalbutton: React.FC  = () => {
 
   // Consultar Placa
     const [placa, setPlaca] = useState('');
@@ -82,16 +83,16 @@ const Modalbutton: React.FC = () => {
 
   return (
     <>
-        <Button className='my-5 border-none p-5 rounded-xs flex items-center bg-sky-600/15 font-medium text-sky-700 z-10' 
+        <Button className='hover:bg-slate-400' 
           onClick={showModal}>
-          Crear orden
+          Verificar placa
         </Button>
 
       <Modal className='modal flex' 
-             title="Verificar placa" 
-             open={isModalOpen} 
-             onOk={handleRefresh} 
+             title="Ingresa una placa" 
+             open={isModalOpen}  
              onCancel={handleCancel}
+             footer={null}
              >
           <section className='flex align-middle items-center'>
               <Input 
@@ -123,21 +124,23 @@ const Modalbutton: React.FC = () => {
                 maxLength={7} // Permitir 3 letras, 1 guión y 3 números
                 required 
               />
-              <Button className='bg-slate-600 text-white mx-4 my-2 hover:bg-transparent'
+              <Button className='mx-4 my-2 hover:bg-transparent'
                 onClick={consultarOrden}
-                type='default'>
-                Verificar placa
+                type='primary'>
+                Verificar
               </Button>
-              <Drawerform onOrderCreated={handleOrderCreated}/>
+              <Button onClick={handleRefresh}>
+                Limpiar
+              </Button>
+              {/* <Drawerform onOrderCreated={handleOrderCreated}/> */}
           </section>
           {error && <p className='my-3 mx-1'>{error}</p>}
           {ordenes.length > 0 && (
             <section className='rounded-md'>
                 <p className='ml-1 my-2 text-green-700'> ¡Orden encontrada! </p>
-              <Collapse accordion>
+              
                 {ordenes.map((orden) => (
                   <Panel header={`Orden #${orden.id}`} key={orden.id}>
-                    
                           <article className='ml-1 text-xs'>
                               <p>Fecha: {orden.fecha_orden}</p>
                               {/* Mostrar otros detalles del vehículo */}
@@ -171,7 +174,6 @@ const Modalbutton: React.FC = () => {
                       )}
                   </Panel>
                 ))}
-              </Collapse>
             </section>
         )}
       </Modal>

@@ -20,12 +20,12 @@ const page = () => {
             <a href='/'> Admin </a>           
         </nav>
 
-        <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>
+        {/* <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>
             <Modal />
             <button className=' h-7 px-4 py-4 border border-slate-200 flex items-center rounded-md transition text-black hover:bg-white hover:text-blue-700 hover:border-blue-700' onClick={handleRecargarPagina}>
               <GrUpdate />
             </button> 
-        </nav>
+        </nav> */}
     </>
   )
 }

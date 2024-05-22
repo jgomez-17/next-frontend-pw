@@ -15,21 +15,20 @@
 
 form {
     /* font-family: 'Poppins', sans-serif; */
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 2.5rem;
 }
 
 /* secciones */
-fieldset {
+/* fieldset {
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-}
+} */
 
 legend {
     font-size: 1.1rem;
@@ -61,38 +60,13 @@ form label .input, .selectform {
     gap: 1rem;
 }
 
-/* boton de agregar servicio */
- .button {
-    background-color: black;
-    color: whitesmoke;
-    width: 150px;
-    height: 40px;
-    border-radius: 5px;
-    font-size: 0.8rem;
-    padding: 8px 20px 8px 20px;
-    border: 1px solid rgba(0, 0, 0, 0.445);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-}
-
- .button:hover {
-    box-shadow: 0 0 0 5px rgba(0, 140, 255, 0.256);
-}
-
- .button:focus {
-    transform: scale(1.03);
-    box-shadow: 0 0 0 4px rgba(0, 140, 255, 0.97);
-}
-
 /* SECCION DATOS DEL VEHICULO */
 
 
 /* SECCION DATOS DEL SERVICIO */
 .datos-servicio {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
 }
 
 .datos-servicio span {
@@ -104,13 +78,12 @@ form label .input, .selectform {
 .escoger-servicios {
     width: max-content;
     height: max-content;
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     gap: 10px;
     right: 0;
     padding: 12px;
     margin-top: 0;
+    margin: auto;
     border-radius: 10px;
 }
 
@@ -118,19 +91,6 @@ form label .input, .selectform {
     margin: 0;    
 }
 
-.agregar-servicio {
-    padding: 8px;
-    border-radius: 15%;
-    border: 2px solid transparent;
-    transition: 0.2s;
-}
-.agregar-servicio:hover {
-    background-color: rgba(60, 72, 82, 0.057);
-    border: 1px solid rgb(0, 70, 220);
-}
-.agregar-servicio:focus {
-    border: 1px solid rgb(43, 101, 226);
-}
 
 /* DETALLES DE LA ORDEN Y TOTALES */
 .servicios-seleccionados {
@@ -139,6 +99,7 @@ form label .input, .selectform {
     width: max-content;
     padding: 12px;
     margin-top: 0;
+    margin: auto;
     flex-direction: column;
     font-size: 0.9rem;
     border-radius: 10px;
@@ -154,18 +115,6 @@ form label .input, .selectform {
     cursor: default;
  }
 
-.servicios-seleccionados .servicio {
-    color: rgb(94, 94, 94);
-    padding: 7px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
-.servicios-seleccionados .servicio:hover {
-    border: 2px solid rgba(255, 0, 0, 0.338);
-    color: black;
-}
     
 .costo-servicios, .costo-con-descuentos {
     border: none;
@@ -175,13 +124,7 @@ form label .input, .selectform {
 
 
 @media screen and (max-width: 740px) {
-    fieldset {
-      width: 100%;
-    }
-    .datos-servicio {
-        display: flex;
-        flex-direction: column;
-    }
+
     .escoger-servicios {
         margin: 0;
     }
