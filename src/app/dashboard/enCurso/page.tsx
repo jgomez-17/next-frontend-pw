@@ -89,7 +89,7 @@ const OrdenesEnCurso = () => {
   //Funcion para asignar lavador y poner en curso 
   const actualizarEstadoOrden = (orderId: number, selectedEmployees: string[]) => {
     if (!selectedEmployees || selectedEmployees.length === 0) {
-      message.error("Por favor selecciona al menos un empleado");
+      message.warning("Por favor asigna un lavador");
       return;
     }
 
@@ -187,22 +187,6 @@ const OrdenesEnCurso = () => {
       ...prevState,
       [orderId]: value,
     }));
-  };
-
-  const handleButtonStateChange = (orderId: number) => {
-    if (!selectedEmployees[orderId] || selectedEmployees[orderId].length === 0) {
-      message.error("Por favor selecciona al menos un empleado");
-      return;
-    }
-
-    setButtonStates((prevState) => ({
-      ...prevState,
-      [orderId]: !prevState[orderId],
-    }));
-
-    if (buttonStates[orderId]) {
-      actualizarEstadoOrden(orderId, selectedEmployees[orderId]);
-    }
   };
 
 
