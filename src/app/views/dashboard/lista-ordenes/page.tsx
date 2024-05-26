@@ -1,22 +1,18 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { message, Modal, Select } from "antd";
+import { message, Modal, Select, Button } from "antd";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { FaCircle } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { IoCarSportSharp } from "react-icons/io5";
-import { AiOutlineFrown } from "react-icons/ai";
 import { MdOutlinePayment } from "react-icons/md"; //icon ordenes por pagar
 import { MdDoneAll } from "react-icons/md"; //icon ordenes terminadas
 import { FaArrowTrendUp } from "react-icons/fa6";//icon total recaudado hoy 
 import { FaPlay } from "react-icons/fa6";
 import { FaStop } from "react-icons/fa";
-import io from "socket.io-client";
-import Drawerform from "@/app/components/ui/drawerform/drawer";
-import CardsStates from '@/app/components/principalpage/cardsStates/page';
-import VerificarPlaca from '@/app/components/ui/modal2/butonmodal'
-import { link } from "fs";
+import Drawerform from "@/app/views/dashboard/formulario-crear-orden/formulario";
+import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
+
 
 const { Option } = Select;
 
@@ -38,7 +34,7 @@ interface Orden {
 
 const OPTIONS = ['Lavador 1', 'Lavador 2', 'Lavador 3', 'Lavador 4', 'Lavador 5', 'Lavador 6'];
 
-const OrdenesEnCurso = () => {
+const OrdenesDashboard = () => {
   const [ordenesEnEspera, setOrdenesEnEspera] = useState<Orden[]>([]);
   const [ordenesEnCurso, setOrdenesEnCurso] = useState<Orden[]>([]);
   const [ordenesTerminadas, setOrdenesTerminadas] = useState<Orden[]>([]);
@@ -50,6 +46,7 @@ const OrdenesEnCurso = () => {
   const [numeroOrdenesEnEspera, setNumeroOrdenesEnEspera] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
+
 
 
   //Fetch de ordenes en espera
@@ -227,8 +224,7 @@ const OrdenesEnCurso = () => {
 
   return (
     <> 
-      <nav className=" gap-3 w-11/12 m-auto flex mt-20 mb-6 ">
-        <VerificarPlaca />
+      <nav className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 ">
         <Drawerform onOrderCreated={fetchOrdenesEnEspera} />
       </nav>
       <article className="z-10 w-11/12 mt-2 m-auto mb-8">
@@ -245,7 +241,7 @@ const OrdenesEnCurso = () => {
             </a>
           </li>
           <li className=" text-[0.95rem] shadow-md rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="/dashboard/porPagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+            <a href="/views/dashboard/ordenes-por-pagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Por pagar
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl max-md:text-2xl font-bold">
@@ -283,14 +279,15 @@ const OrdenesEnCurso = () => {
           </li>
         </ul>
       </article>
-      <Table className=" w-11/12 m-auto mt-4">
-        <TableHeader className="rounded-xl font-medium">
-          <TableRow>
-            <TableCell className="hidden md:block w-24 px-1">Nro Orden</TableCell>
-            <TableCell className="w-36 px-1">Cliente</TableCell>
-            <TableCell className="w-52 px-1">Vehículo</TableCell>
-            <TableCell className="md:w-72 px-1 max-md:w-80">Servicio</TableCell>
-            <TableCell className=" max-md:hidden"></TableCell>
+      <Table className=" w-11/12 m-auto mt-4 shadow-md">
+        <TableHeader className="bg-slate-100 font-medium ">
+          <TableRow className="">
+            <TableCell className="max-md:hidden max-md:justify-center w-24 px-2">Nro Orden</TableCell>
+            <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
+            <TableCell className="w-52 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
+            <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
+            <TableCell className="max-md:hidden"></TableCell>
+            <TableCell className="md:hidden"> Estado</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -298,7 +295,7 @@ const OrdenesEnCurso = () => {
             ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[13px]">
                 <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
-                <TableCell className="p-1">
+                <TableCell className="p-1 max-md:text-center">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -306,7 +303,7 @@ const OrdenesEnCurso = () => {
                     <span>{orden.cliente.celular}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-1">
+                <TableCell className="p-1 max-md:text-center">
                   <span className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </span>
@@ -319,7 +316,7 @@ const OrdenesEnCurso = () => {
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-3 ">
+                <TableCell className="px-1 py-3 max-md:text-center ">
                   <section>
                     <span className="font-semibold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
@@ -328,10 +325,13 @@ const OrdenesEnCurso = () => {
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span className="max-md:text-[0.7rem]">{orden.servicio.nombre_servicios}</span>
+                    <span className="max-md:text-[0.7rem] max-md:hidden">{orden.servicio.nombre_servicios}</span>
+                    <span className=" md:hidden">
+                      <DetallesOrden orden={orden} />
+                    </span>
                   </section>
                 </TableCell>
-                <TableCell className="p-2max-md:hidden gap-2 flex items-center max-md:flex-col max-md:items-start text-xs">
+                <TableCell className="p-2 max-md:hidden gap-2 flex items-center max-md:flex-col max-md:items-start text-xs">
                   <Select
                     className="my-auto"
                     mode="multiple"
@@ -348,28 +348,33 @@ const OrdenesEnCurso = () => {
                   </Select>
                   {orden.estado === "en espera" ? (
                       <Button
-                      variant={"secondary"}
-                      className="px-3 h-8 rounded-lg text-xs text-green-700 bg-green-700/10"
-                      onClick={() => {
-                        if (!selectedEmployees[orden.id] || selectedEmployees[orden.id].length === 0) {
-                          message.error("Por favor selecciona al menos un empleado");
-                          return;
-                        }
-                        actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
-                      }}
-                    >
-                      <FaPlay />
-                    </Button>
+                        className="flex items-center gap-2 text-white text-xs bg-blue-700 hover:bg-blue-800"
+                        onClick={() => {
+                          if (!selectedEmployees[orden.id] || selectedEmployees[orden.id].length === 0) {
+                            message.error("Por favor selecciona al menos un empleado");
+                            return;
+                          }
+                          actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
+                        }}
+                      >
+                        Iniciar
+                        <FaPlay />
+                      </Button>
                   ) : (
                     <span>La orden está en otro estado</span>
                   )}
                   <Button 
                     onClick={() => cancelarOrden(orden.id)} 
-                    variant={"link"}
-                    className="text-xs px-3 h-8 text-red-700"
+                    type="text"
+                    className="text-xs px-3 h-8"
                     >
-                    Cancelar orden
+                    Cancelar
                   </Button>
+                </TableCell>
+                <TableCell className=" md:hidden w-24">
+                  <span className="flex text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
+                    {orden.estado} 
+                  </span>
                 </TableCell>
               </TableRow>
             ))}
@@ -381,7 +386,7 @@ const OrdenesEnCurso = () => {
             ordenesEnCurso.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[13px]">
                 <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
-                <TableCell className="p-1">
+                <TableCell className="p-1 max-md:text-center">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -389,7 +394,7 @@ const OrdenesEnCurso = () => {
                     <span>{orden.cliente.celular}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-1">
+                <TableCell className="p-1 max-md:text-center">
                   <span className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </span>
@@ -402,7 +407,7 @@ const OrdenesEnCurso = () => {
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-3 ">
+                <TableCell className="px-1 py-3 max-md:text-center ">
                   <section>
                     <span className="font-semibold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
@@ -411,7 +416,10 @@ const OrdenesEnCurso = () => {
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span className="max-md:text-[0.7rem]">{orden.servicio.nombre_servicios}</span>
+                    <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
+                    <span className="md:hidden">
+                      <DetallesOrden orden={orden} />
+                    </span>
                   </section>
                 </TableCell>
                 <TableCell className="px-2 py-3 my-auto max-md:hidden gap-4 flex items-start max-md:flex-col text-xs">
@@ -421,22 +429,27 @@ const OrdenesEnCurso = () => {
                   <span className="my-auto">
                   {orden.estado === "en curso" ? (
                       <Button
-                      variant={"secondary"}
-                      className="px-3 h-8 m-auto flex rounded-lg text-xs text-red-700 bg-red-700/10"
-                      onClick={() => {
-                        actualizarEstadoOrden3(orden.id);
-                      }}
-                    >
-                      <FaStop />
+                          className="flex items-center m-auto gap-2 text-xs border bg-white text-red-700 hover:text-red-800 hover:bg-white"
+                          onClick={() => {
+                            actualizarEstadoOrden3(orden.id);
+                          }}
+                        >
+                      Finalizar
+                      <FaStop className=" " />
                     </Button>
                   ) : (
                     <span>La orden está en otro estado</span>
                   )}
                   </span>
-                  <span className=" bg-sky-600/5 py-1 px-2 my-auto rounded-lg">
+                  <span className="bg-green-600/5 max-md:text-center text-green-500 py-1 px-2 my-auto rounded-lg">
                     {orden.estado}
                   </span>
                   
+                </TableCell>
+                <TableCell className="md:hidden w-20">
+                  <span className="flex text-xs  p-1 rounded-md text-green-500 bg-green-500/5"> 
+                    {orden.estado} 
+                    </span>
                 </TableCell>
               </TableRow>
             ))}
@@ -446,4 +459,4 @@ const OrdenesEnCurso = () => {
   );
 };
 
-export default OrdenesEnCurso;
+export default OrdenesDashboard;

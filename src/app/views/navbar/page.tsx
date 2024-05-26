@@ -3,7 +3,7 @@
 import React from 'react'
 import { CgRowFirst } from "react-icons/cg";
 import { GrUpdate } from "react-icons/gr";
-import Modal from "@/app/components/ui/modal2/butonmodal"
+import Modal from "@/app/views/dashboard/detalles-orden/detallesOrden"
 
 const handleRecargarPagina = () => {
     window.location.reload();

@@ -1,16 +1,18 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, message } from 'antd';
 import { IoChevronBackSharp } from "react-icons/io5";
+import { IoChevronBack } from "react-icons/io5";
+
 import { FaPlus } from "react-icons/fa";
-import { GrNext } from "react-icons/gr";
-import Modal from '@/app/components/ui/modal2/butonmodal'
+import { GrFormNext } from "react-icons/gr";
 import './drawer.css'
 
-//TEXT AREA
-const { TextArea } = Input;
-//SELECT
-const onChange = (value: string) => {
+const { TextArea } = Input; //TEXT AREA
+
+const onChange = (value: string) => { //SELECT
   console.log(`selected ${value}`);
 };
 
@@ -18,16 +20,106 @@ const onSearch = (value: string) => {
   console.log('search:', value);
 };
 
-// Filter `option.label` match the user type `input`
 const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-  interface DrawerformProps {
-    onOrderCreated: () => void;
-    showButton?: boolean;
-  }
-  // const Drawerform: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = true }) => {
-  const Drawerform: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = true  }) => {
+interface DrawerformProps {
+  onOrderCreated: () => void;
+  showButton?: boolean;
+}
+
+interface Orden {
+  id: number;
+  fecha_orden: string;
+  cliente: {
+    nombre: string;
+    celular: string;
+    correo: string;
+  };
+  vehiculo: {
+    marca: string;
+    tipo: string;
+    color: string;
+    llaves: boolean;
+  };
+  servicio: {
+    nombre_servicios: string;
+    costo: number;
+  };
+}
+
+const Formulario: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = true  }) => {
+
+
+  //######   VERIFICAR PLACA ####//
+
+  const [verifyplaca, setVerifyPlaca] = useState('');
+  const [ordenes, setOrdenes] = useState<Orden[]>([]);
+  const [error, setError] = useState('');
+
+  const consultarOrden = async () => {
+    if (!verifyplaca) {
+      setError('Por favor, ingresa una placa.');
+      message.error('Por favor, ingresa una placa.')
+      setOrdenes([]);
+      return;
+    }
+
+    if (verifyplaca.length !== 7) {
+      message.warning("Por favor ingresa una placa válida");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/api/vehiculos/placa/${verifyplaca}`);
+
+      const data = await response.json();
+      const ordenesEncontradas = data.ordenes;
+      
+    if (ordenesEncontradas.length > 0) {
+      // Si se encontraron órdenes, actualiza los estados del formulario con los datos de la primera orden encontrada
+      const primeraOrden = ordenesEncontradas[0];
+      setPlaca(primeraOrden.vehiculo.placa);
+      setMarca(primeraOrden.vehiculo.marca);
+      setTipo(primeraOrden.vehiculo.tipo);
+      setColor(primeraOrden.vehiculo.color);
+      // setLlaves(primeraOrden.vehiculo.llaves ? 'Si' : 'No');
+      // setObservaciones(primeraOrden.observaciones);
+      setNombre(primeraOrden.cliente.nombre);
+      setCelular(primeraOrden.cliente.celular);
+      setCorreoCliente(primeraOrden.cliente.correo);
+
+      // Actualiza cualquier otro estado según sea necesario
+    } 
+    
+    // setOrdenes(data.ordenes);
+    avanzarSeccion();
+    message.success('Orden encontrada')
+    setError('');
+  } catch (error: any) {
+    setError(error.message);
+    message.error('No hay ordenes previas relacionadas a este vehiculo')
+    setOrdenes([]);
+    setPlaca(verifyplaca);
+    setMarca('');
+    setTipo('');
+    setColor('');
+    setNombre('');
+    setCelular('');
+    setCorreoCliente('');
+    
+    avanzarSeccion();
+    }
+  }; 
+
+  const handleRefresh = () => {
+    setVerifyPlaca('');
+    setOrdenes([]);
+    setError('');
+  };
+
+  //######   VERRIFICAR PLACA ###//
+
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -40,10 +132,11 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
 
   // FORMULARIO
   // SECCIONES
-  const [seccion, setSeccion] = useState<number>(1); // Estado para controlar qué sección se muestra
+  const [seccion, setSeccion] = useState<number>(1);
 
+  //Funciones para avanzar y retroceder seccion
   const avanzarSeccion = () => {
-    if (seccion === 1 && !tipo) {
+    if (seccion === 2 && !tipo) {
       message.warning("Por favor selecciona un tipo de vehículo.");
       return;
     }
@@ -54,26 +147,22 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     setSeccion(seccion - 1);
   };
 
-  // Estado para los datos del vehiculo
+  // Estado para los datos de la orden
   const [placa, setPlaca] = useState('');
   const [marca, setMarca] = useState('');
   const [tipo, setTipo] = useState('');
   const [color, setColor] = useState('');
   const [llaves, setLlaves] = useState('');
   const [observaciones, setObservaciones] = useState('');
-
-  // Estado para los datos del cliente
   const [nombre, setNombre] = useState('');
   const [celular, setCelular] = useState('');
   const [correoCliente, setCorreoCliente] = useState('');
-
-  // Estado para los datos del servicio
   const [servicios, setServicios] = useState<{ nombre: string, costo: number}[]>([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState<string>('');
   const [nombresServicios, setNombresServicios] = useState<string>(''); 
-  const [descuento, setDescuento] = useState<number>(0); // Nuevo estado para el descuento
+  const [descuento, setDescuento] = useState<number>(0); 
 
-    // Definir precios de servicios por tipo de vehículo
+  // Definir precios de servicios por tipo de vehículo
   const preciosServiciosPorTipo: Record<string, Record<string, number>> = {
     Automovil: {
       "Brillado Manual": 60000,
@@ -121,11 +210,10 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
   }, [tipo]);
   
-
   const costoServicios: number = servicios.reduce((total, servicio) => {
     return total + servicio.costo;
   }, 0);
-
+  
   const costoConDescuento: number = costoServicios - descuento; // Calcula el costo con el descuento
 
   // Manejar la adición de un servicio seleccionado de un solo nombre
@@ -142,7 +230,7 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
     }
   };
 
-    // Maneja la eliminación de un servicio seleccionado para solo nombre
+  // Maneja la eliminación de un servicio seleccionado para solo nombre
   const handleRemoveServicio = (nombre: string) => {
 
     const serviciosFiltrados = servicios.filter(servicio => servicio.nombre !== nombre);
@@ -153,37 +241,33 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
   };
 
   
-  const handleSubmit = async (event: React.FormEvent) => {
+const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-      // Validar que los campos obligatorios estén llenos
-  if (!placa || !marca || !tipo || !color || !nombre || !celular) {
-    message.warning("Por favor completa los campos obligatorios.");
-    return;
-  }
+    if (!placa || !marca || !tipo || !color || !nombre || !celular) {
+      message.warning("Por favor completa los campos obligatorios.");
+      return;
+    }
 
-    // Validar que la placa sea valida
     if (placa.length !== 7) {
       message.warning("Por favor ingresa una placa válida");
       return;
     }
 
-  // Validar si al menos un servicio está seleccionado
-  if (servicios.length === 0) {
-    message.warning("Por favor selecciona al menos un servicio.");
-    return;
-  }
+    if (servicios.length === 0) {
+      message.warning("Por favor selecciona al menos un servicio.");
+      return;
+    }
 
-  if (llaves.length === 0) {
-    message.warning("Por favor selecciona si deja llaves o no");
-    return;
-  }
+    if (llaves.length === 0) {
+      message.warning("Por favor selecciona si deja llaves o no");
+      return;
+    }
 
-    // Validar que el número de teléfono tenga exactamente 10 dígitos
-  if (celular.length !== 10) {
-    message.warning("Por favor ingresa un número de teléfono válido");
-    return;
-  }
+    if (celular.length !== 10) {
+      message.warning("Por favor ingresa un número de teléfono válido");
+      return;
+    }
   
     // Objeto de datos a enviar
      const dataOrdens = {
@@ -248,11 +332,12 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
   return (
     <>
       {showButton && (
-        <Button className='float-end' type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+        <Button className=' bg-blue-700' type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
           Nueva orden
         </Button>
       )}
       <Drawer
+        className=''
         title="Crear nueva orden"
         width={1260}
         onClose={onClose}
@@ -264,15 +349,60 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
         }}
         extra={
           <Space >
-            <Modal />
+
           </Space>
         }
       >
-        <form id='orden' onSubmit={handleSubmit} className='flex flex-col gap-4 items-center'>
+        <Form id='orden' onSubmitCapture={handleSubmit} className='flex flex-col gap-4 items-center'>
+
               {seccion === 1 && (
                 <>
+                  <section className=' bg-slate-400/5 p-6 rounded'>
+                    <span className=' font-medium'> Ingresar placa </span>
+                    <article>
+                      <Input 
+                        className='uppercase w-36' 
+                        type="text" 
+                        value={verifyplaca} 
+                        onChange={(e) => {
+                          let inputValue = e.target.value.toUpperCase();
+                          inputValue = inputValue.replace(/[^A-Z, 0-9]/g, '');
+
+                          if (inputValue.length > 3) {
+                            inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
+                          }
+
+                          inputValue = inputValue.replace(/[^A-Z0-9\-]/g, '');
+
+                          if (inputValue.includes('-')) {
+                            const parts = inputValue.split('-');
+                            parts[1] = parts[1].replace(/[^0-9]/g, '');
+                            inputValue = parts.join('-');
+                          }
+
+                          inputValue = inputValue.slice(0, 7);
+                          setVerifyPlaca(inputValue);
+                        }} 
+                        maxLength={7} // Permitir 3 letras, 1 guión y 3 números
+                        required 
+                      />
+                      <Button 
+                        className='mx-4 my-2 bg-slate-600 text-white' 
+                        onClick={consultarOrden} >
+                        Verificar
+                      </Button>
+                      <Button onClick={handleRefresh}>
+                        Limpiar
+                      </Button>
+                    </article>
+                  </section>
+                </>
+              )}
+              
+              {seccion === 2 && (
+                <>
                   <fieldset className='datos-vehiculo w-9/12 max-md:w-full'>
-                      <legend>Datos del Vehículo</legend>
+                      <legend> Datos del vehiculo</legend>
                       <label>
                         <span>Placa
                         {/* <span className='text-red-500'>*</span> */}
@@ -598,19 +728,26 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                         />
                     </label>
                   </fieldset>
-                  <article className='flex max-w-min m-auto gap-4'>
-                    <button
-                      className='flex rounded gap-4 p-2 px-3 justify-center items-center bg-black text-white hover:bg-sky-700 ' 
-                      type="button" 
+
+                  <section className='flex max-w-min m-auto gap-3'>
+                    <Button 
+                      className='bg-black p-4 flex items-center gap-2 text-white hover:bg-zinc-800'
+                      onClick={retrocederSeccion}
+                      >
+                      <IoChevronBack />
+                      Volver
+                    </Button>
+                    <Button
+                      className='flex p-4 items-center font-medium' 
                       onClick={avanzarSeccion}>
                       Siguiente
-                      <GrNext />
-                    </button>
-                  </article>
+                      <GrFormNext className=' text-lg' />
+                    </Button>
+                  </section>
                 </>
               )}
               
-              {seccion === 2 &&(
+              {seccion === 3 &&(
                 <>
                   <fieldset className='flex max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
@@ -713,29 +850,28 @@ const filterOption = (input: string, option?: { label: string; value: string }) 
                             />
                         </label>
                     </section>
-              </fieldset>
-                    <section className='flex max-w-min m-auto gap-3'>
-                      <button 
-                          className=' w-24 rounded justify-center flex items-center bg-black text-white hover:bg-sky-700 gap-4' 
-                          type="button" 
-                          onClick={retrocederSeccion}
-                          >
-                        <IoChevronBackSharp />
-                        Atras
-                      </button>
-                        <button 
-                            className='flex p-2 w-32 items-center justify-center rounded bg-black text-white hover:bg-sky-700' 
-                            type="submit"
+                  </fieldset>
+                  <section className='flex max-w-min m-auto gap-3'>
+                      <Button 
+                        className='flex p-4 gap-2 items-center hover:bg-zinc-800'
+                        onClick={retrocederSeccion}
+                        >
+                        <IoChevronBack />
+                        Volver
+                      </Button>
+                        <Button
+                            onClick={handleSubmit} 
+                            className='flex p-4 bg-black text-white w-32 items-center justify-center' 
                             >
                             Generar orden
-                        </button>
-                    </section>
+                        </Button>
+                  </section>
                 </>
               )}
-            </form>
+            </Form>
       </Drawer>
     </>
   );
 };
 
-export default Drawerform;
+export default Formulario;
