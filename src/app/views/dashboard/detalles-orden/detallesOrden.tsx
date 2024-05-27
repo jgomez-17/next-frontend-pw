@@ -36,21 +36,19 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     <>
       <Button
         onClick={showModal}
-        className="text-xs"
+        className="text-xs font-medium"
         type="text"
         >
-        Ver detalles
+        Ver mas detalles
       </Button>
       <Modal
-        title={`Detalles de la orden`}
+        title={``}
         visible={visible}
         onCancel={handleCancel}
         footer={null}
-
-        
       >
-        <section>
-          <span className="flex my-1 gap-2 font-medium">Numero de orden: 
+        <section style={{ fontFamily: 'Overpass Variable',}}>
+          <span className="flex my-1 gap-2 font-bold">Numero de orden: 
             <p className=" font-normal"> {orden.id} </p>
           </span>
           <span className="flex gap-2 my-1">
@@ -58,25 +56,31 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             <p> {orden.vehiculo.marca}</p>
             <p>{orden.vehiculo.color}</p>
           </span>
-          <span className=" font-medium flex gap-2 my-1">
+          <span className=" font-bold flex gap-2 my-1">
             Servicio/s:
-            <p className=" font-normal">
+            <p className="font-normal">
               {orden.servicio.nombre_servicios}
             </p>
           </span>
-          <span className=" flex gap-2 font-medium my-1">
+          <span className=" flex gap-2 font-bold my-1">
             Propietario:
-            <p className=" font-normal"> 
+            <p className="capitalize font-normal"> 
               {orden.cliente.nombre}
             </p>
           </span>
-          <span className=" font-medium flex gap-2 my-1">
+          <span className="flex gap-2 font-bold">
+            Celular: 
+            <p className="font-normal"> 
+              {orden.cliente.celular} 
+            </p>
+          </span>
+          <span className="font-bold flex gap-2 my-1">
             Dejó llaves?
             <p className=" font-normal">
               {orden.vehiculo.llaves}
             </p>
           </span>
-          <span className=" flex gap-2 font-medium my-1">
+          <span className="flex gap-2 font-bold my-1">
             Asignado a:
             <p className=" font-normal"> 
               {orden.empleado}

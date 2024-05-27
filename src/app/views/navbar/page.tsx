@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { CgRowFirst } from "react-icons/cg";
-import { GrUpdate } from "react-icons/gr";
-import Modal from "@/app/views/dashboard/detalles-orden/detallesOrden"
+import { FcSettings } from "react-icons/fc";
+
 
 const handleRecargarPagina = () => {
     window.location.reload();
@@ -13,11 +13,14 @@ const handleRecargarPagina = () => {
 const page = () => {
   return (
     <>
-        <nav className='text-[1.3rem] font-bold z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center shadow-sm bg-white-500/30'>
+        <nav className='text-[1.3rem] font-bold z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'>
             <button  className='sidenav-button'>
                 <CgRowFirst className='text-[2rem]' />
             </button> 
-            <a href='/'> Admin </a>           
+            <a href='/'> Admin </a> 
+            <a href="/views/ajustes/" className='ml-auto hover:bg-slate-200 transition p-2 rounded-full'>
+              <FcSettings />
+            </a>          
         </nav>
 
         {/* <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>

@@ -10,6 +10,8 @@ import { MdDoneAll } from "react-icons/md"; //icon ordenes terminadas
 import { FaArrowTrendUp } from "react-icons/fa6";//icon total recaudado hoy 
 import { FaPlay } from "react-icons/fa6";
 import { FaStop } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+
 import Drawerform from "@/app/views/dashboard/formulario-crear-orden/formulario";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 
@@ -50,8 +52,8 @@ const OrdenesDashboard = () => {
 
 
   //Fetch de ordenes en espera
-  const fetchOrdenesEnEspera = () => {
-    fetch('http://localhost:4000/api/estados/enespera')
+  const fetchOrdenesEnEspera = async () => {
+    await fetch('http://localhost:4000/api/estados/enespera')
       .then(response => response.json())
       .then(data => {
         setOrdenesEnEspera(data.ordenes);
@@ -59,6 +61,7 @@ const OrdenesDashboard = () => {
       })
       .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesEnEspera(0)
+      console.log('no hay ordenes en espera')
   };
 
   useEffect(() => {
@@ -133,7 +136,7 @@ const OrdenesDashboard = () => {
     })
       .then((response) => {
         if (response.ok) {
-          message.success("Terminado y enviado a por pagar");
+          message.success("Terminado en espera de pago");
           fetchOrdenesEnEspera();
           fetchOrdenesEnCurso();
           fetchOrdenesPorPagar()
@@ -227,9 +230,9 @@ const OrdenesDashboard = () => {
       <nav className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 ">
         <Drawerform onOrderCreated={fetchOrdenesEnEspera} />
       </nav>
-      <article className="z-10 w-11/12 mt-2 m-auto mb-8">
+      <section style={{ fontFamily: 'Overpass Variable',}} className="z-10 w-11/12 mt-2 m-auto mb-8">
         <ul className="flex flex-wrap justify-between items-center gap-1">
-          <li className="text-[0.95rem] shadow-md rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+          <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="" className=" font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               En espera
               <article className="flex items-center justify-between bottom-0">
@@ -240,7 +243,7 @@ const OrdenesDashboard = () => {
               </article>
             </a>
           </li>
-          <li className=" text-[0.95rem] shadow-md rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+          <li className=" text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="/views/dashboard/ordenes-por-pagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Por pagar
               <article className="flex items-center justify-between bottom-0">
@@ -251,8 +254,8 @@ const OrdenesDashboard = () => {
               </article>
             </a>
           </li>
-          <li className="text-[0.95rem] shadow-md rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
+          <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+            <a href="/views/dashboard/ordenes-terminadas" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Terminadas
               <article className="flex items-center justify-between bottom-0">
                 <span className="text-3xl max-md:text-2xl font-bold">
@@ -262,7 +265,7 @@ const OrdenesDashboard = () => {
               </article>
             </a>
           </li>
-          <li className="text-[0.95rem] shadow-md rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+          <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Total Vendido Hoy
               <article className="flex items-center justify-between bottom-0">
@@ -278,13 +281,13 @@ const OrdenesDashboard = () => {
             </a>
           </li>
         </ul>
-      </article>
-      <Table className=" w-11/12 m-auto mt-4 shadow-md">
-        <TableHeader className="bg-slate-100 font-medium ">
+      </section>
+      <Table style={{ fontFamily: 'Overpass Variable',}} className=" w-11/12 m-auto mt-4">
+        <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className="">
-            <TableCell className="max-md:hidden max-md:justify-center w-24 px-2">Nro Orden</TableCell>
-            <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
-            <TableCell className="w-52 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
+            <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
+            <TableCell className="w-44 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
+            <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
             <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
             <TableCell className="max-md:hidden"></TableCell>
             <TableCell className="md:hidden"> Estado</TableCell>
@@ -293,83 +296,82 @@ const OrdenesDashboard = () => {
         <TableBody>
           {ordenesEnEspera &&
             ordenesEnEspera.map((orden: Orden) => (
-              <TableRow key={orden.id} className="text-[13px]">
-                <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
-                <TableCell className="p-1 max-md:text-center">
+              <TableRow key={orden.id} className="text-[12px]">
+                <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
+                <TableCell className="p-1 max-md:text-center border-b">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </span>
-                    <span>{orden.cliente.celular}</span>
+                    <span className="hidden">{orden.cliente.celular}</span>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 max-md:text-center">
+                <TableCell className="p-1 max-md:text-center border-b">
                   <span className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </span>
                   <section className="gap-4">
-                    <span className="max-md:hidden"> {orden.vehiculo.tipo} </span>
+                    <span className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </span>
                     <span> {orden.vehiculo.marca} </span>
                     <span className="max-md:hidden"> {orden.vehiculo.color} </span>
                   </section>
-                  <span className="max-md:hidden">
+                  <span className="max-md:hidden md:hidden">
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-3 max-md:text-center ">
-                  <section>
-                    <span className="font-semibold flex flex-col">
+                <TableCell className="px-1 py-3 max-md:text-center border-b">
+                  <section className="flex items-center justify-between max-md:flex-col">
+                    <span className="font-bold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span className="max-md:text-[0.7rem] max-md:hidden">{orden.servicio.nombre_servicios}</span>
-                    <span className=" md:hidden">
+                    <span className="translate-y-3">
                       <DetallesOrden orden={orden} />
                     </span>
                   </section>
+                  <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
                 </TableCell>
-                <TableCell className="p-2 max-md:hidden gap-2 flex items-center max-md:flex-col max-md:items-start text-xs">
-                  <Select
-                    className="my-auto"
-                    mode="multiple"
-                    placeholder="Asignar lavadores"
-                    value={selectedEmployees[orden.id] || []}
-                    onChange={(values) => handleEmpleadoChange(orden.id, values)}
-                    style={{ width: 160 }}
-                  >
-                    {OPTIONS.filter((o) => !(selectedEmployees[orden.id] || []).includes(o)).map((item) => (
-                      <Option key={item} value={item}>
-                        {item}
-                      </Option>
-                    ))}
-                  </Select>
-                  {orden.estado === "en espera" ? (
-                      <Button
-                        className="flex items-center gap-2 text-white text-xs bg-blue-700 hover:bg-blue-800"
-                        onClick={() => {
-                          if (!selectedEmployees[orden.id] || selectedEmployees[orden.id].length === 0) {
-                            message.error("Por favor selecciona al menos un empleado");
-                            return;
-                          }
-                          actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
-                        }}
-                      >
-                        Iniciar
-                        <FaPlay />
-                      </Button>
-                  ) : (
-                    <span>La orden está en otro estado</span>
-                  )}
-                  <Button 
-                    onClick={() => cancelarOrden(orden.id)} 
-                    type="text"
-                    className="text-xs px-3 h-8"
+                <TableCell className="p-2 max-md:hidden gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                  <section className="gap-2 w-max flex m-auto">
+                    <Select
+                      className="my-auto"
+                      mode="multiple"
+                      placeholder="Asignar lavadores"
+                      value={selectedEmployees[orden.id] || []}
+                      onChange={(values) => handleEmpleadoChange(orden.id, values)}
+                      style={{ width: 160 }}
                     >
-                    Cancelar
-                  </Button>
+                      {OPTIONS.filter((o) => !(selectedEmployees[orden.id] || []).includes(o)).map((item) => (
+                        <Option key={item} value={item}>
+                          {item}
+                        </Option>
+                      ))}
+                    </Select>
+                    {orden.estado === "en espera" ? (
+                        <Button
+                          className="flex items-center gap-2 text-white text-xs bg-blue-700 hover:bg-blue-800"
+                          onClick={() => {
+                            actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
+                          }}
+                        >
+                          Iniciar
+                          <FaPlay />
+                        </Button>
+                    ) : (
+                      <span>La orden está en otro estado</span>
+                    )}
+                    <Button 
+                      onClick={() => cancelarOrden(orden.id)} 
+                      type="text"
+                      title="Cancelar orden"
+                      className="text-xs bg-slate-200 px-2 mr-auto h-8 font-medium"
+                      >
+                      <IoClose className=" text-lg" />
+                    </Button>
+                  </section>
                 </TableCell>
                 <TableCell className=" md:hidden w-24">
                   <span className="flex text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
@@ -384,14 +386,14 @@ const OrdenesDashboard = () => {
         <TableBody>
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
-              <TableRow key={orden.id} className="text-[13px]">
-                <TableCell className="max-md:hidden w-20 p-2">{orden.id}</TableCell>
+              <TableRow key={orden.id} className="text-[12px]">
+                <TableCell className="max-md:hidden px-4 font-bold w-20 p-2">{orden.id}</TableCell>
                 <TableCell className="p-1 max-md:text-center">
                   <section>
                     <span className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </span>
-                    <span>{orden.cliente.celular}</span>
+                    <span className="hidden">{orden.cliente.celular}</span>
                   </section>
                 </TableCell>
                 <TableCell className="p-1 max-md:text-center">
@@ -399,52 +401,45 @@ const OrdenesDashboard = () => {
                     {orden.vehiculo.placa}
                   </span>
                   <section className="gap-4">
-                    <span className="max-md:hidden"> {orden.vehiculo.tipo} </span>
+                    <span className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </span>
                     <span> {orden.vehiculo.marca} </span>
                     <span className="max-md:hidden"> {orden.vehiculo.color} </span>
                   </section>
-                  <span className="max-md:hidden">
+                  <span className="max-md:hidden md:hidden">
                     {orden.vehiculo.llaves} <span>dejó llaves</span>
                   </span>
                 </TableCell>
                 <TableCell className="px-1 py-3 max-md:text-center ">
-                  <section>
-                    <span className="font-semibold flex flex-col">
+                <section className="flex items-center justify-between max-md:flex-col">
+                    <span className="font-bold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
-                    <span className="md:hidden">
+                    <span className="translate-y-3">
                       <DetallesOrden orden={orden} />
                     </span>
                   </section>
+                  <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
                 </TableCell>
-                <TableCell className="px-2 py-3 my-auto max-md:hidden gap-4 flex items-start max-md:flex-col text-xs">
-                  <span className="font-semibold w-40 rounded-lg bg-gray-100/50 px-2 py-2">
-                    {orden.empleado}
-                  </span>
+                <TableCell className=" my-auto max-md:hidden gap-4 mt-2 mx-10 flex max-md:flex-col text-xs">
                   <span className="my-auto">
                   {orden.estado === "en curso" ? (
                       <Button
-                          className="flex items-center m-auto gap-2 text-xs border bg-white text-red-700 hover:text-red-800 hover:bg-white"
+                          className="flex items-center font-medium m-auto gap-2 text-xs border bg-white text-slate-700"
                           onClick={() => {
                             actualizarEstadoOrden3(orden.id);
                           }}
                         >
-                      Finalizar
+                        Finalizar
                       <FaStop className=" " />
                     </Button>
                   ) : (
                     <span>La orden está en otro estado</span>
                   )}
                   </span>
-                  <span className="bg-green-600/5 max-md:text-center text-green-500 py-1 px-2 my-auto rounded-lg">
-                    {orden.estado}
-                  </span>
-                  
                 </TableCell>
                 <TableCell className="md:hidden w-20">
                   <span className="flex text-xs  p-1 rounded-md text-green-500 bg-green-500/5"> 
