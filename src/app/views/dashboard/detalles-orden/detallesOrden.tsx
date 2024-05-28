@@ -42,12 +42,16 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
         Ver mas detalles
       </Button>
       <Modal
-        title={``}
+        title={`Detalles de la orden`}
         visible={visible}
         onCancel={handleCancel}
         footer={null}
+        style={{fontFamily: 'Overpass Variable',}}
       >
-        <section style={{ fontFamily: 'Overpass Variable',}}>
+        <section 
+          style={{ fontFamily: 'Overpass Variable',}}
+          className=" bg-gray-400/10 p-3 rounded-md"        
+        >
           <span className="flex my-1 gap-2 font-bold">Numero de orden: 
             <p className=" font-normal"> {orden.id} </p>
           </span>
@@ -86,11 +90,17 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.empleado}
             </p>
           </span>
-            <span className="flex w-max px-3 py-1 my-3 m-auto bg-slate-600/10 rounded-md font-medium">
-              {orden.estado} 
-            </span>
 
         </section>
+          <span className={`flex w-max px-3 py-1 my-3 m-auto rounded-md font-medium ${
+            orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
+            orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
+            orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
+            orden.estado === 'terminado' ? 'bg-slate-600/5 text-black capitalize' :
+            '' // clase por defecto o en caso de que no haya una coincidencia
+            }`}>
+            {orden.estado} 
+          </span>
 
       </Modal>
     </>

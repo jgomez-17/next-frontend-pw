@@ -52,8 +52,8 @@ const OrdenesDashboard = () => {
 
 
   //Fetch de ordenes en espera
-  const fetchOrdenesEnEspera = async () => {
-    await fetch('http://localhost:4000/api/estados/enespera')
+  const fetchOrdenesEnEspera = () => {
+     fetch('http://localhost:4000/api/estados/enespera')
       .then(response => response.json())
       .then(data => {
         setOrdenesEnEspera(data.ordenes);
