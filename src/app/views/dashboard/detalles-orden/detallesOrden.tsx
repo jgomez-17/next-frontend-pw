@@ -36,35 +36,31 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     <>
       <Button
         onClick={showModal}
-        className="text-xs font-medium"
-        type="text"
+        className="text-xs text-black font-medium"
+        type="link"
         >
         Ver mas detalles
       </Button>
       <Modal
-        title={`Detalles de la orden`}
+        title={``}
         visible={visible}
         onCancel={handleCancel}
         footer={null}
-        style={{fontFamily: 'Overpass Variable',}}
+        style={{fontFamily: 'Overpass Variable', margin: 'auto'}}
       >
         <section 
           style={{ fontFamily: 'Overpass Variable',}}
-          className=" bg-gray-400/10 p-3 rounded-md"        
+          className=" bg-slate-50/10 p-3 rounded-md"        
         >
-          <span className="flex my-1 gap-2 font-bold">Numero de orden: 
-            <p className=" font-normal"> {orden.id} </p>
+          <span className="flex font-bold gap-2 my-1">
+            Orden
+            <p> {orden.id}</p>
           </span>
-          <span className="flex gap-2 my-1">
-            {orden.vehiculo.tipo}
-            <p> {orden.vehiculo.marca}</p>
-            <p>{orden.vehiculo.color}</p>
-          </span>
-          <span className=" font-bold flex gap-2 my-1">
-            Servicio/s:
-            <p className="font-normal">
-              {orden.servicio.nombre_servicios}
-            </p>
+          <span className="flex font-bold gap-2 my-1">
+             Vehiculo:
+            <p className=" font-normal"> {orden.vehiculo.tipo}</p>
+            <p className=" font-normal"> {orden.vehiculo.marca}</p>
+            <p className=" font-normal">{orden.vehiculo.color}</p>
           </span>
           <span className=" flex gap-2 font-bold my-1">
             Propietario:
@@ -72,9 +68,9 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.cliente.nombre}
             </p>
           </span>
-          <span className="flex gap-2 font-bold">
+          <span className="flex items-center gap-2 font-bold">
             Celular: 
-            <p className="font-normal"> 
+            <p className="font-normal text-xs"> 
               {orden.cliente.celular} 
             </p>
           </span>
@@ -90,9 +86,13 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.empleado}
             </p>
           </span>
-
-        </section>
-          <span className={`flex w-max px-3 py-1 my-3 m-auto rounded-md font-medium ${
+          <span className=" font-bold flex gap-2 my-1">
+            Servicio/s:
+            <p className="font-normal">
+              {orden.servicio.nombre_servicios}
+            </p>
+          </span>
+          <span className={`flex w-max px-2 py-1 my-3 rounded-md font-medium ${
             orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
             orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
             orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
@@ -101,6 +101,8 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             }`}>
             {orden.estado} 
           </span>
+
+        </section>
 
       </Modal>
     </>

@@ -236,7 +236,7 @@ const Formulario: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = tr
     const serviciosFiltrados = servicios.filter(servicio => servicio.nombre !== nombre);
     setServicios(serviciosFiltrados);
     // setServicios(servicios.filter(servicio => servicio.nombre !== nombre));
-    const nuevosNombres = serviciosFiltrados.map(servicio => servicio.nombre).join(',');
+    const nuevosNombres = serviciosFiltrados.map(servicio => servicio.nombre).join(', ');
     setNombresServicios(nuevosNombres);
   };
 
@@ -332,7 +332,7 @@ const handleSubmit = async (event: React.FormEvent) => {
   return (
     <>
       {showButton && (
-        <Button className=' bg-blue-700' type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+        <Button className='text-white bg-black font-medium' type="text" onClick={showDrawer} icon={<PlusOutlined />}>
           Nueva orden
         </Button>
       )}
@@ -347,11 +347,6 @@ const handleSubmit = async (event: React.FormEvent) => {
             paddingBottom: 80,
           },
         }}
-        extra={
-          <Space >
-
-          </Space>
-        }
       >
         <Form id='orden' onSubmitCapture={handleSubmit} className='flex flex-col gap-4 items-center'>
 
@@ -387,7 +382,7 @@ const handleSubmit = async (event: React.FormEvent) => {
                         required 
                       />
                       <Button 
-                        className='mx-4 my-2 bg-slate-600 text-white' 
+                        className='mx-4 my-2 bg-black text-white' 
                         onClick={consultarOrden} >
                         Verificar
                       </Button>
@@ -815,13 +810,13 @@ const handleSubmit = async (event: React.FormEvent) => {
                         Detalles de la orden
                       </span>
                           {servicios.map(servicio => (
-                              <section 
+                              <article 
                                 title='seleccione para eliminar servicio' 
                                 key={servicio.nombre} 
                                 className="servicio py-1 transition cursor-pointer hover:text-red-500 text-gray-600" 
                                 onClick={() => handleRemoveServicio(servicio.nombre)}>
                                 {servicio.nombre}
-                              </section>
+                              </article>
                             ))}
 
                         <label className='ml-0 mt-5'>

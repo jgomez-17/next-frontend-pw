@@ -3,8 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { message, Modal, Select, Button } from "antd";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 // import { Button } from "@/components/ui/button";
 import { IoCarSportSharp } from "react-icons/io5";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { MdOutlinePayment } from "react-icons/md"; //icon ordenes por pagar
 import { MdDoneAll } from "react-icons/md"; //icon ordenes terminadas
 import { FaArrowTrendUp } from "react-icons/fa6";//icon total recaudado hoy 
@@ -34,7 +44,11 @@ interface Orden {
   empleado: string
 }
 
-const OPTIONS = ['Lavador 1', 'Lavador 2', 'Lavador 3', 'Lavador 4', 'Lavador 5', 'Lavador 6'];
+interface Lavador {
+  id: number;
+  nombre: string;
+  activo: string;
+}
 
 const OrdenesDashboard = () => {
   const [ordenesEnEspera, setOrdenesEnEspera] = useState<Orden[]>([]);
@@ -43,6 +57,7 @@ const OrdenesDashboard = () => {
   const [ordenesPorPagar, setOrdenesPorPagar] = useState<Orden[]>([])
   const [totalRecaudado, setTotalRecaudado] = useState<number>(0);
   const [selectedEmployees, setSelectedEmployees] = useState<{ [key: number]: string[] }>({});
+  const [lavadores, setLavadores] = useState<Lavador[]>([]);
   const [buttonStates, setButtonStates] = useState<{ [key: number]: boolean }>({});
 
   const [numeroOrdenesEnEspera, setNumeroOrdenesEnEspera] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
@@ -50,6 +65,19 @@ const OrdenesDashboard = () => {
   const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
 
 
+  //Fetch lavadores
+  const fetchLavadores = () => {
+    fetch('http://localhost:4000/api/lavadores/')
+      .then(response => response.json())
+      .then((data: { body: Lavador[] }) => {
+        setLavadores(data.body);
+      })
+      .catch(error => console.error('Error al obtener datos de lavadores:', error));
+  };
+
+  useEffect(() => {
+    fetchLavadores();
+  }, []);
 
   //Fetch de ordenes en espera
   const fetchOrdenesEnEspera = () => {
@@ -84,6 +112,41 @@ const OrdenesDashboard = () => {
     useEffect(() => {
       fetchOrdenesEnCurso();  // Fetch initial data
     }, []);
+
+      //fech de las ordenes por pagar
+  const fetchOrdenesPorPagar = () => {
+    fetch('http://localhost:4000/api/estados/porpagar')
+    .then(response => response.json())
+    .then(data => {
+      setOrdenesPorPagar(data.ordenes);
+      setNumeroOrdenesPorPagar(data.numeroOrdenesPorPagar || 0)
+    })
+    .catch(error => console.error('Error fetching data:', error));
+    setNumeroOrdenesPorPagar(0)
+  };
+
+  useEffect(() => {
+    fetchOrdenesPorPagar();
+  }, []);
+
+
+  //Fetch de las ordenes terminadas hoy
+  const fetchOrdenesTerminadasHoy = () => {
+    fetch('http://localhost:4000/api/estados/terminadohoy')
+      .then(response => response.json())
+      .then(data => {
+        setOrdenesTerminadas(data.ordenes)
+        setTotalRecaudado(data.totalRecaudado || 0); // Actualizar el total recaudado
+        setNumeroOrdenesHoy(data.numeroOrdenesHoy || 0); // Actualizar el número de órdenes terminadas
+      })
+      .catch(error => console.error('Error fetching data:', error));
+      setTotalRecaudado(0);
+      setNumeroOrdenesHoy(0)
+  };
+
+  useEffect(() => {
+    fetchOrdenesTerminadasHoy();  // Fetch initial data
+  }, []);
 
 
   //Funcion para asignar lavador y poner en curso 
@@ -190,40 +253,7 @@ const OrdenesDashboard = () => {
   };
 
 
-  //fech de las ordenes por pagar
-  const fetchOrdenesPorPagar = () => {
-    fetch('http://localhost:4000/api/estados/porpagar')
-    .then(response => response.json())
-    .then(data => {
-      setOrdenesPorPagar(data.ordenes);
-      setNumeroOrdenesPorPagar(data.numeroOrdenesPorPagar || 0)
-    })
-    .catch(error => console.error('Error fetching data:', error));
-    setNumeroOrdenesPorPagar(0)
-  };
 
-  useEffect(() => {
-    fetchOrdenesPorPagar();
-  }, []);
-
-
-  //Fetch de las ordenes terminadas hoy
-  const fetchOrdenesTerminadasHoy = () => {
-    fetch('http://localhost:4000/api/estados/terminadohoy')
-      .then(response => response.json())
-      .then(data => {
-        setOrdenesTerminadas(data.ordenes)
-        setTotalRecaudado(data.totalRecaudado || 0); // Actualizar el total recaudado
-        setNumeroOrdenesHoy(data.numeroOrdenesHoy || 0); // Actualizar el número de órdenes terminadas
-      })
-      .catch(error => console.error('Error fetching data:', error));
-      setTotalRecaudado(0);
-      setNumeroOrdenesHoy(0)
-  };
-
-  useEffect(() => {
-    fetchOrdenesTerminadasHoy();  // Fetch initial data
-  }, []);
 
   return (
     <> 
@@ -235,49 +265,49 @@ const OrdenesDashboard = () => {
           <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="" className=" font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               En espera
-              <article className="flex items-center justify-between bottom-0">
-                <span className="text-3xl max-md:text-2xl font-bold">
+              <span className="flex items-center justify-between bottom-0">
+                <p className="text-3xl max-md:text-2xl font-bold">
                   {numeroOrdenesEnEspera}
-                </span>
+                </p>
                 <IoCarSportSharp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </article>
+              </span>
             </a>
           </li>
           <li className=" text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="/views/dashboard/ordenes-por-pagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Por pagar
-              <article className="flex items-center justify-between bottom-0">
-                <span className="text-3xl max-md:text-2xl font-bold">
+              <span className="flex items-center justify-between bottom-0">
+                <p className="text-3xl max-md:text-2xl font-bold">
                  {numeroOrdenesPorPagar} 
-                </span>
+                </p>
                 <MdOutlinePayment className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </article>
+              </span>
             </a>
           </li>
           <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="/views/dashboard/ordenes-terminadas" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Terminadas
-              <article className="flex items-center justify-between bottom-0">
-                <span className="text-3xl max-md:text-2xl font-bold">
+              <span className="flex items-center justify-between bottom-0">
+                <p className="text-3xl max-md:text-2xl font-bold">
                    {numeroOrdenesHoy} 
-                </span>
+                </p>
                 <MdDoneAll className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </article>
+              </span>
             </a>
           </li>
           <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
             <a href="" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
               Total Vendido Hoy
-              <article className="flex items-center justify-between bottom-0">
-                <span className="text-3xl max-md:text-2xl font-bold"> 
+              <span className="flex items-center justify-between bottom-0">
+                <p className="text-3xl max-md:text-2xl font-bold"> 
                 {new Intl.NumberFormat("es-CO", {
                     style: "currency",
                     currency: "COP",
                     minimumFractionDigits: 0,
                   }).format(totalRecaudado)}
-                </span>
+                </p>
                 <FaArrowTrendUp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </article>
+              </span>
             </a>
           </li>
         </ul>
@@ -286,11 +316,11 @@ const OrdenesDashboard = () => {
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className="">
             <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
-            <TableCell className="w-44 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
-            <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
+            <TableCell className="md:w-44 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
+            <TableCell className="md:w-36 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
             <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
-            <TableCell className="max-md:hidden"></TableCell>
-            <TableCell className="md:hidden"> Estado</TableCell>
+            <TableCell className=""></TableCell>
+            <TableCell className="hidden"> Estado</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -300,59 +330,58 @@ const OrdenesDashboard = () => {
                 <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
                 <TableCell className="p-1 max-md:text-center border-b">
                   <section>
-                    <span className="font-semibold flex flex-col capitalize">
+                    <p className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
-                    </span>
-                    <span className="hidden">{orden.cliente.celular}</span>
+                    </p>
+                    <p className="">{orden.cliente.celular}</p>
                   </section>
                 </TableCell>
                 <TableCell className="p-1 max-md:text-center border-b">
-                  <span className="w-full font-semibold">
+                  <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
-                  </span>
-                  <section className="gap-4">
-                    <span className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </span>
-                    <span> {orden.vehiculo.marca} </span>
-                    <span className="max-md:hidden"> {orden.vehiculo.color} </span>
+                  </p>
+                  <section className="gap-1 md:flex">
+                    <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
+                    <p>{orden.vehiculo.marca}</p>
+                    <p className="max-md:hidden">{orden.vehiculo.color}</p>
                   </section>
                   <span className="max-md:hidden md:hidden">
-                    {orden.vehiculo.llaves} <span>dejó llaves</span>
+                    {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
                 <TableCell className="px-1 py-3 max-md:text-center border-b">
                   <section className="flex items-center justify-between max-md:flex-col">
-                    <span className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
-                    </span>
-                    <span className="translate-y-3">
-                      <DetallesOrden orden={orden} />
-                    </span>
+                    </p>
                   </section>
-                  <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
+                  <p className="max-md:hidden">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-2 max-md:hidden gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
-                  <section className="gap-2 w-max flex m-auto">
+                <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                  <section className="gap-4 w-max flex m-auto">
                     <Select
-                      className="my-auto"
+                      className="my-auto max-md:hidden"
                       mode="multiple"
                       placeholder="Asignar lavadores"
                       value={selectedEmployees[orden.id] || []}
                       onChange={(values) => handleEmpleadoChange(orden.id, values)}
                       style={{ width: 160 }}
                     >
-                      {OPTIONS.filter((o) => !(selectedEmployees[orden.id] || []).includes(o)).map((item) => (
-                        <Option key={item} value={item}>
-                          {item}
-                        </Option>
-                      ))}
+                      {lavadores
+                        .filter(lavador => lavador.activo === "1" && !(selectedEmployees[orden.id] || []).includes(lavador.nombre))
+                        .map(lavador => (
+                          <Option key={lavador.id} value={lavador.nombre}>
+                            <p className=" capitalize">{lavador.nombre}</p>
+                          </Option>
+                        ))}
                     </Select>
                     {orden.estado === "en espera" ? (
                         <Button
-                          className="flex items-center gap-2 text-white text-xs bg-blue-700 hover:bg-blue-800"
+                          className="flex max-md:hidden items-center gap-2 text-white text-xs bg-black hover:bg-blue-800"
                           onClick={() => {
                             actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
                           }}
@@ -361,22 +390,37 @@ const OrdenesDashboard = () => {
                           <FaPlay />
                         </Button>
                     ) : (
-                      <span>La orden está en otro estado</span>
+                      <p>La orden está en otro estado</p>
                     )}
-                    <Button 
-                      onClick={() => cancelarOrden(orden.id)} 
-                      type="text"
-                      title="Cancelar orden"
-                      className="text-xs bg-slate-200 px-2 mr-auto h-8 font-medium"
-                      >
-                      <IoClose className=" text-lg" />
-                    </Button>
+
+                    <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <BsThreeDotsVertical className=" text-2xl" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                          <Button 
+                            onClick={() => cancelarOrden(orden.id)} 
+                            type="link"
+                            title="Cancelar orden"
+                            className="text-xs max-md:hidden text-red-600 font-medium"
+                          >
+                            Cancelar orden
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <DetallesOrden orden={orden} />
+                        </span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   </section>
                 </TableCell>
-                <TableCell className=" md:hidden w-24">
-                  <span className="flex text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
+                <TableCell className="hidden w-24">
+                  <p className="flex text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
                     {orden.estado} 
-                  </span>
+                  </p>
                 </TableCell>
               </TableRow>
             ))}
@@ -390,45 +434,42 @@ const OrdenesDashboard = () => {
                 <TableCell className="max-md:hidden px-4 font-bold w-20 p-2">{orden.id}</TableCell>
                 <TableCell className="p-1 max-md:text-center">
                   <section>
-                    <span className="font-semibold flex flex-col capitalize">
+                    <p className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
-                    </span>
-                    <span className="hidden">{orden.cliente.celular}</span>
+                    </p>
+                    <p className="">{orden.cliente.celular}</p>
                   </section>
                 </TableCell>
                 <TableCell className="p-1 max-md:text-center">
-                  <span className="w-full font-semibold">
+                  <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
-                  </span>
-                  <section className="gap-4">
-                    <span className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </span>
-                    <span> {orden.vehiculo.marca} </span>
-                    <span className="max-md:hidden"> {orden.vehiculo.color} </span>
+                  </p>
+                  <section className="gap-1 md:flex">
+                    <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
+                    <p> {orden.vehiculo.marca} </p>
+                    <p className="max-md:hidden"> {orden.vehiculo.color} </p>
                   </section>
                   <span className="max-md:hidden md:hidden">
-                    {orden.vehiculo.llaves} <span>dejó llaves</span>
+                    {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
                 <TableCell className="px-1 py-3 max-md:text-center ">
                 <section className="flex items-center justify-between max-md:flex-col">
-                    <span className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
-                    </span>
-                    <span className="translate-y-3">
-                      <DetallesOrden orden={orden} />
-                    </span>
+                    </p>
                   </section>
-                  <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
+                  <p className="max-md:hidden">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className=" my-auto max-md:hidden gap-4 mt-2 mx-10 flex max-md:flex-col text-xs">
-                  <span className="my-auto">
+                <TableCell className="my-auto gap-4 mt-2 md:mx-10 flex text-xs">
+                  <section className="my-auto max-md:hidden">
                   {orden.estado === "en curso" ? (
                       <Button
-                          className="flex items-center font-medium m-auto gap-2 text-xs border bg-white text-slate-700"
+                          className="flex items-center font-medium m-auto gap-2 text-xs border bg-white"
                           onClick={() => {
                             actualizarEstadoOrden3(orden.id);
                           }}
@@ -437,14 +478,36 @@ const OrdenesDashboard = () => {
                       <FaStop className=" " />
                     </Button>
                   ) : (
-                    <span>La orden está en otro estado</span>
+                    <p>La orden está en otro estado</p>
                   )}
-                  </span>
+                  </section>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="max-md:m-auto">
+                      <BsThreeDotsVertical className=" text-2xl" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                          <Button 
+                            onClick={() => cancelarOrden(orden.id)} 
+                            type="link"
+                            title="Cancelar orden"
+                            className="text-xs max-md:hidden text-red-600 font-medium"
+                          >
+                            Cancelar orden
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <DetallesOrden orden={orden} />
+                        </span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
-                <TableCell className="md:hidden w-20">
-                  <span className="flex text-xs  p-1 rounded-md text-green-500 bg-green-500/5"> 
+                <TableCell className="hidden">
+                  <p className="flex text-xs  p-1 rounded-md text-green-500 bg-green-500/5"> 
                     {orden.estado} 
-                    </span>
+                    </p>
                 </TableCell>
               </TableRow>
             ))}
