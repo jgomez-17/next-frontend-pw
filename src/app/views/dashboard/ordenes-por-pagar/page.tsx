@@ -3,11 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import { message, Radio } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
 import { BsCashCoin } from "react-icons/bs";
 import { DaviplataIcon, NequiIcon } from '@/app/components/ui/iconos'
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { FaRegCreditCard } from "react-icons/fa";
 import DetallesOrden from '../detalles-orden/detallesOrden';
 
@@ -129,7 +132,7 @@ const OrdenesPorPagar = () => {
                   </span>
                 </TableCell>
                 <TableCell className="p-1 border-b-1">
-                  <section className=' flex items-center gap-2'>
+                  <section className='flex flex-col max-md:items-center gap-2'>
                     <span className="font-bold  flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
@@ -137,18 +140,15 @@ const OrdenesPorPagar = () => {
                         minimumFractionDigits: 0,
                       }).format(Number(orden.servicio.costo))}
                     </span>
-                    <span className="max-md:text-[0.8rem] hidden">{orden.servicio.nombre_servicios}</span>
-                    <span className="">
-                      <DetallesOrden orden={orden} />
-                    </span>
+                    <span className="max-md:text-[0.8rem] max-md:hidden">{orden.servicio.nombre_servicios}</span>
                   </section>
                 </TableCell>
                 <TableCell className="gap-2 items-start max-md:items-start text-xs border-b-1 border-black">
-                    <section className='flex gap-2'>
+                    <section className='flex gap-4 items-center'>
                         <Radio.Group 
                           value={metodosPago[orden.id] || ''}
                           buttonStyle="solid"
-                          className='flex w-max items-center mb-3'
+                          className='flex w-max my-auto items-center'
                           onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
                         >
                           <Radio.Button title='Efectivo' className='flex items-center' value="Efectivo">
@@ -159,11 +159,23 @@ const OrdenesPorPagar = () => {
                           </Radio.Button>
                         </Radio.Group>
                           <Button
-                            className='h-8 text-xs bg-blue-700 hover:bg-blue-500 text-white'
+                            className='flex items-center h-8 text-xs bg-black text-white'
                             onClick={() => actualizarEstadoOrden(orden.id)}
                           >
                           Pagar
                           </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger className="max-md:m-auto">
+                              <BsThreeDotsVertical className=" text-2xl" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                            <DropdownMenuItem>
+                              <span onClick={(e) => e.stopPropagation()}>
+                                <DetallesOrden orden={orden} />
+                              </span>
+                            </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
                     </section>
               </TableCell>
             </TableRow>

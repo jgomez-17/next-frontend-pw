@@ -3,11 +3,8 @@
 import React from 'react'
 import { CgRowFirst } from "react-icons/cg";
 import { FcSettings } from "react-icons/fc";
+import { FaChartSimple } from "react-icons/fa6";
 
-
-const handleRecargarPagina = () => {
-    window.location.reload();
-  };
 
   
 const page = () => {
@@ -18,8 +15,14 @@ const page = () => {
                 <CgRowFirst className='text-[2rem]' />
             </button> 
             <a href='/'> Admin </a> 
-            <a href="/views/ajustes/" className='ml-auto hover:bg-slate-200 transition p-2 rounded-full'>
+            <a href="/views/ajustes/" 
+              className='ml-auto hover:bg-slate-200 transition p-2 rounded-full'>
               <FcSettings />
+            </a>
+            <a href="/views/estadisticas/"
+               className='hover:bg-slate-200 transition p-2 rounded-full'
+            >
+              <FaChartSimple className='text-slate-600' />
             </a>          
         </nav>
 

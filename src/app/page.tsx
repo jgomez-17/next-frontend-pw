@@ -3,16 +3,19 @@ import Consultar from "./temp/prueba/page";
 import Navbar from '@/app/views/navbar/page'
 import OrdenesDashboard from '@/app/views/dashboard/lista-ordenes/page'
 import PorPagar from '@/app/views/dashboard/ordenes-por-pagar/page'
+import Login from "./views/login/page";
 
 export default function Home() {
   return (
    <>
     <main>
-      {/* <Navbar /> */}
-      <OrdenesDashboard />
-      {/* <PorPagar /> */}
+        {/* <Login /> */}
+        {/* <Navbar /> */}
+        <OrdenesDashboard />
+        {/* <PorPagar /> */}
         {/* <Formulario /> */}
         {/* <Consultar /> */}
+
     </main>
    </>
   );

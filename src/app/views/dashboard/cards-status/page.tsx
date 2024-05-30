@@ -73,6 +73,44 @@ const CardsStats: React.FC<CardsStatsProps> = ({
          </ul>
        </section>
 
+
+        // <ul className="flex w-11/12 m-auto flex-wrap justify-between items-center gap-1">
+        //     <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+        //         <a href="#">
+        //             En espera
+        //         </a>
+        //         <p> {numeroOrdenesEnEspera} </p>
+        //         <IoCarSportSharp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
+
+        //     </li>
+        //     <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+        //         <a href="">
+        //             Por pagar
+        //         </a>
+        //         <p> {numeroOrdenesPorPagar} </p>
+        //         <MdOutlinePayment className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
+
+        //     </li>
+        //     <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+        //         <a href="">
+        //             Terminadas
+        //         </a>
+        //         <p> {numeroOrdenesHoy} </p>
+        //         <MdDoneAll className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
+        //     </li>
+        //     <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+        //         <a href="">
+        //             Total vendido hoy
+        //         </a>
+        //         <p> {new Intl.NumberFormat("es-CO", {
+        //              style: "currency",
+        //              currency: "COP",
+        //              minimumFractionDigits: 0,
+        //            }).format(totalRecaudado)} 
+        //         </p>
+        //         <FaArrowTrendUp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
+        //     </li>
+        // </ul>
   );
 };
 
