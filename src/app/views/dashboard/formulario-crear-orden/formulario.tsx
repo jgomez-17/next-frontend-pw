@@ -98,7 +98,7 @@ const Formulario: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = tr
     setError('');
   } catch (error: any) {
     setError(error.message);
-    message.error('No hay ordenes previas relacionadas a este vehiculo')
+    message.warning('No hay ordenes previas relacionadas a este vehiculo')
     setOrdenes([]);
     setPlaca(verifyplaca);
     setMarca('');

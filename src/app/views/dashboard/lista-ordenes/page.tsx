@@ -3,16 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { message, Modal, Select, Button } from "antd";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 // import { Button } from "@/components/ui/button";
-import { IoCarSportSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { MdOutlinePayment } from "react-icons/md"; //icon ordenes por pagar
@@ -24,6 +16,7 @@ import { IoClose } from "react-icons/io5";
 
 import Drawerform from "@/app/views/dashboard/formulario-crear-orden/formulario";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
+import CardsStats from "../cards-status/page";
 
 
 const { Option } = Select;
@@ -260,58 +253,12 @@ const OrdenesDashboard = () => {
       <nav className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 ">
         <Drawerform onOrderCreated={fetchOrdenesEnEspera} />
       </nav>
-      <section style={{ fontFamily: 'Overpass Variable',}} className="z-10 w-11/12 mt-2 m-auto mb-8">
-        <ul className="flex flex-wrap justify-between items-center gap-1">
-          <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="" className=" font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
-              En espera
-              <span className="flex items-center justify-between bottom-0">
-                <p className="text-3xl max-md:text-2xl font-bold">
-                  {numeroOrdenesEnEspera}
-                </p>
-                <IoCarSportSharp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </span>
-            </a>
-          </li>
-          <li className=" text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="/views/dashboard/ordenes-por-pagar" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
-              Por pagar
-              <span className="flex items-center justify-between bottom-0">
-                <p className="text-3xl max-md:text-2xl font-bold">
-                 {numeroOrdenesPorPagar} 
-                </p>
-                <MdOutlinePayment className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </span>
-            </a>
-          </li>
-          <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="/views/dashboard/ordenes-terminadas" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
-              Terminadas
-              <span className="flex items-center justify-between bottom-0">
-                <p className="text-3xl max-md:text-2xl font-bold">
-                   {numeroOrdenesHoy} 
-                </p>
-                <MdDoneAll className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </span>
-            </a>
-          </li>
-          <li className="text-[0.95rem] shadow-md hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-            <a href="" className="font-medium text-sm max-md:text-xs max-md:font-normal flex flex-col gap-14 md:gap-16">
-              Total Vendido Hoy
-              <span className="flex items-center justify-between bottom-0">
-                <p className="text-3xl max-md:text-2xl font-bold"> 
-                {new Intl.NumberFormat("es-CO", {
-                    style: "currency",
-                    currency: "COP",
-                    minimumFractionDigits: 0,
-                  }).format(totalRecaudado)}
-                </p>
-                <FaArrowTrendUp className="text-gray-800/60 -translate-y-10 -translate-x-2 max-md:text-3xl text-5xl opacity-30" />
-              </span>
-            </a>
-          </li>
-        </ul>
-      </section>
+      <CardsStats
+        numeroOrdenesEnEspera={numeroOrdenesEnEspera}
+        numeroOrdenesHoy={numeroOrdenesHoy}
+        numeroOrdenesPorPagar={numeroOrdenesPorPagar}
+        totalRecaudado={totalRecaudado}
+      />
       <Table style={{ fontFamily: 'Overpass Variable',}} className=" w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className="">
