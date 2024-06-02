@@ -6,10 +6,11 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa6";
-import Drawerform from "@/app/views/dashboard/formulario-crear-orden/formulario";
+import Drawerform from "@/app/temp/formulario-crear-orden/formulario";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import CardsStats from "../cards-status/page";
 import OrdenesEnCurso from "../ordenes-en-curso/page";
+import NewForm from "@/app/views/dashboard/new-formulario/page";
 
 
 const { Option } = Select;
@@ -241,8 +242,10 @@ const OrdenesDashboard = () => {
 
   return (
     <> 
-      <nav className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 ">
-        <Drawerform onOrderCreated={fetchOrdenesEnEspera} />
+      <nav 
+        className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 "
+      >
+        <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
       </nav>
       <CardsStats
         numeroOrdenesEnEspera={numeroOrdenesEnEspera}
@@ -250,6 +253,7 @@ const OrdenesDashboard = () => {
         numeroOrdenesPorPagar={numeroOrdenesPorPagar}
         totalRecaudado={totalRecaudado}
       />
+
       <Table style={{ fontFamily: 'Overpass Variable',}} className=" w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className="">

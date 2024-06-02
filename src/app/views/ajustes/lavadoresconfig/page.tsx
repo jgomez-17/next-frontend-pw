@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import { IoPersonAdd } from "react-icons/io5";
-
+import { TbArrowsExchange } from "react-icons/tb";
 
 interface Lavador {
   id: number;
@@ -98,32 +98,85 @@ const Page = () => {
     }
   };
 
+  //Funcion para cambiar el estado del lavador a inactivo
+  const cambiarEstadoLavador = (lavadorId: number) => {
+
+    fetch("http://localhost:4000/api/lavadores/cambiarestadolavador", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        lavadorId: lavadorId,
+        newStatus: "0",
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          message.success("Lavador inactivo");
+          fetchLavadores();
+        } else {
+          throw new Error("Error al actualizar el estado");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el estado:", error);
+        message.error("Error al actualizar el estado");
+      });
+  };
+
+  //Funcion para cambiar el estado del lavador a activo
+  const cambiarEstadoLavador2 = (lavadorId: number) => {
+
+    fetch("http://localhost:4000/api/lavadores/cambiarestadolavador", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        lavadorId: lavadorId,
+        newStatus: "1",
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          message.success("Lavador activo");
+          fetchLavadores();
+        } else {
+          throw new Error("Error al actualizar el estado de la orden");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el estado de la orden:", error);
+        message.error("Error al actualizar el estado de la orden");
+      });
+  };
 
   return (    
     <>
       <section style={{ fontFamily: 'Overpass Variable',}} className='mt-20 max-md:p-5 md:ml-10 '>
       <Dialog>
-        <nav className='flex max-md:w-full w-[44%] justify-between items-center'>
-        <h1 className='w-max flex font-medium'>Lavadores</h1>
+        <nav className='flex max-md:w-full m-auto w-11/12 justify-between items-center'>
           <DialogTrigger className=' bg-black transition hover:bg-gray-600 px-3 py-1.5 rounded text-white'>
             <IoPersonAdd className='text-lg' />
           </DialogTrigger>
+        <h1 className='w-max flex font-bold text-lg'>Lavadores</h1>
         </nav>
-      <table className='mt-5 p-3 rounded'>
+      <table className='mt-10 p-3 rounded m-auto'>
         <thead>
-          <tr className=' bg-slate-50'>
-            <th className='w-14 text-left p-1 border-b'>ID</th>
-            <th className='w-44 text-left p-1 border-b'>Nombre</th>
-            <th className='w-36 text-left p-1 border-b'>Estado</th>
+          <tr>
+            <th className='w-14 text-left p-1 border-b hidden'>ID</th>
+            <th className='w-44 text-left px-5 p-1 border-b'>Nombre</th>
+            <th className='w-36 text-left p-1 border-b'>Activo</th>
             <th className='w-36 text-left p-1 border-b'></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className=''>
           {lavadores.map(lavador => (
             <tr className=' rounded-xl text-sm' key={lavador.id}>
-              <td className='p-1 border-b'>{lavador.id}</td>
-              <td className='p-1 border-b'>{lavador.nombre}</td>
-              <td className='p-1 border-b'>{lavador.activo === "1" ? "Activo" : "Inactivo"}</td>
+              <td className='p-1 border-b hidden'>{lavador.id}</td>
+              <td className='p-1 border-b px-5 capitalize'>{lavador.nombre}</td>
+              <td className='p-1 border-b'>{lavador.activo === "1" ? "Si" : "No"}</td>
               <td className='p-1 border-b'>
                 <Button 
                   onClick={() => eliminarLavador(lavador.id)} 
@@ -131,6 +184,21 @@ const Page = () => {
                   > 
                   <MdOutlineDeleteOutline className='text-lg text-red-600' />
                 </Button>
+                {lavador.activo === "1" ? (
+                    <Button 
+                      variant={'ghost'}
+                      onClick={() => cambiarEstadoLavador(lavador.id)}  
+                    >
+                      <TbArrowsExchange className='text-[20px]' />
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant={'ghost'}
+                      onClick={() => cambiarEstadoLavador2(lavador.id)}
+                    >
+                      <TbArrowsExchange className='text-green-500 text-[20px]' />
+                    </Button>
+                  )}
               </td>
             </tr>
           ))}

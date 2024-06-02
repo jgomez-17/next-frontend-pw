@@ -30,7 +30,6 @@ const EstadisticasPage: React.FC = () => {
             <nav className='flex w-11/12 m-auto justify-between'>
                 <h1 className='font-bold'>Estadísticas</h1>
                 <form onSubmit={handleSubmit} className='flex'>
-                    <p className=' mx-6'>Filtrar</p>
                     <label>
                         Mes:
                         <select className='mx-2 rounded bg-slate-100' value={mesSeleccionado} onChange={handleChangeMes}>

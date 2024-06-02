@@ -5,7 +5,6 @@ import { CgRowFirst } from "react-icons/cg";
 import { FcSettings } from "react-icons/fc";
 import { FaChartSimple } from "react-icons/fa6";
 
-
   
 const page = () => {
   return (
@@ -23,7 +22,8 @@ const page = () => {
                className='hover:bg-slate-200 transition p-2 rounded-full'
             >
               <FaChartSimple className='text-slate-600' />
-            </a>          
+            </a>
+          
         </nav>
 
         {/* <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>

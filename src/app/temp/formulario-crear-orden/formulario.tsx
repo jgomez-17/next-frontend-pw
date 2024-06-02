@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, message } from 'antd';
@@ -83,13 +81,9 @@ const Formulario: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = tr
       setMarca(primeraOrden.vehiculo.marca);
       setTipo(primeraOrden.vehiculo.tipo);
       setColor(primeraOrden.vehiculo.color);
-      // setLlaves(primeraOrden.vehiculo.llaves ? 'Si' : 'No');
-      // setObservaciones(primeraOrden.observaciones);
       setNombre(primeraOrden.cliente.nombre);
       setCelular(primeraOrden.cliente.celular);
       setCorreoCliente(primeraOrden.cliente.correo);
-
-      // Actualiza cualquier otro estado según sea necesario
     } 
     
     // setOrdenes(data.ordenes);
@@ -210,11 +204,12 @@ const Formulario: React.FC<DrawerformProps> = ({ onOrderCreated, showButton = tr
     setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
   }, [tipo]);
   
+  // Calcula el costo de servicio y con el descuento
   const costoServicios: number = servicios.reduce((total, servicio) => {
     return total + servicio.costo;
   }, 0);
   
-  const costoConDescuento: number = costoServicios - descuento; // Calcula el costo con el descuento
+  const costoConDescuento: number = costoServicios - descuento; 
 
   // Manejar la adición de un servicio seleccionado de un solo nombre
   const handleAgregarServicio = () => {
@@ -327,7 +322,7 @@ const handleSubmit = async (event: React.FormEvent) => {
       console.error('Error en la solicitud:', error);
       message.error('Error en la solicitud')
     }
-  };
+};
 
   return (
     <>
