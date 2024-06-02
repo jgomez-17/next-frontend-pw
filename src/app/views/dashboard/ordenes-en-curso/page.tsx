@@ -40,7 +40,7 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
     ordenesEnCurso.map((orden: Orden) => (
       <TableRow key={orden.id} className="text-[12px]">
         <TableCell className="max-md:hidden px-4 font-bold w-20 p-2">{orden.id}</TableCell>
-        <TableCell className="p-1 max-md:text-center">
+        <TableCell className="p-1">
           <section>
             <p className="font-semibold flex flex-col capitalize">
               {orden.cliente.nombre}
@@ -48,7 +48,7 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
             <p className="">{orden.cliente.celular}</p>
           </section>
         </TableCell>
-        <TableCell className="p-1 max-md:text-center">
+        <TableCell className="p-1">
           <p className="w-full font-semibold">
             {orden.vehiculo.placa}
           </p>
@@ -61,8 +61,8 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
             {orden.vehiculo.llaves} <p>dejó llaves</p>
           </span>
         </TableCell>
-        <TableCell className="px-1 py-3 max-md:text-center ">
-        <section className="flex items-center justify-between max-md:flex-col">
+        <TableCell className="px-1 py-3">
+        <section className="flex justify-between max-md:flex-col">
             <p className="font-bold flex flex-col">
               {new Intl.NumberFormat("es-CO", {
                 style: "currency",
@@ -73,33 +73,37 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
           </section>
           <p className="max-md:hidden">{orden.servicio.nombre_servicios}</p>
         </TableCell>
-        <TableCell className="my-auto gap-4 mt-2 md:mx-10 flex text-xs">
-          <section className="my-auto max-md:hidden">
-          {orden.estado === "en curso" ? (
-              <Button
-                  className="flex items-center font-medium m-auto gap-2 text-xs border bg-white"
-                  onClick={() => {
-                    actualizarEstadoOrden3(orden.id);
-                  }}
-                >
-                Finalizar
-              <FaStop className=" " />
-            </Button>
-          ) : (
-            <p>La orden está en otro estado</p>
-          )}
+        <TableCell className="text-xs">
+          <section className="flex m-auto w-max gap-7 text-left max-md:hidden">
+              <span onClick={(e) => e.stopPropagation()}>
+                  <DetallesOrden orden={orden} />
+              </span>
+              {orden.estado === "en curso" ? (
+                  <Button
+                      danger
+                      className="flex items-center font-medium m-auto gap-2 text-xs border bg-white"
+                      onClick={() => {
+                        actualizarEstadoOrden3(orden.id);
+                      }}
+                    >
+                    Finalizar
+                  <FaStop className=" " />
+                </Button>
+              ) : (
+                <p>La orden está en otro estado</p>
+              )}
           </section>
           <DropdownMenu>
-            <DropdownMenuTrigger className="max-md:m-auto">
+            <DropdownMenuTrigger className="max-md:m-auto md:hidden">
               <BsThreeDotsVertical className=" text-2xl" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>
+              <DropdownMenuItem className=" max-md:hidden">
                   <Button 
                     onClick={() => cancelarOrden(orden.id)} 
                     type="link"
                     title="Cancelar orden"
-                    className="text-xs max-md:hidden text-red-600 font-medium"
+                    className="text-xs text-red-600 font-medium"
                   >
                     Cancelar orden
                 </Button>

@@ -7,7 +7,8 @@ import { Button, Form, message } from 'antd';
 import { IoChevronBack } from "react-icons/io5";
 import { GrFormNext } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa";
-
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const onSearch = (value: string) => {
     console.log('search:', value);
@@ -298,6 +299,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             message.success('Orden generada')
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
+            handleGenerarFactura();
             // onOrderCreated();
             // onClose();
             
@@ -307,6 +309,46 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           message.error('Error en la solicitud')
         }
     };
+
+    //Generar factura
+    const handleGenerarFactura = () => {
+      const doc = new jsPDF();
+  
+      // Encabezado
+      doc.setFontSize(18);
+      doc.text('Factura de Servicios', 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Cliente: ${nombre}`, 20, 30);
+      doc.text(`Celular: ${celular}`, 20, 35);
+      doc.text(`Correo: ${correoCliente}`, 20, 40);
+      doc.text(`Vehículo: ${marca} ${tipo} - ${color}`, 20, 45);
+      doc.text(`Placa: ${placa}`, 20, 50);
+      // doc.text(`Llaves: ${llaves}`, 20, 55);
+      doc.text(`Observaciones: ${observaciones}`, 20, 60);
+  
+      // Detalles de los servicios
+      const serviciosData = servicios.map(servicio => [servicio.nombre, formatCurrency(servicio.costo)]);
+      autoTable(doc, {
+        head: [['Servicio', 'Costo']],
+        body: serviciosData,
+        startY: 70,
+        didDrawPage: (data) => {
+          // Totales
+          const cursorY = data.cursor?.y ?? 70;
+        const totalY = cursorY + 10;
+        doc.text(`Subtotal: ${formatCurrency(costoServicios)}`, 20, totalY);
+        doc.text(`Descuento: ${formatCurrency(descuento)}`, 20, totalY + 5);
+        doc.text(`Total: ${formatCurrency(costoConDescuento)}`, 20, totalY + 10);
+        }
+      });
+  
+      doc.save(`Factura_${placa}.pdf`);
+    };
+
+    function formatCurrency(number: number) {
+      // Formatea el número con separadores de miles y redondeado a dos decimales
+      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, }).format(number);
+  }
 
 
   return (
@@ -429,8 +471,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="BMW">BMW</SelectItem>
                                 <SelectItem value="Audi">Audi</SelectItem>
+                                <SelectItem value="BMW">BMW</SelectItem>
                                 <SelectItem value="Cadillac">Cadillac</SelectItem>
                                 <SelectItem value="Citroen">Citroen</SelectItem>
                                 <SelectItem value="Chery">Chery</SelectItem>

@@ -8,7 +8,6 @@ import Login from "./views/login/page";
 export default function Home() {
   return (
    <>
-    <Navbar />
     <main>
         {/* <Login /> */}
         {/* <Navbar /> */}

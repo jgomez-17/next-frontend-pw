@@ -243,9 +243,17 @@ const OrdenesDashboard = () => {
   return (
     <> 
       <nav 
-        className=" gap-3 w-11/12 m-auto flex mt-[80px] mb-6 "
+        style={{ fontFamily: 'Overpass Variable',}}
+        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 "
       >
         <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
+        <Button
+          danger
+          type="text"
+          className=" px-10 h-9"
+        > 
+          Cierre 
+        </Button>
       </nav>
       <CardsStats
         numeroOrdenesEnEspera={numeroOrdenesEnEspera}
@@ -257,11 +265,11 @@ const OrdenesDashboard = () => {
       <Table style={{ fontFamily: 'Overpass Variable',}} className=" w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className="">
-            <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
-            <TableCell className="md:w-44 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
-            <TableCell className="md:w-36 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
-            <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
-            <TableCell className=""></TableCell>
+            <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
+            <TableCell className="md:w-44 px-1 max-md:w-28">Cliente</TableCell>
+            <TableCell className="md:w-36 px-1 max-md:w-28">Vehículo</TableCell>
+            <TableCell className="md:w-72 px-1 max-md:w-24">Servicio</TableCell>
+            <TableCell className="max-md:w-14"></TableCell>
             <TableCell className="hidden"> Estado</TableCell>
           </TableRow>
         </TableHeader>
@@ -270,7 +278,7 @@ const OrdenesDashboard = () => {
             ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px]">
                 <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 max-md:text-center border-b">
+                <TableCell className="p-1  border-b">
                   <section>
                     <p className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -278,7 +286,7 @@ const OrdenesDashboard = () => {
                     <p className="">{orden.cliente.celular}</p>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 max-md:text-center border-b">
+                <TableCell className="p-1 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
@@ -291,8 +299,8 @@ const OrdenesDashboard = () => {
                     {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-3 max-md:text-center border-b">
-                  <section className="flex items-center justify-between max-md:flex-col">
+                <TableCell className="px-1 py-3 border-b">
+                  <section className="flex max-md:flex-col">
                     <p className="font-bold flex flex-col">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
@@ -340,12 +348,12 @@ const OrdenesDashboard = () => {
                       <BsThreeDotsVertical className=" text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem className=" max-md:hidden">
                           <Button 
                             onClick={() => cancelarOrden(orden.id)} 
                             type="link"
                             title="Cancelar orden"
-                            className="text-xs max-md:hidden text-red-600 font-medium"
+                            className="text-xs text-red-600 font-medium"
                           >
                             Cancelar orden
                         </Button>
@@ -360,7 +368,7 @@ const OrdenesDashboard = () => {
                   </section>
                 </TableCell>
                 <TableCell className="hidden w-24">
-                  <p className="flex text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
+                  <p className="flex text-xs p-1 rounded-md text-blue-600"> 
                     {orden.estado} 
                   </p>
                 </TableCell>

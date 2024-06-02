@@ -28,7 +28,7 @@ const EstadisticasPage: React.FC = () => {
     return (
         <main style={{ fontFamily: 'Overpass Variable',}} className=' mt-20'>
             <nav className='flex w-11/12 m-auto justify-between'>
-                <h1 className='font-bold'>Estadísticas</h1>
+                
                 <form onSubmit={handleSubmit} className='flex'>
                     <label>
                         Mes:
@@ -54,6 +54,7 @@ const EstadisticasPage: React.FC = () => {
                     </label>
                     {/* <button type="submit">Buscar</button> */}
                 </form>
+                <h1 className='font-bold'>Estadísticas</h1>
             </nav>
             <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
         </main>

@@ -88,6 +88,7 @@ const Page = () => {
       if (response.ok) {
         fetchLavadores();
         setNombreLavador('');
+        setIsDialogOpen(false);
         message.success('Lavador registrado correctamente');
       } else {
         message.error('Error al registrar el lavador');
@@ -152,10 +153,12 @@ const Page = () => {
       });
   };
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
   return (    
     <>
       <section style={{ fontFamily: 'Overpass Variable',}} className='mt-20 max-md:p-5 md:ml-10 '>
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <nav className='flex max-md:w-full m-auto w-11/12 justify-between items-center'>
           <DialogTrigger className=' bg-black transition hover:bg-gray-600 px-3 py-1.5 rounded text-white'>
             <IoPersonAdd className='text-lg' />
@@ -227,9 +230,8 @@ const Page = () => {
         </DialogHeader>
       </DialogContent>
     </Dialog>
-    </section>
-
-      
+      </section>
+ 
     </>
   );
 };
