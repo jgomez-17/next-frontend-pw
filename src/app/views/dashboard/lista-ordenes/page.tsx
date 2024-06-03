@@ -247,13 +247,13 @@ const OrdenesDashboard = () => {
         className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 "
       >
         <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
-        <Button
-          danger
-          type="text"
-          className=" px-10 h-9"
+        <a
+          href="/views/planillas/cierre-diario"
+          className="ml-auto px-10 h-9"
         > 
           Cierre 
-        </Button>
+        </a>
+        <h1 className=""> Ordenes </h1>
       </nav>
       <CardsStats
         numeroOrdenesEnEspera={numeroOrdenesEnEspera}
@@ -278,7 +278,7 @@ const OrdenesDashboard = () => {
             ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px]">
                 <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1  border-b">
+                <TableCell className="p-1 border-b">
                   <section>
                     <p className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}

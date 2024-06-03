@@ -299,7 +299,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             message.success('Orden generada')
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
-            handleGenerarFactura();
+            // handleGenerarFactura();
             // onOrderCreated();
             // onClose();
             

@@ -56,6 +56,12 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             Orden
             <p> {orden.id}</p>
           </span>
+
+          <span className=" font-bold">
+            Fecha 
+            <p className=" font-normal">{orden.fechaOrden}</p>
+          </span>
+
           <span className="flex font-bold gap-2 my-1">
              Vehiculo:
             <p className=" font-normal"> {orden.vehiculo.tipo}</p>
@@ -80,6 +86,7 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.vehiculo.llaves}
             </p>
           </span>
+
           <span className="flex gap-2 font-bold my-1">
             Asignado a:
             <p className=" font-normal"> 

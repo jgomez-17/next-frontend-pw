@@ -95,7 +95,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
 
            </li>
            <li className="text-[0.95rem] shadow-lg hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-               <a href="" className='h-screen'>
+               <a href="/views/dashboard/ordenes-terminadas" className='h-screen'>
                   <span className='max-md:text-[13px] max-md:font-semibold'>
                     Terminadas
                   </span>
