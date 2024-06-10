@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import EstadisticasMensuales from './data/page';
+import Navbar from '@/app/views/navbar/page'
+
 
 const EstadisticasPage: React.FC = () => {
     const mesActual = new Date().getMonth() + 1; // Mes actual (enero es 0, por eso sumamos 1)
@@ -26,6 +28,8 @@ const EstadisticasPage: React.FC = () => {
     };
 
     return (
+        <>
+        <Navbar />
         <main style={{ fontFamily: 'Overpass Variable',}} className=' mt-20'>
             <nav className='flex w-11/12 m-auto justify-between'>
                 
@@ -58,6 +62,7 @@ const EstadisticasPage: React.FC = () => {
             </nav>
             <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
         </main>
+        </>
     );
 };
 

@@ -10,9 +10,11 @@ import { DaviplataIcon, NequiIcon } from '@/app/components/ui/iconos'
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
 import { FaRegCreditCard } from "react-icons/fa";
 import DetallesOrden from '../detalles-orden/detallesOrden';
+import Link from 'next/link';
+import Navbar from '@/app/views/navbar/page'
+
 
 interface Orden {
   id: number;
@@ -87,13 +89,16 @@ const OrdenesPorPagar = () => {
     
 
   return (
-    <section style={{ fontFamily: 'Overpass Variable',}} className='mt-[70px]'>
+    <>
+    <Navbar />
+    <section className='mt-20'>
       <nav className='rounded flex justify-between w-11/12 m-auto'>
-        <a
-          className='w-8 p-2 rounded-full font-medium transition-all bg-slate-100 hover:bg-slate-200 text-sm items-center gap-2'
+        <Link
+          className=' py-1 px-3 rounded-full flex font-medium transition-all bg-slate-100 hover:bg-slate-200 text-sm items-center gap-2'
           href="/views/dashboard/lista-ordenes">
           <MdOutlineArrowBackIos />
-        </a>
+          <span>Volver</span>
+        </Link>
         <span className=' font-medium p-1 text-[0.9rem]'> 
           Ordenes por pagar
         </span>
@@ -150,7 +155,7 @@ const OrdenesPorPagar = () => {
                           buttonStyle="solid"
                           className='flex w-max my-auto items-center'
                           onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
-                        >
+                          >
                           <Radio.Button title='Efectivo' className='flex items-center' value="Efectivo">
                             <GiMoneyStack className=' text-[18px]' />
                           </Radio.Button>
@@ -161,7 +166,7 @@ const OrdenesPorPagar = () => {
                           <Button
                             className='flex items-center h-8 text-xs bg-black text-white'
                             onClick={() => actualizarEstadoOrden(orden.id)}
-                          >
+                            >
                           Pagar
                           </Button>
                           <DropdownMenu>
@@ -183,6 +188,7 @@ const OrdenesPorPagar = () => {
         </TableBody>
       </Table>
     </section>
+    </>
   );
 };
 

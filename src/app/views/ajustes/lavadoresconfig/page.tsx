@@ -7,6 +7,8 @@ import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import { IoPersonAdd } from "react-icons/io5";
 import { TbArrowsExchange } from "react-icons/tb";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Lavador {
   id: number;
@@ -155,9 +157,36 @@ const Page = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const generatePDF = () => {
+    const input = document.getElementById('pdf-content');
+    if (input) {
+      html2canvas(input, { scale: 4 }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgWidth = 210;
+        const pageHeight = 295;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+  
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+  
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+  
+        pdf.save('planilla.pdf');
+      });
+    }
+  };
+
   return (    
     <>
-      <section style={{ fontFamily: 'Overpass Variable',}} className='mt-20 max-md:p-5 md:ml-10 '>
+      <section className='mt-20 max-md:p-5 md:ml-10 '>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <nav className='flex max-md:w-full m-auto w-11/12 justify-between items-center'>
           <DialogTrigger className=' bg-black transition hover:bg-gray-600 px-3 py-1.5 rounded text-white'>
@@ -165,7 +194,7 @@ const Page = () => {
           </DialogTrigger>
         <h1 className='w-max flex font-bold text-lg'>Lavadores</h1>
         </nav>
-      <table className='mt-10 p-3 rounded m-auto'>
+      <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
         <thead>
           <tr>
             <th className='w-14 text-left p-1 border-b hidden'>ID</th>
@@ -207,6 +236,10 @@ const Page = () => {
           ))}
         </tbody>
       </table>
+
+      <Button onClick={generatePDF}>
+        pdf
+      </Button>
 
       <DialogContent>
         <DialogHeader>

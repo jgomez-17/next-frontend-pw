@@ -4,25 +4,49 @@ import React from 'react'
 import { CgRowFirst } from "react-icons/cg";
 import { FcSettings } from "react-icons/fc";
 import { FaChartSimple } from "react-icons/fa6";
+import { FaHouse } from "react-icons/fa6";
+import Image from 'next/image';
+
+import Link from 'next/link';
 
   
 const page = () => {
+
   return (
     <>
-        <nav className='text-[1.3rem] font-bold z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'>
-            <button  className='sidenav-button'>
+        <nav className='text-[1.3rem] z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between max-md:px-5 shadow-sm bg-white-500/30'>
+          <article className='flex gap-2'>
+            <button  className='sidenav-button max-md:hidden' >
                 <CgRowFirst className='text-[2rem]' />
             </button> 
-            <a href='/'> Admin </a> 
-            <a href="/views/ajustes/" 
-              className='ml-auto hover:bg-slate-200 transition p-2 rounded-full'>
-              <FcSettings />
-            </a>
-            <a href="/views/estadisticas/"
-               className='hover:bg-slate-200 transition p-2 rounded-full'
-            >
-              <FaChartSimple className='text-slate-600' />
-            </a>
+            {/* <Link href='/' className='font-bold'> Admin </Link>  */}
+            <Link href="/" className=' text-[13.5px] max-md:text-lg flex gap-2 px-3 py-2 rounded-full items-center hover:bg-slate-200 font-medium'>
+              Inicio
+              <FaHouse className='text-slate-600 text-lg' />
+            </Link>
+          </article>
+          <article>
+          <Image
+              className='m-auto'
+              src="/prontowash-img.png"
+              alt='logo'
+              width={120}
+              height={200}
+            ></Image>
+          </article>
+            <article className='flex max-md:hidden'>
+              <Link href="/views/ajustes/" 
+                className='ml-auto flex px-3 gap-2 items-center text-xs font-medium hover:bg-slate-200 transition p-2 rounded-full'>
+                Ajustes
+                <FcSettings className='text-lg' />
+              </Link>
+              <Link href="/views/estadisticas/"
+                className='hover:bg-slate-200 gap-2 px-3 flex font-medium items-center text-xs transition p-2 rounded-full'
+              >
+                Estadisticas
+                <FaChartSimple className='text-slate-600 text-lg' />
+              </Link>
+            </article>
           
         </nav>
 

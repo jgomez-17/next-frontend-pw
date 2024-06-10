@@ -4,6 +4,8 @@ import React, {useState, useEffect} from 'react';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import Link from 'next/link';
+import Navbar from '@/app/views/navbar/page'
 
 
 interface Orden {
@@ -26,8 +28,8 @@ const page = () => {
   const [ordenesTerminadas, setOrdenesTerminadas] = useState<Orden[]>([]);
 
 
-    //Fetch de ordenes en espera
-    const fetchOrdenesTerminadas = () => {
+  //Fetch de ordenes en terminadas
+  const fetchOrdenesTerminadas = () => {
       fetch('http://localhost:4000/api/estados/terminadohoy')
         .then(response => response.json())
         .then(data => {
@@ -37,23 +39,25 @@ const page = () => {
         console.log('no hay ordenes en espera')
     };
   
-    useEffect(() => {
-      fetchOrdenesTerminadas();  // Fetch initial data
-    }, []);
+  useEffect(() => {
+    fetchOrdenesTerminadas();  // Fetch initial data
+  }, []);
 
   return (
     <>
-      <div style={{ fontFamily: 'Overpass Variable',}} className='roundedflex-col flex justify-between w-11/12 m-auto mt-20'>
-        <a
-          className='w-8 p-2 rounded-full font-medium transition-all bg-slate-100 hover:bg-slate-200 text-sm items-center gap-2'
+      <Navbar />
+      <div className='roundedflex-col flex justify-between w-11/12 m-auto mt-20'>
+        <Link
+          className='flex px-3 py-1 rounded-full font-medium transition-all bg-slate-100 hover:bg-slate-200 text-sm items-center gap-2'
           href="/views/dashboard/lista-ordenes">
           <MdOutlineArrowBackIos />
-        </a>
+          <span className='mt-1'>Volver</span>
+        </Link>
         <span className=' font-medium pt-1 text-[0.9rem]'>
           Todas las ordenes de hoy
         </span>
       </div>
-      <Table style={{ fontFamily: 'Overpass Variable',}} className=" w-11/12 m-auto mt-5 ">
+      <Table className=" w-11/12 m-auto mt-5 ">
           <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
             <TableRow className="">
               <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
@@ -105,7 +109,7 @@ const page = () => {
                     <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
                   </TableCell>
                   <TableCell className="w-24 border-b">
-                    <span className=" text-center text-xs p-1 rounded-md bg-blue-600/5 text-blue-600"> 
+                    <span className="capitalize text-center text-xs p-1 rounded-md bg-gray-600/5 text-black"> 
                       {orden.estado} 
                     </span>
                   </TableCell>

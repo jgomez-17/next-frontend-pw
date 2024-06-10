@@ -299,7 +299,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             message.success('Orden generada')
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
-            // handleGenerarFactura();
+            handleGenerarFactura();
             // onOrderCreated();
             // onClose();
             
@@ -313,37 +313,70 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     //Generar factura
     const handleGenerarFactura = () => {
       const doc = new jsPDF();
-  
+    
+      doc.setFont('times'); // Tipo de letra
+      doc.setFontSize(10); // Tamaño de letra
+      doc.setTextColor('#333'); // Color de texto
+    
+      // Obtener la fecha actual
+      const fechaActual = new Date();
+      const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
+    
       // Encabezado
       doc.setFontSize(18);
-      doc.text('Factura de Servicios', 20, 20);
+      doc.text('Factura', 20, 20);
+    
+      // Encabezado de los datos del cliente
       doc.setFontSize(12);
-      doc.text(`Cliente: ${nombre}`, 20, 30);
-      doc.text(`Celular: ${celular}`, 20, 35);
-      doc.text(`Correo: ${correoCliente}`, 20, 40);
-      doc.text(`Vehículo: ${marca} ${tipo} - ${color}`, 20, 45);
-      doc.text(`Placa: ${placa}`, 20, 50);
-      // doc.text(`Llaves: ${llaves}`, 20, 55);
-      doc.text(`Observaciones: ${observaciones}`, 20, 60);
-  
+      doc.text(`Fecha: ${fechaFormateada}`, 150, 22); // Mostrar la fecha
+
+      doc.setFontSize(13);
+      doc.text(`Facturar a:`, 20, 40)
+
+      doc.setFontSize(10);
+      doc.text(`${nombre}`, 20, 46);
+      doc.text(`${celular}`, 20, 52);
+    
+      // Encabezado de los datos del vehículo
+      doc.setFontSize(13);
+      doc.text(`Vehículo: `, 150, 40); // Nueva columna
+      doc.setFontSize(10);
+      doc.text(`${marca} ${color}`, 150, 46)
+      doc.text(`Placa: ${placa}`, 150, 52); // Nueva columna
+    
+      // doc.text(`Llaves: ${llaves}`, 20, 55); // Puedes añadir más datos si es necesario
+      doc.text(`Observaciones: ${observaciones}`, 20, 70);
+    
       // Detalles de los servicios
       const serviciosData = servicios.map(servicio => [servicio.nombre, formatCurrency(servicio.costo)]);
+      
+      // Ajustar el ancho de la primera columna de la tabla
+      const columnStyles = {
+        0: { cellWidth: 100 }, // Ancho deseado para la primera columna
+        1: { cellWidth: 70 } // Ancho deseado para la segunda columna
+      };
+    
       autoTable(doc, {
-        head: [['Servicio', 'Costo']],
+        head: [['Servicio', 'Costo Unitario']],
         body: serviciosData,
-        startY: 70,
+        startY: 80, // Ajustar el startY para dejar espacio entre los datos y la tabla
+        margin: { left: 20 }, // Mueve la tabla a la derecha
+        columnStyles: columnStyles,
         didDrawPage: (data) => {
           // Totales
-          const cursorY = data.cursor?.y ?? 70;
-        const totalY = cursorY + 10;
-        doc.text(`Subtotal: ${formatCurrency(costoServicios)}`, 20, totalY);
-        doc.text(`Descuento: ${formatCurrency(descuento)}`, 20, totalY + 5);
-        doc.text(`Total: ${formatCurrency(costoConDescuento)}`, 20, totalY + 10);
+          const cursorY = data.cursor?.y ?? 80;
+          const totalY = cursorY + 10;
+          doc.text(`Subtotal: ${formatCurrency(costoServicios)}`, 20, totalY);
+          doc.text(`Descuento: ${formatCurrency(descuento)}`, 20, totalY + 5);
+          doc.text(`Total: ${formatCurrency(costoConDescuento)}`, 20, totalY + 10);
         }
       });
-  
+    
       doc.save(`Factura_${placa}.pdf`);
     };
+    
+    
+    
 
     function formatCurrency(number: number) {
       // Formatea el número con separadores de miles y redondeado a dos decimales
@@ -356,7 +389,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
         style={{fontFamily: 'Overpass Variable'}} 
-        className='flex items-center bg-black text-white py-2 pt-2.5 text-[13px] px-6 rounded-md' >
+        className='flex items-center bg-black text-white py-2 pt-2.5 text-xs px-6 rounded-full' >
             Nueva orden
     </SheetTrigger>
     <SheetContent
@@ -626,34 +659,6 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                   <fieldset className='flex max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
                       <section className='w-max gap-7 mt-0 rounded-md flex flex-col'>
-                      {/* <label>
-                      <span>Escoge tus servicios</span>
-                        <article className='flex w-max flex-row items-center gap-3'>
-                            <Select
-                              className='selectform w-[21rem]'
-                              showSearch  
-                              placeholder='Seleccionar'
-                              onChange={(value) => setServicioSeleccionado(value)}
-                              value={servicioSeleccionado}
-                              filterOption={filterOption} 
-                            >
-                              {Object.entries(preciosServicios).map(([nombreServicio, costo]) => (
-                                <Select.Option key={nombreServicio} value={`${nombreServicio} - $${costo}`}>
-                                  {nombreServicio} - ${costo.toLocaleString('es-CO')}
-                                </Select.Option>
-                              ))}
-                            </Select>
-                            <Button 
-                              className=' bg-white border-slate-200 rounded-lg border' 
-                              type="text" 
-                              title='Agregar'
-                              onClick={handleAgregarServicio}
-                            >
-                              <FaPlus />
-                            </Button>
-                        </article>
-                      </label> */}
-
                       <label>
                         <span> Servicios </span>
                         <div className='flex items-center gap-4'>
@@ -728,7 +733,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
                         <label className='ml-0 mt-5'>
                           <span className=''>
-                            Total
+                            Subtotal
                           </span>
                           <Input 
                               className='costo-servicios bg-transparent' 
@@ -741,7 +746,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
                         <label className='ml-0'>
                           <span>
-                            Total con descuento
+                            Total
                           </span>
                           <Input 
                               className='costo-con-descuentos bg-transparent' 
