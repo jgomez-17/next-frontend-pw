@@ -39,7 +39,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
       router.replace('/views/sin-acceso'); // Redireccionar a acceso denegado si el rol no es permitido
     }
 
-  }, [router, token, rol, children]);
+  }, [router, token, rol, children, checkAccess]);
 
   return <>{children}</>;
 };

@@ -50,7 +50,26 @@ const GenerarPlanilla = () => {
   const [totalSatelital, setTotalSatelital] = useState<number>(0); // Nuevo estado para total de "Satelital"
   const [totalSpa, setTotalSpa] = useState<number>(0); // Nuevo estado para total de "Satelital"
 
-
+  const calcularTotalesSeccion = () => {
+    let totalSpa = 0;
+    let totalSatelital = 0;
+  
+    lavadores.forEach(lavador => {
+      const nombreLavador = lavador.nombre;
+      const ordenes = ordenesTerminadas.filter(orden => orden.empleado.includes(nombreLavador));
+      const totalCosto = ordenes.reduce((acc, orden) => acc + (editableOrdenes[`${nombreLavador}-${orden.id}`] || 0), 0);
+  
+      if (lavador.seccion === "Satelital") {
+        totalSatelital += totalCosto;
+      } else {
+        totalSpa += totalCosto;
+      }
+    });
+  
+    setTotalSpa(totalSpa);
+    setTotalSatelital(totalSatelital);
+  };
+  
 
   useEffect(() => {
     fetchOrdenesTerminadasHoy();
@@ -89,7 +108,7 @@ const GenerarPlanilla = () => {
 
   useEffect(() => {
     calcularTotalesSeccion();
-  }, [editableOrdenes, lavadores]);
+  }, [editableOrdenes, lavadores, calcularTotalesSeccion]);
 
   const handleCostChange = (lavadorNombre: string, ordenId: number, value: number | null) => {
     if (value !== null) {
@@ -439,26 +458,6 @@ const GenerarPlanilla = () => {
       doc.save(`planilla_${formattedDate}.pdf`);
   };
 
-  const calcularTotalesSeccion = () => {
-    let totalSpa = 0;
-    let totalSatelital = 0;
-  
-    lavadores.forEach(lavador => {
-      const nombreLavador = lavador.nombre;
-      const ordenes = ordenesTerminadas.filter(orden => orden.empleado.includes(nombreLavador));
-      const totalCosto = ordenes.reduce((acc, orden) => acc + (editableOrdenes[`${nombreLavador}-${orden.id}`] || 0), 0);
-  
-      if (lavador.seccion === "Satelital") {
-        totalSatelital += totalCosto;
-      } else {
-        totalSpa += totalCosto;
-      }
-    });
-  
-    setTotalSpa(totalSpa);
-    setTotalSatelital(totalSatelital);
-  };
-  
 //inserta los totales para el acumulado
   const insertAcumulados = () => {
 

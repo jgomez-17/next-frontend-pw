@@ -20,8 +20,6 @@ const onSearch = (value: string) => {
 const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-
-
 interface Orden {
     id: number;
     fecha_orden: string;
@@ -196,7 +194,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
     useEffect(() => {
         setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
-    }, [tipo]);
+    }, [tipo, preciosServiciosPorTipo]);
 
     // Manejar la adición de un servicio seleccionado de un solo nombre
     const handleAgregarServicio = () => {

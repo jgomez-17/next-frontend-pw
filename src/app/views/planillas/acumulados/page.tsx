@@ -54,7 +54,7 @@ const AcumuladosComponent = () => {
         };
 
         fetchData();
-    }, []);
+    }, [currentMonth, currentYear]);
 
     const obtenerNombreDia = (fecha: string) => {
         try {

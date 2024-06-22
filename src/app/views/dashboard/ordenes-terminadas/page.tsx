@@ -24,7 +24,7 @@ interface Orden {
   empleado: string
 }
 
-  const page = () => {
+  const OrdenesTerminadas = () => {
     const [ordenesTerminadas, setOrdenesTerminadas] = useState<Orden[]>([]);
 
 
@@ -122,4 +122,4 @@ interface Orden {
   )
 }
 
-export default page
+export default OrdenesTerminadas
