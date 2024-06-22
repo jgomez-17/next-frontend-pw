@@ -9,7 +9,7 @@ import { FaPlay } from "react-icons/fa6";
 import Navbar from '@/app/views/navbar/page'
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import CardsStats from "../cards-status/cards-status";
-import OrdenesEnCurso from "../ordenes-en-curso/page";
+import OrdenesEnCurso from "../ordenes-en-curso/ordenes-en-curso";
 import NewForm from "@/app/views/dashboard/new-formulario/new-form";
 import Link from "next/link";
 import ProtectedRoute from "@/app/components/protectedRoute";
