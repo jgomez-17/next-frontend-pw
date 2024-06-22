@@ -8,7 +8,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa6";
 import Navbar from '@/app/views/navbar/page'
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
-import CardsStats from "../cards-status/page";
+import CardsStats from "../cards-status/cards-status";
 import OrdenesEnCurso from "../ordenes-en-curso/page";
 import NewForm from "@/app/views/dashboard/new-formulario/page";
 import Link from "next/link";
