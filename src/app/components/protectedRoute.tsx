@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { ReactNode } from 'react';
@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   const token = Cookies.get('token');
   const rol = Cookies.get('rol');
 
-  const checkAccess = (rol: string | undefined): boolean => {
+  const checkAccess = useCallback((rol: string | undefined): boolean => {
     // Si no se han definido roles permitidos, se permite el acceso
     if (allowedRoles.length === 0) {
       return true;
@@ -26,12 +26,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
 
     // Verificar si el rol actual está en la lista de roles permitidos
     return allowedRoles.includes(rol || '');
-  };
+  }, [allowedRoles]); // Dependencia de useCallback
 
   useEffect(() => {
-
     if (!token) {
-      router.replace('/login'); // Redireccionar al login si no hay token o rol
+      router.replace('/login'); // Redireccionar al login si no hay token
       return;
     }
 
@@ -39,7 +38,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
       router.replace('/views/sin-acceso'); // Redireccionar a acceso denegado si el rol no es permitido
     }
 
-  }, [router, token, rol, children, checkAccess]);
+  }, [router, token, rol, checkAccess]); // Dependencia de useEffect
 
   return <>{children}</>;
 };

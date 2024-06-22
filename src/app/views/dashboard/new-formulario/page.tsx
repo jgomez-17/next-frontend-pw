@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,8 @@ const onSearch = (value: string) => {
 
 const filterOption = (input: string, option?: { label: string; value: string }) =>
   (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+
 
 interface Orden {
     id: number;
@@ -193,8 +195,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     );
 
     useEffect(() => {
-        setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
-    }, [tipo, preciosServiciosPorTipo]);
+      setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
+    }, [tipo]);
 
     // Manejar la adición de un servicio seleccionado de un solo nombre
     const handleAgregarServicio = () => {
