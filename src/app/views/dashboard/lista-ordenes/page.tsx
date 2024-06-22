@@ -10,7 +10,7 @@ import Navbar from '@/app/views/navbar/page'
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import CardsStats from "../cards-status/cards-status";
 import OrdenesEnCurso from "../ordenes-en-curso/page";
-import NewForm from "@/app/views/dashboard/new-formulario/page";
+import NewForm from "@/app/views/dashboard/new-formulario/new-form";
 import Link from "next/link";
 import ProtectedRoute from "@/app/components/protectedRoute";
 import { ReloadIcon } from "@/app/components/ui/iconos";
