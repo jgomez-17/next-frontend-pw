@@ -57,7 +57,7 @@ const GenerarPlanilla = () => {
   }, []);
 
   const fetchOrdenesTerminadasHoy = () => {
-    fetch('http://localhost:4000/api/estados/terminadohoy')
+    fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
       .then(response => response.json())
       .then(data => {
         const ordenes = data.ordenes || [];
@@ -81,7 +81,7 @@ const GenerarPlanilla = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/lavadores/')
+    fetch('https://express-api-pw.onrender.com/api/lavadores/')
       .then(response => response.json())
       .then((data: any) => setLavadores(data.body || []))
       .catch(error => console.error('Error fetching data:', error));
@@ -468,7 +468,7 @@ const GenerarPlanilla = () => {
       servicios: numeroOrdenesHoy
     }
     
-    fetch('http://localhost:4000/api/acumulados/insertaracumulados', {
+    fetch('https://express-api-pw.onrender.com/api/acumulados/insertaracumulados', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

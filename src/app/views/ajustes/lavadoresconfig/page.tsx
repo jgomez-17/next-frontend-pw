@@ -26,7 +26,7 @@ const Page: React.FC = () => {
   const [nombreLavador, setNombreLavador] = useState('')
 
   const fetchLavadores = () => {
-    fetch('http://localhost:4000/api/lavadores/')
+    fetch('https://express-api-pw.onrender.com/api/lavadores/')
       .then(response => response.json())
       .then((data: { body: Lavador[] }) => {
         setLavadores(data.body);
@@ -53,7 +53,7 @@ const Page: React.FC = () => {
      }
 
     try {
-      const response = await fetch('http://localhost:4000/api/lavadores/', {
+      const response = await fetch('https://express-api-pw.onrender.com/api/lavadores/', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const Page: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:4000/api/lavadores', {
+      const response = await fetch('https://express-api-pw.onrender.com/api/lavadores', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const Page: React.FC = () => {
   //Funcion para cambiar el estado del lavador a inactivo
   const cambiarEstadoLavador = (lavadorId: number) => {
 
-    fetch("http://localhost:4000/api/lavadores/cambiarestadolavador", {
+    fetch("https://express-api-pw.onrender.com/api/lavadores/cambiarestadolavador", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +134,7 @@ const Page: React.FC = () => {
   //Funcion para cambiar el estado del lavador a activo
   const cambiarEstadoLavador2 = (lavadorId: number) => {
 
-    fetch("http://localhost:4000/api/lavadores/cambiarestadolavador", {
+    fetch("https://express-api-pw.onrender.com/api/lavadores/cambiarestadolavador", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

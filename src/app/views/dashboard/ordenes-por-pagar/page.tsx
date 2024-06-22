@@ -43,7 +43,7 @@ const OrdenesPorPagar = () => {
   }, []);
   
   const fetchOrdenesPorPagar = () => {
-    fetch('http://localhost:4000/api/estados/porpagar')
+    fetch('https://express-api-pw.onrender.com/api/estados/porpagar')
     .then(response => response.json())
     .then(data => {
       setOrdenesPorPagar(data.ordenes);
@@ -63,7 +63,7 @@ const OrdenesPorPagar = () => {
       return;
     }
     
-    fetch('http://localhost:4000/api/ordenes/actualizarestado2', {
+    fetch('https://express-api-pw.onrender.com/api/ordenes/actualizarestado2', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

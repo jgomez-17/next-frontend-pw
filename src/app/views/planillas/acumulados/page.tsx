@@ -34,7 +34,7 @@ const AcumuladosComponent = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/acumulados?year=${currentYear}&month=${currentMonth}`);
+                const response = await fetch(`https://express-api-pw.onrender.com/api/acumulados?year=${currentYear}&month=${currentMonth}`);
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos.');
                 }

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState} from 'react'
 import {
     Sheet,
@@ -33,14 +35,14 @@ const ResumenOrdenes = () => {
 
     //Fetch de ordenes en terminadas
     const fetchOrdenesTerminadas = () => {
-        fetch('http://localhost:4000/api/estados/terminadohoy')
+        fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
           .then(response => response.json())
           .then(data => {
             setOrdenesTerminadas(data.ordenes);
           })
           .catch(error => console.error('Error fetching data:', error));
           console.log('no hay ordenes en espera')
-      };
+    };
     
     useEffect(() => {
       fetchOrdenesTerminadas();  // Fetch initial data

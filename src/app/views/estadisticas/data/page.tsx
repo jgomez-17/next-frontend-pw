@@ -38,7 +38,7 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
     useEffect(() => {
         const fetchEstadisticas = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/estadisticas/${mes}/${ano}`);
+                const response = await fetch(`https://express-api-pw.onrender.com/api/estadisticas/${mes}/${ano}`);
                 if (!response.ok) {
                     throw new Error('Error al obtener las estadísticas');
                 }
@@ -94,7 +94,6 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
             borderWidth: 1
         }]
     };
-
 
     const diasVentasData = {
         labels: [

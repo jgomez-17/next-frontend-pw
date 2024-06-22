@@ -95,7 +95,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       }
 
       try {
-          const response = await fetch(`http://localhost:4000/api/vehiculos/placa/${verifyplaca}`);
+          const response = await fetch(`https://express-api-pw.onrender.com/api/vehiculos/placa/${verifyplaca}`);
           const data = await response.json();
 
           // Ahora solo tienes una orden en lugar de un array de ordenes
@@ -278,7 +278,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
         };
         
           try {
-             const responseOrdenes = await fetch('http://localhost:4000/api/ordenes', {
+             const responseOrdenes = await fetch('https://express-api-pw.onrender.com/api/ordenes', {
                method: 'POST',
                headers: {
                  'Content-Type': 'application/json'
@@ -385,7 +385,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
     function formatCurrency(number: number) {
       return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, }).format(number);
-  }
+    }
 
 
   return (

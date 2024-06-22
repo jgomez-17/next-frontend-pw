@@ -56,7 +56,7 @@ const OrdenesDashboard = () => {
 
   //Fetch lavadores
   const fetchLavadores = () => {
-    fetch('http://localhost:4000/api/lavadores/')
+    fetch('https://express-api-pw.onrender.com/api/lavadores/')
       .then(response => response.json())
       .then((data: { body: Lavador[] }) => {
         setLavadores(data.body);
@@ -70,7 +70,7 @@ const OrdenesDashboard = () => {
 
   //Fetch de ordenes en espera
   const fetchOrdenesEnEspera = () => {
-     fetch('http://localhost:4000/api/estados/enespera')
+     fetch('https://express-api-pw.onrender.com/api/estados/enespera')
       .then(response => response.json())
       .then(data => {
         setOrdenesEnEspera(data.ordenes);
@@ -86,7 +86,7 @@ const OrdenesDashboard = () => {
 
   //Fetch de ordenes en curso
   const fetchOrdenesEnCurso = () => {
-    fetch('http://localhost:4000/api/estados/encurso')
+    fetch('https://express-api-pw.onrender.com/api/estados/encurso')
       .then(response => response.json())
       .then(data => {
         setOrdenesEnCurso(data.ordenes);
@@ -102,7 +102,7 @@ const OrdenesDashboard = () => {
 
   //fech de las ordenes por pagar
   const fetchOrdenesPorPagar = () => {
-    fetch('http://localhost:4000/api/estados/porpagar')
+    fetch('https://express-api-pw.onrender.com/api/estados/porpagar')
     .then(response => response.json())
     .then(data => {
       setOrdenesPorPagar(data.ordenes);
@@ -119,7 +119,7 @@ const OrdenesDashboard = () => {
 
   //Fetch de las ordenes terminadas hoy
   const fetchOrdenesTerminadasHoy = () => {
-    fetch('http://localhost:4000/api/estados/terminadohoy')
+    fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
       .then(response => response.json())
       .then(data => {
         setOrdenesTerminadas(data.ordenes)
@@ -145,7 +145,7 @@ const OrdenesDashboard = () => {
 
     const employeesString = selectedEmployees.join(", ");
 
-    fetch("http://localhost:4000/api/ordenes/actualizarestado", {
+    fetch("https://express-api-pw.onrender.com/api/ordenes/actualizarestado", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const OrdenesDashboard = () => {
   //Funcion para actualizar estado a por pagar 
   const actualizarEstadoOrden3 = (orderId: number) => {
 
-    fetch("http://localhost:4000/api/ordenes/actualizarestado3", {
+    fetch("https://express-api-pw.onrender.com/api/ordenes/actualizarestado3", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -202,7 +202,7 @@ const OrdenesDashboard = () => {
 
   //funcion para cancelar la orden
   const cancelarOrden = (orderId: number) => {
-    fetch("http://localhost:4000/api/ordenes/cancelarorden", {
+    fetch("https://express-api-pw.onrender.com/api/ordenes/cancelarorden", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
