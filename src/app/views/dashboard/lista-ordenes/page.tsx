@@ -12,7 +12,8 @@ import CardsStats from "../cards-status/page";
 import OrdenesEnCurso from "../ordenes-en-curso/page";
 import NewForm from "@/app/views/dashboard/new-formulario/page";
 import Link from "next/link";
-
+import ProtectedRoute from "@/app/components/protectedRoute";
+import { ReloadIcon } from "@/app/components/ui/iconos";
 
 const { Option } = Select;
 
@@ -77,7 +78,6 @@ const OrdenesDashboard = () => {
       })
       .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesEnEspera(0)
-      console.log('no hay ordenes en espera')
   };
 
   useEffect(() => {
@@ -90,7 +90,6 @@ const OrdenesDashboard = () => {
       .then(response => response.json())
       .then(data => {
         setOrdenesEnCurso(data.ordenes);
-        console.log(data.ordenes)
         // setNumeroOrdenesEnEspera(data.numeroOrdenesEnEspera || 0);
       })
       .catch(error => console.error('Error fetching data:', error));
@@ -240,28 +239,37 @@ const OrdenesDashboard = () => {
     }));
   };
 
+  const reloadPage = () => {
+  window.location.reload();
+  };
+
+
 
   return (
     <>
-      <Navbar /> 
+    <ProtectedRoute>
+      <Navbar />
+
       <nav 
-        style={{ fontFamily: 'Overpass Variable',}}
+        style={{ fontFamily: 'Roboto',}}
         className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 "
       >
-        <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
-        {/* <a
-          href="/views/planillas/cierre-diario"
-          className="flex px-4 pb-2 transition pt-2.5 items-center text-sm bg-slate-200 hover:bg-slate-300 rounded"
-        > 
-          Cierre 
-        </a>   */}
 
-        <Link 
-          href="/views/planillas/cierre-diario2"
-          className="text-xs font-medium bg-slate-200 hover:bg-slate-100 py-1 pt-2 px-5 rounded-full"
-        >
-          Cierre
-        </Link>
+
+          <Button onClick={reloadPage} className=" border-none">
+            <ReloadIcon />
+          </Button>
+
+          <article className="flex items-center gap-4">
+          <Link 
+            href="/views/planillas/cierre-diario"
+            className="text-sm font-medium border hover:bg-slate-50 hover:border-transparent py-1.5 px-5 rounded-md max-md:hidden"
+          >
+            Cierre
+          </Link>
+          <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
+          </article>
+      
       </nav>
       <CardsStats
         numeroOrdenesEnEspera={numeroOrdenesEnEspera}
@@ -271,9 +279,9 @@ const OrdenesDashboard = () => {
       />
       
 
-      <Table className=" w-11/12 m-auto mt-4">
+      <Table className=" w-11/12 m-auto mt-4" style={{ fontFamily: 'Roboto'}}>
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
-          <TableRow className="">
+          <TableRow className=" text-sm">
             <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
             <TableCell className="md:w-44 px-1 max-md:w-28">Cliente</TableCell>
             <TableCell className="md:w-36 px-1 max-md:w-28">Vehículo</TableCell>
@@ -392,6 +400,7 @@ const OrdenesDashboard = () => {
           cancelarOrden={cancelarOrden}
         />
       </Table>
+      </ProtectedRoute>
     </>
   );
 };

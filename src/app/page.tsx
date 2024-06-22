@@ -1,22 +1,17 @@
-import Formulario from "./temp/formulario/page";
-import Consultar from "./temp/prueba/page";
-import Navbar from '@/app/views/navbar/page'
+'use client'
+
 import OrdenesDashboard from '@/app/views/dashboard/lista-ordenes/page'
-import PorPagar from '@/app/views/dashboard/ordenes-por-pagar/page'
-import Login from "./views/login/page";
+import ProtectedRoute from "./components/protectedRoute";
+
 
 export default function Home() {
   return (
    <>
-    <main>
-        {/* <Login /> */}
-        {/* <Navbar /> */}
-        <OrdenesDashboard />
-        {/* <PorPagar /> */}
-        {/* <Formulario /> */}
-        {/* <Consultar /> */}
-
-    </main>
+   <ProtectedRoute>
+      <main>
+          <OrdenesDashboard />
+      </main>
+   </ProtectedRoute>
    </>
   );
 }

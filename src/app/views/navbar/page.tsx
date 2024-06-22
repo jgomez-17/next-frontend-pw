@@ -1,54 +1,56 @@
 'use client'
 
-import React from 'react'
-import { CgRowFirst } from "react-icons/cg";
-import { FcSettings } from "react-icons/fc";
-import { FaChartSimple } from "react-icons/fa6";
-import { FaHouse } from "react-icons/fa6";
+import React, {useState, useEffect} from 'react'
 import Image from 'next/image';
-
+import { message } from 'antd';
 import Link from 'next/link';
+import { SettingsIcon, EstadisticasIcon, UsersIcon } from '@/app/components/ui/iconos';
+import { NavigationMenuDemo } from './logout/page';
 
   
 const page = () => {
 
+
   return (
     <>
-        <nav className='text-[1.3rem] z-50 gap-2 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between max-md:px-5 shadow-sm bg-white-500/30'>
-          <article className='flex gap-2'>
-            <button  className='sidenav-button max-md:hidden' >
-                <CgRowFirst className='text-[2rem]' />
-            </button> 
-            {/* <Link href='/' className='font-bold'> Admin </Link>  */}
-            <Link href="/" className=' text-[13.5px] max-md:text-lg flex gap-2 px-3 py-2 rounded-full items-center hover:bg-slate-200 font-medium'>
-              Inicio
-              <FaHouse className='text-slate-600 text-lg' />
+        <ul 
+          className='text-[1.3rem] z-50 gap-6 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between max-md:px-5 shadow-sm bg-white-500/30'
+          style={{ fontFamily: 'Roboto', }}
+        >
+          <article className='flex gap-4'>
+
+            <Link href="/">
+              <Image
+                className=' md:ml-8 flex pb-1'
+                src="/prontowash-img.png"
+                alt='logo'
+                width={130}
+                height={200}
+              ></Image>
+            </Link>
+
+          </article>
+
+          <article className='flex ml-auto max-md:hidden gap-2'>
+            <Link href="/views/clientes"
+                  className='flex px-3 rounded-full items-center text-sm gap-2 text-gray-700 hover:text-gray-500'
+            > 
+              <UsersIcon />              
+            </Link>
+            <Link href="/views/estadisticas/"
+                  className='text-gray-700 hover:text-gray-500 max-md:hidden gap-2 px-3 flex font-medium items-center text-sm transition p-1 rounded-full'
+            >
+                <EstadisticasIcon />
+            </Link>
+            <Link href="/views/ajustes/" 
+                  className='ml-auto max-md:hidden text-gray-700 hover:text-gray-500 flex px-3 gap-2 items-center text-sm font-medium transition rounded-full'>
+                <SettingsIcon />
             </Link>
           </article>
-          <article>
-          <Image
-              className='m-auto'
-              src="/prontowash-img.png"
-              alt='logo'
-              width={120}
-              height={200}
-            ></Image>
-          </article>
-            <article className='flex max-md:hidden'>
-              <Link href="/views/ajustes/" 
-                className='ml-auto flex px-3 gap-2 items-center text-xs font-medium hover:bg-slate-200 transition p-2 rounded-full'>
-                Ajustes
-                <FcSettings className='text-lg' />
-              </Link>
-              <Link href="/views/estadisticas/"
-                className='hover:bg-slate-200 gap-2 px-3 flex font-medium items-center text-xs transition p-2 rounded-full'
-              >
-                Estadisticas
-                <FaChartSimple className='text-slate-600 text-lg' />
-              </Link>
-            </article>
-          
-        </nav>
+          <NavigationMenuDemo />
+
+
+        </ul>
 
         {/* <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>
             <Modal />
@@ -56,6 +58,8 @@ const page = () => {
               <GrUpdate />
             </button> 
         </nav> */}
+
+
     </>
   )
 }

@@ -7,6 +7,7 @@ import { Button, Form, message } from 'antd';
 import { IoChevronBack } from "react-icons/io5";
 import { GrFormNext } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa";
+import { PlusIcon } from '@/app/components/ui/iconos';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -79,57 +80,67 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
         setSeccion(seccion - 1);
     };
 
-    //Funcion para consultar orden mediante placa
+    // Función para consultar orden mediante placa
     const consultarOrden = async () => {
-        if (!verifyplaca) {
+      if (!verifyplaca) {
           setError('Por favor, ingresa una placa.');
-          message.error('Por favor, ingresa una placa.')
+          message.error('Por favor, ingresa una placa.');
           setOrdenes([]);
           return;
-        }
-    
-        if (verifyplaca.length !== 7) {
-          message.warning("Por favor ingresa una placa válida");
+      }
+
+      if (verifyplaca.length !== 7) {
+          message.warning('Por favor ingresa una placa válida');
           return;
-        }
-    
-        try {
+      }
+
+      try {
           const response = await fetch(`http://localhost:4000/api/vehiculos/placa/${verifyplaca}`);
-    
           const data = await response.json();
-          const ordenesEncontradas = data.ordenes;
-          
-        if (ordenesEncontradas.length > 0) {
-          // Si se encontraron órdenes, actualiza los estados del formulario con los datos de la primera orden encontrada
-          const primeraOrden = ordenesEncontradas[0];
-          setPlaca(primeraOrden.vehiculo.placa);
-          setMarca(primeraOrden.vehiculo.marca);
-          setTipo(primeraOrden.vehiculo.tipo);
-          setColor(primeraOrden.vehiculo.color);
-          setNombre(primeraOrden.cliente.nombre);
-          setCelular(primeraOrden.cliente.celular);
-          setCorreoCliente(primeraOrden.cliente.correo);
-        } 
-        
-        // setOrdenes(data.ordenes);
-        avanzarSeccion();
-        message.success('Orden encontrada')
-        setError('');
+
+          // Ahora solo tienes una orden en lugar de un array de ordenes
+          const ordenEncontrada = data.orden;
+
+          if (ordenEncontrada) {
+              // Si se encontró una orden, actualiza los estados del formulario con los datos de la orden encontrada
+              setPlaca(ordenEncontrada.vehiculo.placa);
+              setMarca(ordenEncontrada.vehiculo.marca);
+              setTipo(ordenEncontrada.vehiculo.tipo);
+              setColor(ordenEncontrada.vehiculo.color);
+              setNombre(ordenEncontrada.cliente.nombre);
+              setCelular(ordenEncontrada.cliente.celular);
+              setCorreoCliente(ordenEncontrada.cliente.correo);
+              message.success('Orden encontrada');
+          } else {
+              message.info('No hay ordenes previas relacionadas a este vehiculo');
+              setOrdenes([]);
+              setPlaca(verifyplaca);
+              setMarca('');
+              setTipo('');
+              setColor('');
+              setNombre('');
+              setCelular('');
+              setCorreoCliente('');
+          }
+
+          avanzarSeccion();
+          setError('');
       } catch (error: any) {
-        setError(error.message);
-        message.warning('No hay ordenes previas relacionadas a este vehiculo')
-        setOrdenes([]);
-        setPlaca(verifyplaca);
-        setMarca('');
-        setTipo('');
-        setColor('');
-        setNombre('');
-        setCelular('');
-        setCorreoCliente('');
-        
-        avanzarSeccion();
-        }
-      }; 
+          setError(error.message);
+          message.warning('No hay ordenes previas relacionadas a este vehiculo');
+          setOrdenes([]);
+          setPlaca(verifyplaca);
+          setMarca('');
+          setTipo('');
+          setColor('');
+          setNombre('');
+          setCelular('');
+          setCorreoCliente('');
+          
+          avanzarSeccion();
+      }
+    };
+
     
     const handleRefresh = () => {
       setVerifyPlaca('');
@@ -248,7 +259,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
         }
       
         // Objeto de datos a enviar
-         const dataOrdens = {
+        const dataOrdens = {
           placa: placa,
           marca: marca,
           tipo: tipo,
@@ -299,11 +310,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             message.success('Orden generada')
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
-            handleGenerarFactura();
-            // onOrderCreated();
-            // onClose();
-            
-    
+            handleGenerarFactura();            
+  
         } catch (error) {
           console.error('Error en la solicitud:', error);
           message.error('Error en la solicitud')
@@ -330,7 +338,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       doc.setFontSize(12);
       doc.text(`Fecha: ${fechaFormateada}`, 150, 22); // Mostrar la fecha
 
-      doc.setFontSize(13);
+      doc.setFontSize(10);
       doc.text(`Facturar a:`, 20, 40)
 
       doc.setFontSize(10);
@@ -338,7 +346,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       doc.text(`${celular}`, 20, 52);
     
       // Encabezado de los datos del vehículo
-      doc.setFontSize(13);
+      doc.setFontSize(10);
       doc.text(`Vehículo: `, 150, 40); // Nueva columna
       doc.setFontSize(10);
       doc.text(`${marca} ${color}`, 150, 46)
@@ -374,12 +382,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     
       doc.save(`Factura_${placa}.pdf`);
     };
-    
-    
-    
 
     function formatCurrency(number: number) {
-      // Formatea el número con separadores de miles y redondeado a dos decimales
       return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, }).format(number);
   }
 
@@ -388,9 +392,10 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
-        style={{fontFamily: 'Overpass Variable'}} 
-        className='flex items-center bg-black text-white py-2 pt-2.5 text-xs px-6 rounded-full' >
-            Nueva orden
+        style={{fontFamily: 'Roboto'}} 
+        className='flex gap-1 ml-auto items-center bg-black text-white font-medium border border-gray-700 hover:bg-transparent hover:text-blue-900 hover:font-medium hover:border-blue-900 py-1 text-sm px-5 rounded-md' >
+        Nueva orden
+        <PlusIcon />
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
@@ -410,11 +415,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                 
                 {seccion === 1 && (
                     <>
-                    <section className='bg-slate-400/5 max-md:w-full w-1/2 m-auto p-6 rounded'>
+                    <section className='bg-slate-400/5 max-md:w-full w-1/2 m-auto p-6 rounded-md'>
                         <span className='ml-1 text-zinc-500 font-medium'> Ingresar placa </span>
                         <article className='flex items-center'>
                         <Input 
-                            className='uppercase w-36' 
+                            className='uppercase w-36 h-8' 
                             type="text" 
                             value={verifyplaca} 
                             onChange={(e) => {
@@ -625,6 +630,19 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         }} 
                         maxLength={10}             />
                     </label>
+                    {/* <label>
+                      <span className='ml-1 text-zinc-500'>Celular</span>
+                      <Input 
+                        className='input max-md:w-40'
+                        type="text" 
+                        value={celular} 
+                        onChange={(e) => {
+                          const formattedValue = e.target.value.replace(/\D/g, '');
+                          const trimmedValue = formattedValue.slice(0, 10);
+                          setCelular(trimmedValue);
+                        }} 
+                        maxLength={10}             />
+                    </label> */}
                     <label>
                         <span className='ml-1 text-zinc-500'>Correo</span>
                         <Input 

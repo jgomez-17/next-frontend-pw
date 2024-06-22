@@ -120,7 +120,7 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
     };
 
     return (
-        <main style={{ fontFamily: 'Overpass Variable' }} className='w-11/12 flex flex-wrap gap-16 m-auto mt-10'>
+        <main style={{ fontFamily: 'Roboto' }} className='w-11/12 flex flex-wrap gap-16 m-auto mt-10'>
             <div className="chart-container" style={{ width: '300px', height: '200px' }}>
                 <Bar data={totalOrdenesData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Total de Ordenes' } } }} />
             </div>

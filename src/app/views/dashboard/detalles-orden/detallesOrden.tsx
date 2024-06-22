@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";  // Importación correcta de la localización
 
 interface Orden {
   id: number;
@@ -14,7 +16,7 @@ interface Orden {
   };
   servicio: { nombre_servicios: string; costo: string };
   estado: string;
-  empleado: string
+  empleado: string;
 }
 
 interface Props {
@@ -32,68 +34,71 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     setVisible(false);
   };
 
+  // Formatear la fecha y hora en formato de 12 horas
+  const formattedDate = format(new Date(orden.fechaOrden), "PPPP 'a las' hh:mm a", { locale: es });
+
   return (
     <>
       <Button
         onClick={showModal}
         className="text-xs text-black font-medium"
         type="link"
-        >
-        Ver mas detalles
+      >
+        Ver más detalles
       </Button>
       <Modal
         title={``}
         visible={visible}
         onCancel={handleCancel}
         footer={null}
-        style={{fontFamily: 'Overpass Variable', margin: 'auto'}}
+        style={{ fontFamily: 'Fira Sans'}}
       >
-        <section 
-          style={{ fontFamily: 'Overpass Variable',}}
-          className=" bg-slate-50/10 p-3 rounded-md"        
+        <section
+          style={{ fontFamily: 'Roboto', }}
+          className="bg-slate-50/10 p-3 rounded-md"
         >
           <span className="flex font-bold gap-2 my-1">
             Orden
-            <p> {orden.id}</p>
+            <p>{orden.id}</p>
           </span>
 
-          <span className=" font-bold">
+          <span className="font-bold">
             Fecha 
-            <p className=" font-normal">{orden.fechaOrden}</p>
+            <p className="font-normal">{formattedDate}</p>
           </span>
 
           <span className="flex font-bold gap-2 my-1">
-             Vehiculo:
-            <p className=" font-normal"> {orden.vehiculo.tipo}</p>
-            <p className=" font-normal"> {orden.vehiculo.marca}</p>
-            <p className=" font-normal">{orden.vehiculo.color}</p>
+            Vehículo:
+            <p className="font-normal">{orden.vehiculo.tipo}</p>
+            <p className="font-normal">{orden.vehiculo.marca}</p>
+            <p className="font-normal">{orden.vehiculo.color}</p>
           </span>
-          <span className=" flex gap-2 font-bold my-1">
+          <span className="flex gap-2 font-bold my-1">
             Propietario:
-            <p className="capitalize font-normal"> 
+            <p className="capitalize font-normal">
               {orden.cliente.nombre}
             </p>
           </span>
           <span className="flex items-center gap-2 font-bold">
             Celular: 
-            <p className="font-normal text-xs"> 
-              {orden.cliente.celular} 
+            <p className="font-normal text-xs">
+              {orden.cliente.celular}
             </p>
           </span>
           <span className="font-bold flex gap-2 my-1">
             Dejó llaves?
-            <p className=" font-normal">
+            <p className="font-normal">
               {orden.vehiculo.llaves}
             </p>
           </span>
 
           <span className="flex gap-2 font-bold my-1">
             Asignado a:
-            <p className=" font-normal"> 
+            <p className="font-normal">
               {orden.empleado}
             </p>
           </span>
-          <span className=" font-bold flex gap-2 my-1">
+          <span className="font-bold flex gap-2 my-1">
             Servicio/s:
             <p className="font-normal">
               {orden.servicio.nombre_servicios}
@@ -106,7 +111,7 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             orden.estado === 'terminado' ? 'bg-slate-600/5 text-black capitalize' :
             '' // clase por defecto o en caso de que no haya una coincidencia
             }`}>
-            {orden.estado} 
+            {orden.estado}
           </span>
 
         </section>

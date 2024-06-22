@@ -49,10 +49,10 @@ const ResumenOrdenes = () => {
 
   return (
     <Sheet>
-    <SheetTrigger className=' bg-slate-200 text-xs px-5 py-2 rounded-full font-medium'>
+    <SheetTrigger className='text-xs border hover:bg-slate-200 px-5 py-2 rounded-md font-bold'>
         Ordenes
     </SheetTrigger>
-    <SheetContent className='overflow-y-auto'>
+    <SheetContent className='overflow-y-auto' style={{ fontFamily: 'Roboto'}}>
         <SheetHeader>
         <SheetTitle>Servicios realizados hoy</SheetTitle>
         <SheetDescription>
@@ -60,7 +60,7 @@ const ResumenOrdenes = () => {
         </SheetDescription>
         <Table className=" w-full m-auto mt-5 ">
           <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
-            <TableRow className="">
+            <TableRow className="text-sm">
               <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
               <TableCell className="w-44 px-1 max-md:w-24 max-md:text-center">Placa</TableCell>
               <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
