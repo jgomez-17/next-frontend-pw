@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import { format } from "date-fns";
