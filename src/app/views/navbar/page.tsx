@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { message } from 'antd';
 import Link from 'next/link';
 import { SettingsIcon, EstadisticasIcon, UsersIcon } from '@/app/components/ui/iconos';
-import { NavigationMenuDemo } from './logout/page';
+import { NavigationMenuDemo } from './logout/logout-seccion';
 
   
 const page = () => {

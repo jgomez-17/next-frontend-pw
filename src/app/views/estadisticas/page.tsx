@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import EstadisticasMensuales from './data/page';
+import EstadisticasMensuales from './data/estadisticas-data';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import Link from 'next/link';
