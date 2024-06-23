@@ -195,8 +195,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     );
 
     useEffect(() => {
-      setPreciosServicios(preciosServiciosPorTipo[tipo] || {});
-    }, [tipo]);
+      const nuevosPrecios = preciosServiciosPorTipo[tipo] || {};
+      // Verificar si realmente hay un cambio en los precios antes de actualizar el estado
+      if (JSON.stringify(nuevosPrecios) !== JSON.stringify(preciosServicios)) {
+        setPreciosServicios(nuevosPrecios);
+      }
+    }, [tipo, preciosServiciosPorTipo, preciosServicios]);
+    
 
     // Manejar la adición de un servicio seleccionado de un solo nombre
     const handleAgregarServicio = () => {

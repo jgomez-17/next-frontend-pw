@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { InputNumber, message } from "antd";
 import { Button } from "@/components/ui/button";
@@ -50,7 +50,7 @@ const GenerarPlanilla = () => {
   const [totalSatelital, setTotalSatelital] = useState<number>(0); // Nuevo estado para total de "Satelital"
   const [totalSpa, setTotalSpa] = useState<number>(0); // Nuevo estado para total de "Satelital"
 
-  const calcularTotalesSeccion = () => {
+  const calcularTotalesSeccion =  useCallback(() => {
     let totalSpa = 0;
     let totalSatelital = 0;
   
@@ -68,7 +68,7 @@ const GenerarPlanilla = () => {
   
     setTotalSpa(totalSpa);
     setTotalSatelital(totalSatelital);
-  };
+  },[editableOrdenes, lavadores, ordenesTerminadas, setTotalSpa, setTotalSatelital]);
   
 
   useEffect(() => {

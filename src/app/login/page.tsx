@@ -73,8 +73,8 @@ const LoginPage = () => {
     };
 
     return (
-        <form onSubmit={handleLogin} className='mt-20 w-2/5 m-auto'>
-            <section className="grid gap-4 py-10 bg-slate-50 px-10 rounded-lg">
+        <form onSubmit={handleLogin} className="flex items-center justify-center h-screen">
+            <section className="grid gap-4 py-10 bg-slate-50 max-md:bg-slate-50/60 px-10 rounded-lg">
                 <Image
                     className='m-auto'
                     src="/prontowash-img.png"
