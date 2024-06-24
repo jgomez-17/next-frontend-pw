@@ -497,7 +497,7 @@ const GenerarPlanilla = () => {
       <Navbar /> 
 
       <nav 
-        className="w-full gap-4 flex items-center justify-between md:px-12 bg-white-500/30 backdrop-blur-sm z-50 py-2 m-auto top-16 fixed"
+        className="w-full gap-4 max-md:gap-1 flex items-center justify-between md:px-12 bg-white-500/30 backdrop-blur-sm z-50 py-2 m-auto top-16 fixed"
         style={{ fontFamily: 'Roboto'}}
       >
         <Link
@@ -506,30 +506,31 @@ const GenerarPlanilla = () => {
             <BackIcon />
         </Link>
         <ResumenOrdenes />
+        <p className="flex gap-2 max-md:mr-auto text-sm rounded">{fechaHoy}</p>
+
         <Button 
-          className="md:mr-auto max-md:mr-auto rounded-md h-8 text-xs gap-2 border hover:font-bold hover:bg-transparent hover:border-blue-950 hover:text-blue-950"
+          className="md:ml-auto rounded-md h-8 text-xs gap-2 bg-black"
           onClick={insertarYdescargar}
           >
           Guardar y descargar
           <DownloadIcon />
         </Button>
-        <h1 className='w-max flex font-bold text-md'>Planillario de Gestion</h1>
+        <h1 className='w-max flex font-bold text-md max-md:hidden'>Planillario de Gestion</h1>
       </nav>
 
       <article id="pdf-content" style={{ fontFamily: 'Roboto'}}>
 
       <section 
-          className="w-11/12 flex p-0 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
+          className="w-11/12 max-md:w-full max-md:mx-1 gap-1 flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
       >
-        <p className="flex flex-col gap-2"><strong>Fecha:</strong>{fechaHoy}</p>
-        <p className="flex flex-col gap-2"><strong>Servicios:</strong>{numeroOrdenesHoy}</p>
-        <p className="flex flex-col gap-2"><strong>Vendido:</strong> {formatNumber(totalRecaudado)}</p>
-        <p className="flex flex-col gap-2"><strong>Spa:</strong> {formatNumber(totalSpa)}</p>
-        <p className="flex flex-col gap-2"><strong>Satelital:</strong> {formatNumber(totalSatelital)}</p>
-        <p className="flex flex-col gap-2"><strong>Efectivo:</strong> {formatNumber(totalEfectivo)}</p>
-        <p className="flex flex-col gap-2"><strong>Bancolombia:</strong> {formatNumber(totalBancolombia)}</p>
-        <p className="flex flex-col gap-2"><strong>Nequi:</strong> {formatNumber(totalNequi)}</p>
-        <p className="flex flex-col gap-2"><strong>Administración:</strong>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Servicios:</strong>{numeroOrdenesHoy}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Vendido:</strong> {formatNumber(totalRecaudado)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Spa:</strong> {formatNumber(totalSpa)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Satelital:</strong> {formatNumber(totalSatelital)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Efectivo:</strong> {formatNumber(totalEfectivo)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Bancolombia:</strong> {formatNumber(totalBancolombia)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Nequi:</strong> {formatNumber(totalNequi)}</p>
+        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Administración:</strong>
           <Input
               value={pagoAdministracion.toString()}
               onChange={(e) => setPagoAdministracion(Number(e.target.value))}

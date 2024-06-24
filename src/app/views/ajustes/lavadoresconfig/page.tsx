@@ -7,7 +7,7 @@ import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { UserAdd, BackIcon, DeleteIcon } from '@/app/components/ui/iconos';
+import { UserAdd, BackIcon, DeleteIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label";
@@ -160,25 +160,55 @@ const Page: React.FC = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
   return (    
     <>
       <ProtectedRoute>
         <Navbar />
-        <section className='mt-20 max-md:p-5 md:ml-10 ' style={{ fontFamily: 'Roboto', }}>
+        <section className='mt-20 w-11/12 m-auto max-md:p-0 md:ml-10 ' style={{ fontFamily: 'Roboto' }}>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <nav className='flex max-md:w-full m-auto gap-4 w-11/12 justify-between items-center'>
+          <nav className='flex w-full m-auto gap-4 justify-between items-center'>
             <Link
               className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
               href="/">
               <BackIcon />
             </Link>
-            <DialogTrigger className='transition ml-auto flex items-center gap-2 hover:bg-blue-950 hover:text-slate-200 px-3 py-1 rounded-full'>
+            <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
+              <ReloadIcon />
+            </Button>
+            <DialogTrigger className='transition ml-auto flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
               <UserAdd />
             </DialogTrigger>
-            <h1 className='w-max flex font-bold text-lg'>Lavadores</h1>
+            <h1 className='w-max flex font-bold text-md'>Lavadores</h1>
           </nav>
-        <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
+       
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Registrar lavador</DialogTitle>
+            <DialogDescription>
+              <Form className='flex gap-5 mt-4' onFinish={registrarLavador}>
+                <label className='flex flex-col gap-1'>
+                  <Input
+                    className='w-44 capitalize max-md:w-40'
+                    type="text"
+                    value={nombreLavador}
+                    onChange={(e) => setNombreLavador(e.target.value)}
+                    required
+                  />
+                </label>
+                <Button className='flex items-center text-xs h-8' itemType='submit' >
+                    Agregar
+                </Button>
+              </Form>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
           <thead>
             <tr className='text-sm'>
               <th className='w-14 text-left p-1 border-b hidden'>ID</th>
@@ -215,29 +245,6 @@ const Page: React.FC = () => {
             ))}
           </tbody>
         </table>
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Registrar lavador</DialogTitle>
-            <DialogDescription>
-              <Form className='flex gap-5 mt-4' onFinish={registrarLavador}>
-                <label className='flex flex-col gap-1'>
-                  <Input
-                    className='w-44 capitalize max-md:w-40'
-                    type="text"
-                    value={nombreLavador}
-                    onChange={(e) => setNombreLavador(e.target.value)}
-                    required
-                  />
-                </label>
-                <Button className='flex items-center text-xs h-8' itemType='submit' >
-                    Agregar
-                </Button>
-              </Form>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
         </section>
       </ProtectedRoute>
     </>

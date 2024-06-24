@@ -14,7 +14,7 @@ const page = () => {
   return (
     <>
         <ul 
-          className='text-[1.3rem] z-50 gap-6 flex fixed top-0 w-full p-3 backdrop-blur-sm items-center justify-between max-md:px-5 shadow-sm bg-white-500/30'
+          className='text-[1.3rem] max-h-16 z-50 gap-6 max-md:gap-1 flex fixed top-0 w-full p-3 max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'
           style={{ fontFamily: 'Roboto', }}
         >
           <article className='flex gap-4'>
@@ -31,19 +31,19 @@ const page = () => {
 
           </article>
 
-          <article className='flex ml-auto max-md:hidden gap-2'>
+          <article className='flex ml-auto gap-2 max-md:gap-0'>
             <Link href="/views/clientes"
-                  className='flex px-3 rounded-full items-center text-sm gap-2 text-gray-700 hover:text-gray-500'
+                  className='flex md:hidden max-md:hidden px-3 rounded-full items-center text-sm gap-2 text-gray-700 hover:text-gray-500'
             > 
               <UsersIcon />              
             </Link>
             <Link href="/views/estadisticas/"
-                  className='text-gray-700 hover:text-gray-500 max-md:hidden gap-2 px-3 flex font-medium items-center text-sm transition p-1 rounded-full'
+                  className='text-gray-700 hover:text-gray-500 gap-2 px-3 flex font-medium items-center text-sm transition p-1 rounded-full'
             >
                 <EstadisticasIcon />
             </Link>
             <Link href="/views/ajustes/" 
-                  className='ml-auto max-md:hidden text-gray-700 hover:text-gray-500 flex px-3 gap-2 items-center text-sm font-medium transition rounded-full'>
+                  className='ml-auto text-gray-700 hover:text-gray-500 flex px-3 gap-2 items-center text-sm font-medium transition rounded-full'>
                 <SettingsIcon />
             </Link>
           </article>

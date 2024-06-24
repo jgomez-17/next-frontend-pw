@@ -44,11 +44,11 @@ export function NavigationMenuDemo() {
     <NavigationMenu className=" text-sm" style={{ fontFamily: 'Roboto', }}>
       <NavigationMenuList className="">
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="px-8 gap-3 capitalize text-blue-600 hover:text-blue-600 rounded-sm h-8 bg-blue-600/5">
+          <NavigationMenuTrigger className="px-6 gap-3 capitalize text-blue-600 hover:text-blue-600 rounded-sm h-8 bg-blue-600/5">
             {rol && <p className="font-semibold text-sm">{rol}</p>}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="">
-            <ul className="grid max-md:w-[155px] md:w-[150px] lg:grid-cols-[1fr]">
+            <ul className="">
                 <LogoutButton />
             </ul>
           </NavigationMenuContent>

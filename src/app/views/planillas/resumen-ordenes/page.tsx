@@ -51,7 +51,7 @@ const ResumenOrdenes = () => {
 
   return (
     <Sheet>
-    <SheetTrigger className='text-xs border hover:bg-slate-200 px-5 py-2 rounded-md font-bold'>
+    <SheetTrigger className='text-xs max-md:mr-auto border h-8 hover:bg-slate-200 px-5 py-2 rounded-md font-bold'>
         Ordenes
     </SheetTrigger>
     <SheetContent className='overflow-y-auto' style={{ fontFamily: 'Roboto'}}>

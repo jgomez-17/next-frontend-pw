@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Navbar from '@/app/views/navbar/page';
-import { BackIcon, DownloadIcon } from '@/app/components/ui/iconos';
+import { BackIcon, DownloadIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import jsPDF from 'jspdf';
@@ -131,37 +131,44 @@ const AcumuladosComponent = () => {
       // Descargar el PDF
       doc.save(`acumulado_ventas_${mesYAnio}.pdf`);
     };
+
+    const reloadPage = () => {
+        window.location.reload();
+    };
   
     return (
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <Navbar />
-            <nav className='mt-20 w-11/12 gap-4 m-auto flex items-center justify-between' style={{ fontFamily: 'Roboto' }}>
+            <nav className='mt-20 max-md:w-full w-11/12 gap-4 m-auto flex items-center justify-between' style={{ fontFamily: 'Roboto' }}>
                 <Link href="/" className=' hover:bg-slate-100 px-3 py-1 rounded-full'>
                   <BackIcon />
                 </Link>
-                <p className='text-sm capitalize font-semibold'> {mesYAnio} </p>
-                <Button onClick={generarPDF} variant={'secondary'} className='mr-auto gap-2 flex h-8 items-center font-semibold text-sm hover:bg-white hover:outline hover:outline-slate-200'>
+                <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
+                <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
+                    <ReloadIcon />
+                </Button>
+                <Button onClick={generarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
                   Descargar PDF
                   <DownloadIcon />
                 </Button>
-                <h1 className='font-bold text-sm'>Acumulado de ventas</h1>
+                <h1 className='font-bold text-sm max-md:hidden'>Acumulado de ventas</h1>
             </nav>
             {dataLoaded && (
-                <Table className='w-11/12 m-auto mt-4' style={{ fontFamily: 'Roboto' }}>
-                    <TableHeader className='font-semibold text-sm'>
+                <Table className='w-11/12 max-md:w-full m-auto mt-4' style={{ fontFamily: 'Roboto' }}>
+                    <TableHeader className='font-semibold text-sm max-md:text-[10px]'>
                         <TableRow>
-                            <TableCell>D/S</TableCell>
-                            <TableCell>Día</TableCell>
-                            <TableCell>Venta Diaria</TableCell>
-                            <TableCell>Acum. Venta Diaria</TableCell>
-                            <TableCell>Prontowash</TableCell>
-                            <TableCell>Acum. Prontowash</TableCell>
-                            <TableCell>Servicios</TableCell>
-                            <TableCell>Acum. Servicios</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>D/S</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Día</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Venta Diaria</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Venta Diaria</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Prontowash</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Prontowash</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Servicios</TableCell>
+                            <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Servicios</TableCell>
                         </TableRow>
                     </TableHeader>
-                    <TableBody className='text-xs'>
+                    <TableBody className='text-xs max-md:text-[9px]'>
                         {daysArray.map((day) => {
                             const record = data.find((item) => {
                                 const itemDay = new Date(item.fecha).getDate(); // Obtener el día del mes del registro
@@ -172,25 +179,25 @@ const AcumuladosComponent = () => {
 
                             return (
                                 <TableRow key={day}>
-                                    <TableCell className='py-1 border px-3 capitalize'>{nombreDiaSemana}</TableCell>
-                                    <TableCell className='py-1 border px-3'>{day}</TableCell>
+                                    <TableCell className='py-1 border max-md:px-1 px-3 capitalize'>{nombreDiaSemana}</TableCell>
+                                    <TableCell className='py-1 border max-md:px-1 px-3'>{day}</TableCell>
                                     {record ? (
                                         <>
-                                            <TableCell className='py-1 px-3 border'>{formatNumber(record.venta_diaria)}</TableCell>
-                                            <TableCell className='py-1 px-3 border'>{formatNumber(record.acum_venta_diaria)}</TableCell>
-                                            <TableCell className='py-1 px-3 border'>{formatNumber(record.prontowash)}</TableCell>
-                                            <TableCell className='py-1 px-3 border'>{formatNumber(record.acum_prontowash)}</TableCell>
-                                            <TableCell className='py-1 px-3 border'>{record.servicios}</TableCell>
-                                            <TableCell className='py-1 px-3 border'>{record.acum_servicios}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.venta_diaria)}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_venta_diaria)}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.prontowash)}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_prontowash)}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{record.servicios}</TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'>{record.acum_servicios}</TableCell>
                                         </>
                                     ) : (
                                         <>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
-                                            <TableCell className='py-1 px-3 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                            <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
                                         </>
                                     )}
                                 </TableRow>

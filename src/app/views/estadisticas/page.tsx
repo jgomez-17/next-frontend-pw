@@ -32,10 +32,10 @@ const EstadisticasPage: React.FC = () => {
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <Navbar />
-            <main style={{ fontFamily: 'Roboto',}} className=' mt-20'>
-                <nav className='flex w-11/12 gap-4 m-auto justify-between'>
+            <main style={{ fontFamily: 'Roboto',}} className='mt-20'>
+                <nav className='flex w-11/12 max-md:w-full max-md:px-1 gap-4 m-auto items-center justify-between'>
                     
-                    <form onSubmit={handleSubmit} className='flex'>
+                    <form onSubmit={handleSubmit} className='flex max-md:text-sm'>
                         <label>
                             Mes:
                             <select className='mx-2 rounded bg-slate-100' value={mesSeleccionado} onChange={handleChangeMes}>
@@ -61,11 +61,11 @@ const EstadisticasPage: React.FC = () => {
                         {/* <button type="submit">Buscar</button> */}
                     </form>
                     <Link href="/views/planillas/acumulados"
-                          className='rounded-md underline mr-auto hover:text-blue-900 px-3 text-sm flex items-center font-semibold'  
+                          className='rounded-md md:mr-auto bg-black hover:bg-slate-900 h-8 text-white px-3 text-xs flex items-center'  
                     >
                         Ver Acumulado
                     </Link>
-                    <h1 className='font-bold'>Estadísticas</h1>
+                    <h1 className='font-bold max-md:hidden'>Estadísticas</h1>
                 </nav>
                 <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
             </main>

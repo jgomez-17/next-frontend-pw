@@ -263,7 +263,7 @@ const OrdenesDashboard = () => {
           <article className="flex items-center gap-4">
           <Link 
             href="/views/planillas/cierre-diario"
-            className="text-sm font-medium border hover:bg-slate-50 hover:border-transparent py-1.5 px-5 rounded-md max-md:hidden"
+            className="text-sm font-medium border hover:bg-slate-50 hover:border-transparent py-1.5 px-5 rounded-md"
           >
             Cierre
           </Link>
