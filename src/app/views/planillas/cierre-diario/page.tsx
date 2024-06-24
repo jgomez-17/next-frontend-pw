@@ -497,7 +497,7 @@ const GenerarPlanilla = () => {
       <Navbar /> 
 
       <nav 
-        className="w-full gap-4 max-md:gap-1 flex items-center justify-between md:px-12 bg-white-500/30 backdrop-blur-sm z-50 py-2 m-auto top-16 fixed"
+        className="w-full gap-4 max-md:gap-1 flex items-center justify-between md:px-10 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-50 py-2 m-auto top-16 fixed"
         style={{ fontFamily: 'Roboto'}}
       >
         <Link

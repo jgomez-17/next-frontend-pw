@@ -140,7 +140,7 @@ const AcumuladosComponent = () => {
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <Navbar />
-            <nav className='mt-20 max-md:w-full w-11/12 gap-4 m-auto flex items-center justify-between' style={{ fontFamily: 'Roboto' }}>
+            <nav className='mt-20 max-md:w-full max-md:px-1 w-11/12 gap-4 m-auto flex items-center justify-between' style={{ fontFamily: 'Roboto' }}>
                 <Link href="/" className=' hover:bg-slate-100 px-3 py-1 rounded-full'>
                   <BackIcon />
                 </Link>
@@ -155,7 +155,7 @@ const AcumuladosComponent = () => {
                 <h1 className='font-bold text-sm max-md:hidden'>Acumulado de ventas</h1>
             </nav>
             {dataLoaded && (
-                <Table className='w-11/12 max-md:w-full m-auto mt-4' style={{ fontFamily: 'Roboto' }}>
+                <Table className='w-11/12 max-md:w-[98%] m-auto mt-4' style={{ fontFamily: 'Roboto' }}>
                     <TableHeader className='font-semibold text-sm max-md:text-[10px]'>
                         <TableRow>
                             <TableCell className=' max-md:leading-tight max-md:p-1'>D/S</TableCell>
