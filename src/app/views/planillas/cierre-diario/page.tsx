@@ -76,7 +76,9 @@ const GenerarPlanilla = () => {
   }, []);
 
   const fetchOrdenesTerminadasHoy = () => {
-    fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         const ordenes = data.ordenes || [];
@@ -100,7 +102,9 @@ const GenerarPlanilla = () => {
   };
 
   useEffect(() => {
-    fetch('https://express-api-pw.onrender.com/api/lavadores/')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then((data: any) => setLavadores(data.body || []))
       .catch(error => console.error('Error fetching data:', error));
@@ -458,7 +462,7 @@ const GenerarPlanilla = () => {
       doc.save(`planilla_${formattedDate}.pdf`);
   };
 
-//inserta los totales para el acumulado
+  //inserta los totales para el acumulado
   const insertAcumulados = () => {
 
     const dataTotales = {
@@ -466,8 +470,10 @@ const GenerarPlanilla = () => {
       prontowash: totalRestanteGeneral,
       servicios: numeroOrdenesHoy
     }
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados/insertaracumulados`
     
-    fetch('https://express-api-pw.onrender.com/api/acumulados/insertaracumulados', {
+    fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -497,11 +503,11 @@ const GenerarPlanilla = () => {
       <Navbar /> 
 
       <nav 
-        className="w-full gap-4 max-md:gap-1 flex items-center justify-between md:px-10 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-50 py-2 m-auto top-16 fixed"
+        className="w-11/12 max-md:w-full top-16 left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-50 py-2 fixed"
         style={{ fontFamily: 'Roboto'}}
       >
         <Link
-            className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
+            className='py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
             href="/">
             <BackIcon />
         </Link>

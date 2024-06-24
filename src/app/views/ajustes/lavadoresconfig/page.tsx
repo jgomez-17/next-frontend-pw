@@ -26,7 +26,9 @@ const Page: React.FC = () => {
   const [nombreLavador, setNombreLavador] = useState('')
 
   const fetchLavadores = () => {
-    fetch('https://express-api-pw.onrender.com/api/lavadores/')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then((data: { body: Lavador[] }) => {
         setLavadores(data.body);
@@ -53,7 +55,8 @@ const Page: React.FC = () => {
      }
 
     try {
-      const response = await fetch('https://express-api-pw.onrender.com/api/lavadores/', {
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`
+      const response = await fetch(apiUrl, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +85,8 @@ const Page: React.FC = () => {
     };
 
     try {
-      const response = await fetch('https://express-api-pw.onrender.com/api/lavadores', {
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,8 +110,9 @@ const Page: React.FC = () => {
 
   //Funcion para cambiar el estado del lavador a inactivo
   const cambiarEstadoLavador = (lavadorId: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores/cambiarestadolavador`
 
-    fetch("https://express-api-pw.onrender.com/api/lavadores/cambiarestadolavador", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,8 +138,9 @@ const Page: React.FC = () => {
 
   //Funcion para cambiar el estado del lavador a activo
   const cambiarEstadoLavador2 = (lavadorId: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores/cambiarestadolavador`
 
-    fetch("https://express-api-pw.onrender.com/api/lavadores/cambiarestadolavador", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

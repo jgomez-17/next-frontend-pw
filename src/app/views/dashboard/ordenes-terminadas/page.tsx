@@ -30,7 +30,9 @@ interface Orden {
 
   //Fetch de ordenes en terminadas
   const fetchOrdenesTerminadas = () => {
-      fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
+  
+      fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
           setOrdenesTerminadas(data.ordenes);

@@ -33,7 +33,8 @@ const LoginPage = () => {
         }
 
         try {
-            const response = await fetch('https://express-api-pw.onrender.com/api/auth/login', {
+            const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/auth/login`
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -43,7 +43,9 @@ const OrdenesPorPagar = () => {
   }, []);
   
   const fetchOrdenesPorPagar = () => {
-    fetch('https://express-api-pw.onrender.com/api/estados/porpagar')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
+
+    fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
       setOrdenesPorPagar(data.ordenes);
@@ -62,8 +64,10 @@ const OrdenesPorPagar = () => {
       message.error('Por favor selecciona un método de pago');
       return;
     }
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes/actualizarestado2`
     
-    fetch('https://express-api-pw.onrender.com/api/ordenes/actualizarestado2', {
+    fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

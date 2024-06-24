@@ -70,7 +70,9 @@ const OrdenesDashboard = () => {
 
   //Fetch de ordenes en espera
   const fetchOrdenesEnEspera = () => {
-     fetch('https://express-api-pw.onrender.com/api/estados/enespera')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`; 
+
+     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         setOrdenesEnEspera(data.ordenes);
@@ -102,7 +104,9 @@ const OrdenesDashboard = () => {
 
   //fech de las ordenes por pagar
   const fetchOrdenesPorPagar = () => {
-    fetch('https://express-api-pw.onrender.com/api/estados/porpagar')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
+
+    fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
       setOrdenesPorPagar(data.ordenes);
@@ -119,7 +123,9 @@ const OrdenesDashboard = () => {
 
   //Fetch de las ordenes terminadas hoy
   const fetchOrdenesTerminadasHoy = () => {
-    fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         setOrdenesTerminadas(data.ordenes)
@@ -144,8 +150,9 @@ const OrdenesDashboard = () => {
     }
 
     const employeesString = selectedEmployees.join(", ");
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes/actualizarestado`
 
-    fetch("https://express-api-pw.onrender.com/api/ordenes/actualizarestado", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -173,8 +180,9 @@ const OrdenesDashboard = () => {
 
   //Funcion para actualizar estado a por pagar 
   const actualizarEstadoOrden3 = (orderId: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes/actualizarestado3`
 
-    fetch("https://express-api-pw.onrender.com/api/ordenes/actualizarestado3", {
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -202,7 +210,8 @@ const OrdenesDashboard = () => {
 
   //funcion para cancelar la orden
   const cancelarOrden = (orderId: number) => {
-    fetch("https://express-api-pw.onrender.com/api/ordenes/cancelarorden", {
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes/cancelarorden`
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

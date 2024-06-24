@@ -97,7 +97,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       }
 
       try {
-          const response = await fetch(`https://express-api-pw.onrender.com/api/vehiculos/placa/${verifyplaca}`);
+          const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/vehiculos/placa/${verifyplaca}`
+          const response = await fetch(apiUrl);
           const data = await response.json();
 
           // Ahora solo tienes una orden en lugar de un array de ordenes
@@ -285,7 +286,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
         };
         
           try {
-             const responseOrdenes = await fetch('https://express-api-pw.onrender.com/api/ordenes', {
+             const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes`
+             const responseOrdenes = await fetch(apiUrl, {
                method: 'POST',
                headers: {
                  'Content-Type': 'application/json'
