@@ -33,7 +33,7 @@ const page = () => {
 
           <article className='flex ml-auto gap-2 max-md:gap-0'>
             <Link href="/views/clientes"
-                  className='flex md:hidden max-md:hidden px-3 rounded-full items-center text-sm gap-2 text-gray-700 hover:text-gray-500'
+                  className='flex max-md:hidden px-3 rounded-full items-center text-sm gap-2 text-gray-700 hover:text-gray-500'
             > 
               <UsersIcon />              
             </Link>

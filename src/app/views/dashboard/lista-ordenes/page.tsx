@@ -28,7 +28,7 @@ interface Orden {
     placa: string;
     llaves: string;
   };
-  servicio: { nombre_servicios: string; costo: string };
+  servicio: { nombre_servicios: string; costo: string; descuento: string };
   estado: string;
   empleado: string
 }
@@ -56,7 +56,9 @@ const OrdenesDashboard = () => {
 
   //Fetch lavadores
   const fetchLavadores = () => {
-    fetch('https://express-api-pw.onrender.com/api/lavadores/')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`; 
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then((data: { body: Lavador[] }) => {
         setLavadores(data.body);
@@ -339,7 +341,7 @@ const OrdenesDashboard = () => {
                 </TableCell>
                 <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
                   <section className="gap-4 w-max flex m-auto">
-                    <Select
+                  <Select
                       className="my-auto max-md:hidden"
                       mode="multiple"
                       placeholder="Asignar lavadores"
@@ -351,7 +353,7 @@ const OrdenesDashboard = () => {
                         .filter(lavador => lavador.activo === "1" && !(selectedEmployees[orden.id] || []).includes(lavador.nombre))
                         .map(lavador => (
                           <Option key={lavador.id} value={lavador.nombre}>
-                            <p className=" capitalize">{lavador.nombre}</p>
+                            <p className="capitalize">{lavador.nombre}</p>
                           </Option>
                         ))}
                     </Select>

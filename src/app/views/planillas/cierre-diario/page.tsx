@@ -503,7 +503,7 @@ const GenerarPlanilla = () => {
       <Navbar /> 
 
       <nav 
-        className="w-11/12 max-md:w-full top-16 left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-50 py-2 fixed"
+        className="w-11/12 max-md:w-full top-16 left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-20 py-2 fixed"
         style={{ fontFamily: 'Roboto'}}
       >
         <Link
