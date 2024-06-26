@@ -103,7 +103,7 @@ const OrdenesPorPagar = () => {
       <section className='mt-20' style={{ fontFamily: 'Roboto'}}>
         <nav className='rounded flex justify-between w-11/12 m-auto'>
           <Link
-            className=' py-1 px-3 rounded-full flex font-medium transition-all bg-slate-100 hover:bg-slate-200 text-sm items-center gap-2'
+            className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
             href="/">
             <BackIcon />
           </Link>

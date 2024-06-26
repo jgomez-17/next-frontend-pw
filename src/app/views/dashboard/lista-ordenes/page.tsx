@@ -90,7 +90,9 @@ const OrdenesDashboard = () => {
 
   //Fetch de ordenes en curso
   const fetchOrdenesEnCurso = () => {
-    fetch('https://express-api-pw.onrender.com/api/estados/encurso')
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
+
+    fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
         setOrdenesEnCurso(data.ordenes);
@@ -213,6 +215,7 @@ const OrdenesDashboard = () => {
   //funcion para cancelar la orden
   const cancelarOrden = (orderId: number) => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/ordenes/cancelarorden`
+
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -253,8 +256,6 @@ const OrdenesDashboard = () => {
   const reloadPage = () => {
   window.location.reload();
   };
-
-
 
   return (
     <>

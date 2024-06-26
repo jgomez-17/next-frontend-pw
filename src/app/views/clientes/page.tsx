@@ -24,7 +24,7 @@ interface Orden {
     placa: string;
     llaves: string;
   };
-  servicio: { nombre_servicios: string; costo: string };
+  servicio: { nombre_servicios: string; costo: string; descuento: string };
   estado: string;
   empleado: string
 }
@@ -59,7 +59,9 @@ const ClientesPage = () => {
   
     //Fetch de ordenes en curso
     const fetchOrdenesEnCurso = () => {
-      fetch('https://express-api-pw.onrender.com/api/estados/encurso')
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
+
+      fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
           setOrdenesEnCurso(data.ordenes);
@@ -122,7 +124,7 @@ const ClientesPage = () => {
             >
                 <BackIcon />
             </Link>
-            <Button onClick={reloadPage}>
+            <Button type='text' onClick={reloadPage}>
               <ReloadIcon />
             </Button>
             <h1 className='ml-auto font-bold'>Clientes</h1>
@@ -130,27 +132,27 @@ const ClientesPage = () => {
         <Table className=" w-11/12 m-auto mt-4" style={{ fontFamily: 'Roboto'}}>
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm max-md:text-[11px]">
-            <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
-            <TableCell className="px-1 max-md:w-28">Cliente</TableCell>
-            <TableCell className="px-1 max-md:w-28">Vehículo</TableCell>
-            <TableCell className="px-1 max-md:w-24">Servicio</TableCell>
-            <TableCell className="w-44">Lavador Asignado</TableCell>
-            <TableCell className=""> Estado</TableCell>
+            <TableCell className="px-1 w-[5%] max-md:hidden max-md:justify-center">#</TableCell>
+            <TableCell className="px-1 w-[8%] max-md:hidden">Cliente</TableCell>
+            <TableCell className="px-1 w-[10%]">Vehículo</TableCell>
+            <TableCell className="px-1 w-[19%] ">Servicio</TableCell>
+            <TableCell className="px-1 w-1/6">Lavador </TableCell>
+            <TableCell className="px-1 w-[7%]"> Estado</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
           {ordenesEnEspera &&
             ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden px-4 font-bold w-20 p-1 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </p>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
@@ -163,9 +165,9 @@ const ClientesPage = () => {
                     {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <section className="flex max-md:flex-col">
-                    <p className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col md:hidden max-md:hidden">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
@@ -173,12 +175,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="hidden">{orden.servicio.nombre_servicios}</p>
+                  <p className="">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-1 w-24 border-b capitalize">
+                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -194,7 +196,7 @@ const ClientesPage = () => {
                     </p>
                     <DropdownMenu>
                     <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl" />
+                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>
@@ -213,15 +215,15 @@ const ClientesPage = () => {
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden px-1 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="max-md:hidden p-0.5 font-bold w-20 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </p>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
@@ -234,9 +236,9 @@ const ClientesPage = () => {
                     {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <section className="flex max-md:flex-col">
-                    <p className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col md:hidden max-md:hidden">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
@@ -244,12 +246,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="hidden">{orden.servicio.nombre_servicios}</p>
+                  <p className="">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="w-24 p-2 border-b capitalize">
+                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -265,7 +267,7 @@ const ClientesPage = () => {
                     </p>
                     <DropdownMenu>
                     <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl" />
+                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>
@@ -284,15 +286,15 @@ const ClientesPage = () => {
           {ordenesPorPagar &&
             ordenesPorPagar.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden px-1 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="max-md:hidden p-0.5 font-bold border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </p>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
@@ -305,9 +307,9 @@ const ClientesPage = () => {
                     {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <section className="flex max-md:flex-col">
-                    <p className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col md:hidden max-md:hidden">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
@@ -315,12 +317,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="hidden">{orden.servicio.nombre_servicios}</p>
+                  <p className="">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="w-24 p-2 border-b capitalize">
+                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -336,7 +338,7 @@ const ClientesPage = () => {
                     </p>
                     <DropdownMenu>
                     <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl" />
+                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>
@@ -355,15 +357,15 @@ const ClientesPage = () => {
           {ordenesTerminadas &&
             ordenesTerminadas.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden px-1 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="max-md:hidden p-0.5 font-bold border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </p>
                   </section>
                 </TableCell>
-                <TableCell className="p-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
@@ -376,9 +378,9 @@ const ClientesPage = () => {
                     {orden.vehiculo.llaves} <p>dejó llaves</p>
                   </span>
                 </TableCell>
-                <TableCell className="px-1 py-1 border-b">
+                <TableCell className="p-0.5 border-b">
                   <section className="flex max-md:flex-col">
-                    <p className="font-bold flex flex-col">
+                    <p className="font-bold flex flex-col md:hidden max-md:hidden">
                       {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
@@ -386,12 +388,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="hidden">{orden.servicio.nombre_servicios}</p>
+                  <p className="">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="w-24 p-2 border-b capitalize">
+                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -407,7 +409,7 @@ const ClientesPage = () => {
                     </p>
                     <DropdownMenu>
                     <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl" />
+                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>

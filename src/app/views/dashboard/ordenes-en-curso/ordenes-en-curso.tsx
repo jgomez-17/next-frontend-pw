@@ -20,7 +20,7 @@ interface Orden {
     placa: string;
     llaves: string;
   };
-  servicio: { nombre_servicios: string; costo: string };
+  servicio: { nombre_servicios: string; costo: string; descuento: string };
   estado: string;
 }
 

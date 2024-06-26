@@ -759,11 +759,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             ))}
 
                         <label className='ml-0 mt-5'>
-                          <span className=''>
+                          <span className=' font-semibold'>
                             Subtotal
                           </span>
                           <Input 
-                              className='costo-servicios bg-transparent' 
+                              className='bg-transparent border-none px-0' 
                               type="text" 
                               name="costo" 
                               value={`$ ${costoServicios.toLocaleString('es-CO')}`} 
@@ -772,11 +772,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         </label>
 
                         <label className='ml-0'>
-                          <span>
+                          <span className=' font-semibold'>
                             Total
                           </span>
                           <Input 
-                              className='costo-con-descuentos bg-transparent' 
+                              className='bg-transparent border-none px-0' 
                               type="text" 
                               name="costo" 
                               value={`$ ${costoConDescuento.toLocaleString('es-CO')}`} 
