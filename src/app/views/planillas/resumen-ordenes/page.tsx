@@ -1,18 +1,8 @@
 'use client'
 
 import React, { useEffect, useState} from 'react'
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-  } from "@/components/ui/sheet"
-import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger,} from "@/components/ui/sheet"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
- 
-
 interface Orden {
     id: number;
     fechaOrden: string;
@@ -35,13 +25,14 @@ const ResumenOrdenes = () => {
 
     //Fetch de ordenes en terminadas
     const fetchOrdenesTerminadas = () => {
-        fetch('https://express-api-pw.onrender.com/api/estados/terminadohoy')
+        const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
+
+        fetch(apiUrl)
           .then(response => response.json())
           .then(data => {
             setOrdenesTerminadas(data.ordenes);
           })
           .catch(error => console.error('Error fetching data:', error));
-          console.log('no hay ordenes en espera')
     };
     
     useEffect(() => {
@@ -112,7 +103,6 @@ const ResumenOrdenes = () => {
         </SheetHeader>
     </SheetContent>
     </Sheet>
-
   )
 }
 

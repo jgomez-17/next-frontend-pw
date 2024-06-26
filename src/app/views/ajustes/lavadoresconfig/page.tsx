@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { MdDelete } from "react-icons/md";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
@@ -10,8 +9,6 @@ import ProtectedRoute from '@/app/components/protectedRoute';
 import { UserAdd, BackIcon, DeleteIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label";
-
 
 
 interface Lavador {
@@ -41,12 +38,6 @@ const Page: React.FC = () => {
     fetchLavadores();
   }, []);
 
-  // Esto se ejecutará solo si no hay lavadores
-  if (numeroLavadores === 0) {
-    console.log('No hay lavadores disponibles');
-  }
-
-  //funcion para eliminar lavador
   const eliminarLavador = async (id: number) => {
 
      const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar este lavador?");
@@ -77,7 +68,6 @@ const Page: React.FC = () => {
     }
   };
 
-  // Función para registrar un nuevo lavador
   const registrarLavador = async () => {
     const nuevoLavador = {
       nombre: nombreLavador,
@@ -167,7 +157,11 @@ const Page: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const reloadPage = () => {
-    window.location.reload();
+
+    const hideMessage = message.loading('Cargando...', 0);
+  
+    fetchLavadores()
+    setTimeout(hideMessage, 1000);
   };
 
   return (    

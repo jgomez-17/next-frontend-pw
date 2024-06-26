@@ -36,7 +36,6 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     setVisible(false);
   };
 
-  // Formatear la fecha y hora en formato de 12 horas
   const formattedDate = format(new Date(orden.fechaOrden), "PPPP 'a las' hh:mm a", { locale: es });
 
   return (
@@ -75,18 +74,21 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             <p className="font-normal">{orden.vehiculo.marca}</p>
             <p className="font-normal">{orden.vehiculo.color}</p>
           </span>
+
           <span className="flex gap-2 font-bold my-1">
             Propietario:
             <p className="capitalize font-normal">
               {orden.cliente.nombre}
             </p>
           </span>
+
           <span className="flex items-center gap-2 font-bold">
             Celular: 
             <p className="font-normal text-xs">
               {orden.cliente.celular}
             </p>
           </span>
+
           <span className="font-bold flex gap-2 my-1">
             Dejó llaves?
             <p className="font-normal">
@@ -100,18 +102,20 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.empleado}
             </p>
           </span>
+
           <span className="font-bold flex gap-2 my-1">
             Servicio/s:
             <p className="font-normal">
               {orden.servicio.nombre_servicios}
             </p>
           </span>
+
           <span className={`flex w-max px-2 py-1 my-3 rounded-md font-medium ${
             orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
             orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
             orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
             orden.estado === 'terminado' ? 'bg-slate-600/5 text-black capitalize' :
-            '' // clase por defecto o en caso de que no haya una coincidencia
+            '' 
             }`}>
             {orden.estado}
           </span>

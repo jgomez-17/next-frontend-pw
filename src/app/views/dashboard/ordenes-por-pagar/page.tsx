@@ -38,10 +38,6 @@ const OrdenesPorPagar = () => {
   const [ordenesPorPagar, setOrdenesPorPagar] = useState<Orden[]>([]);
   const [metodosPago, setMetodosPago] = useState<{ [key: number]: string }>({});
   
-  useEffect(() => {
-    fetchOrdenesPorPagar();
-  }, []);
-  
   const fetchOrdenesPorPagar = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
 
@@ -49,10 +45,13 @@ const OrdenesPorPagar = () => {
     .then(response => response.json())
     .then(data => {
       setOrdenesPorPagar(data.ordenes);
-      console.log(data.ordenes)
     })
     .catch(error => console.error('Error fetching data:', error));
   };
+
+  useEffect(() => {
+    fetchOrdenesPorPagar();
+  }, []);
   
   const handleMetodoPagoChange = (orderId: number, value: string) => {
     setMetodosPago({ ...metodosPago, [orderId]: value });

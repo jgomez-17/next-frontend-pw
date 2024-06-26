@@ -1,8 +1,7 @@
 'use client'
 
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Image from 'next/image';
-import { message } from 'antd';
 import Link from 'next/link';
 import { SettingsIcon, EstadisticasIcon, UsersIcon } from '@/app/components/ui/iconos';
 import { NavigationMenuDemo } from './logout/logout-seccion';
@@ -10,22 +9,23 @@ import { NavigationMenuDemo } from './logout/logout-seccion';
   
 const page = () => {
 
-
   return (
     <>
         <ul 
-          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 flex fixed top-0 w-full p-3 max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'
+          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 p-1 flex fixed top-0 w-full max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'
           style={{ fontFamily: 'Roboto', }}
         >
           <article className='flex gap-4'>
 
-            <Link href="/">
+            <Link href="/" className=''>
               <Image
-                className=' md:ml-8 flex pb-1'
+                loading='lazy'
+                priority
+                className=' md:ml-8 flex pb-1 w-36'
                 src="/prontowash-img.png"
                 alt='logo'
-                width={130}
-                height={200}
+                width={500}
+                height={300}
               ></Image>
             </Link>
 
@@ -48,18 +48,7 @@ const page = () => {
             </Link>
           </article>
           <NavigationMenuDemo />
-
-
         </ul>
-
-        {/* <nav className='w-11/12 m-auto flex h-12 mt-20 items-center justify-between '>
-            <Modal />
-            <button className=' h-7 px-4 py-4 border border-slate-200 flex items-center rounded-md transition text-black hover:bg-white hover:text-blue-700 hover:border-blue-700' onClick={handleRecargarPagina}>
-              <GrUpdate />
-            </button> 
-        </nav> */}
-
-
     </>
   )
 }

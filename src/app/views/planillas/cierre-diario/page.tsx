@@ -4,8 +4,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { InputNumber, message } from "antd";
 import { Button } from "@/components/ui/button";
-import { MdOutlineDelete } from "react-icons/md";
-import { IoMdCloudDownload } from "react-icons/io";
 import { Input } from "@/components/ui/input"; 
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
@@ -15,7 +13,6 @@ import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from "@/app/components/protectedRoute";
 import { DownloadIcon, DeleteIcon, BackIcon } from "@/app/components/ui/iconos";
 import Link from "next/link";
-
 
 interface Orden {
   id: number;
@@ -96,7 +93,6 @@ const GenerarPlanilla = () => {
         setTotalEfectivo(data.totalEfectivo || 0);
         setTotalNequi(data.totalNequi || 0);
         setTotalBancolombia(data.totalBancolombia || 0);
-        console.log(data)
       })
       .catch(error => console.error('Error fetching data:', error));
   };
@@ -176,160 +172,6 @@ const GenerarPlanilla = () => {
   const formatNumber = (number: number) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
   };
-
-
-  // const handleGenerarPDF = () => {
-  //   const doc = new jsPDF();
-
-  //   const fechaHoy = new Date().toLocaleDateString('es-CO');
-  //   const resumenData = [
-  //     { label: 'Fecha:', value: fechaHoy },
-  //     { label: 'Vendido:', value: formatNumber(totalRecaudado) },
-  //     { label: 'Servicios:', value: numeroOrdenesHoy },
-  //     { label: 'Efectivo:', value: formatNumber(totalEfectivo) },
-  //     { label: 'Transferencia:', value: formatNumber(totalTransferencia) },
-  //     { label: 'Administración:', value: formatNumber(pagoAdministracion) },
-  //     { label: 'Ventas:', value: formatNumber(pagoVentas) },
-  //     { label: 'Meta:', value: formatNumber(meta) },
-  //     { label: 'Adicionales:', value: formatNumber(gastosAdicionales) },
-  //     { label: 'Total Restante:', value: formatNumber(totalRestanteGeneral) }
-  //   ];
-
-
-  //   doc.setFont('times');
-  //   doc.setFontSize(10);
-  //   doc.setTextColor('#333');
-  //   doc.text('Planillario de gestion', 20, 20);
-  //   // doc.textWithLink('Click me!', 20, 30, { url: 'https://www.example.com' });
-
-  //   doc.setFont('times');
-
-  //   let posYLeft = 30; // Posición Y inicial para la columna izquierda
-  //   let posYRight = 30; // Posición Y inicial para la columna derecha
-
-  //   const halfLength = Math.ceil(resumenData.length / 2);
-  //   const firstHalf = resumenData.slice(0, halfLength);
-  //   const secondHalf = resumenData.slice(halfLength);
-
-  //   firstHalf.forEach((item, index) => {
-  //     doc.text(`${item.label} ${item.value}`, 20, posYLeft);
-  //     posYLeft += 6; // Incremento vertical reducido para la columna izquierda
-  //   });
-
-  //   secondHalf.forEach((item, index) => {
-  //     doc.text(`${item.label} ${item.value}`, 120, posYRight);
-  //     posYRight += 6; // Incremento vertical reducido para la columna derecha
-  //   });
-
-  //   // Generar las tablas por lavador
-  //   let posY = 80; // Posición Y inicial de la primera tabla
-
-  //   Object.keys(ordenesPorLavador).forEach(nombreLavador => {
-  //     const ordenes = ordenesPorLavador[nombreLavador];
-  //     const lavador = lavadores.find(l => l.nombre === nombreLavador);
-  //     const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
-  //     const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
-
-  //     const tableData = ordenes.map((orden: Orden) => {
-  //       return [orden.id.toString(), orden.vehiculo.marca, orden.vehiculo.placa, formatNumber(editableOrdenes[`${nombreLavador}-${orden.id}`])];
-  //     });
-
-  //     const lavadorRow = [
-  //       { content: `${nombreLavador}`, styles: { cellWidth: 50 } },
-  //       { content: `${lavador.seccion}`, styles: { cellWidth: 40 } }
-  //     ];
-
-  //     const totalRow = [
-  //       'Totales:',
-  //       '',
-  //       '',
-  //       formatNumber(totalCosto)
-  //     ];
-
-  //     const netoLavadorRow = [
-  //       'Neto Lavador:',
-  //       '',
-  //       '',
-  //       formatNumber(totalGanancia)
-  //     ];
-
-  //     const totalRestanteRow = [
-  //       '',
-  //       '',
-  //       '',
-  //       formatNumber(totalRestante)
-  //     ];
-
-  //     const tableHeight = (tableData.length * 10) + 40;
-  //     const totalHeight = (tableData.length * 10) + 60;
-
-  //     if (posY + totalHeight > doc.internal.pageSize.height - 20) {
-  //       doc.addPage();
-  //       posY = 20;
-  //     }
-
-  //     autoTable(doc, {
-  //       body: [lavadorRow],
-  //       startY: posY,
-  //       columnStyles: {
-  //         0: { cellWidth: 50 },
-  //         1: { cellWidth: 40 }
-  //       },
-  //       bodyStyles: { fontSize: 8 },
-  //     });
-
-  //     posY += 10;
-
-  //     if (posY + tableHeight > doc.internal.pageSize.height - 20) {
-  //       doc.addPage();
-  //       posY = 20;
-  //     }
-
-  //     autoTable(doc, {
-  //       head: [['ODT#', 'Vehículo', 'Placa', 'Valor']],
-  //       body: tableData,
-  //       startY: posY,
-  //       headStyles: { fillColor: [51, 65, 85], fontSize: 8  }, // Cambia el color de fondo de los títulos a azul
-  //       columnStyles: {
-  //         0: { cellWidth: 20 },
-  //         1: { cellWidth: 30 },
-  //         2: { cellWidth: 20 },
-  //         3: { cellWidth: 20 },
-  //       },
-  //       bodyStyles: { fontSize: 8 },
-  //     });
-
-  //     if (posY + totalHeight > doc.internal.pageSize.height - 20) {
-  //       doc.addPage();
-  //       posY = 20;
-  //     }
-
-  //     autoTable(doc, {
-  //       body: [totalRow, netoLavadorRow, totalRestanteRow],
-  //       startY: posY + (tableData.length * 10) + 10,
-  //       columnStyles: {
-  //         0: { cellWidth: 40 },
-  //         1: { cellWidth: 10 },
-  //         2: { cellWidth: 20 },
-  //         3: { cellWidth: 20 },
-  //       },
-  //       bodyStyles: { fontSize: 8 },
-  //     });
-
-  //     posY += (tableData.length * 10) + 40;
-  //   });
-
-  //   // Obtener la fecha actual
-  //   const today = new Date();
-  //   const year = today.getFullYear();
-  //   const month = today.getMonth() + 1;
-  //   const day = today.getDate();
-    
-  //   // Formatear la fecha como YYYY-MM-DD
-  //   const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-
-  //   doc.save(`planilla_${formattedDate}.pdf`);
-  // };
   
   const handleGenerarPDF = () => {
       const doc = new jsPDF();
@@ -381,7 +223,7 @@ const GenerarPlanilla = () => {
 
       posY += 10;
       let posX = 15
-      // Generar las tablas por lavador
+      
       Object.keys(ordenesPorLavador).forEach(nombreLavador => {
           const ordenes = ordenesPorLavador[nombreLavador];
           const lavador = lavadores.find(l => l.nombre === nombreLavador);
@@ -450,7 +292,6 @@ const GenerarPlanilla = () => {
           posY += tableHeight + 10; // Incremento vertical para la próxima tabla
       });
 
-      // Obtener la fecha actual
       const today = new Date();
       const year = today.getFullYear();
       const month = today.getMonth() + 1;
@@ -485,7 +326,6 @@ const GenerarPlanilla = () => {
         console.log('Respuesta del backend:', data);
         console.log ('insertado', dataTotales )
         message.success('guardado correctamente')
-        // Puedes realizar otras acciones después de recibir la respuesta
       })
       .catch(error => {
         console.error('Error al hacer la solicitud al backend:', error);

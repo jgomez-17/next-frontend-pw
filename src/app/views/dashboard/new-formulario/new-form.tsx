@@ -48,11 +48,9 @@ interface ListaOrdenesProps {
 
 const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
-    // Verificar Placa
     const [verifyplaca, setVerifyPlaca] = useState('');
     const [ordenes, setOrdenes] = useState<Orden[]>([]);
     const [error, setError] = useState('');
-    // Estado para los datos de la orden
     const [placa, setPlaca] = useState('');
     const [marca, setMarca] = useState('');
     const [tipo, setTipo] = useState('');
@@ -66,7 +64,6 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     const [servicioSeleccionado, setServicioSeleccionado] = useState<string>('');
     const [nombresServicios, setNombresServicios] = useState<string>(''); 
     const [descuento, setDescuento] = useState<number>(0); 
-    //Estado para las secciones
     const [seccion, setSeccion] = useState<number>(1);
 
     //Funciones para avanzar y retroceder seccion
@@ -101,11 +98,9 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           const response = await fetch(apiUrl);
           const data = await response.json();
 
-          // Ahora solo tienes una orden en lugar de un array de ordenes
           const ordenEncontrada = data.orden;
 
           if (ordenEncontrada) {
-              // Si se encontró una orden, actualiza los estados del formulario con los datos de la orden encontrada
               setPlaca(ordenEncontrada.vehiculo.placa);
               setMarca(ordenEncontrada.vehiculo.marca);
               setTipo(ordenEncontrada.vehiculo.tipo);
@@ -283,6 +278,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             costo: servicio.costo
           })),
           costo: costoConDescuento,
+          descuento: descuento
         };
         
           try {
@@ -301,18 +297,18 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
              
         
             // resetea el formulario si las solicitudes son exitosas
-            //  setPlaca('');
-            //  setMarca('');
-            //  setTipo('');
-            //  setColor('');
-            //  setLlaves('');
-            //  setObservaciones('');
-            //  setNombre('');
-            //  setCelular('');
-            //  setCorreoCliente('');
-            //  setServicios([]);
-            //  setDescuento(0);
-            //  setNombresServicios('');
+              setPlaca('');
+              setMarca('');
+              setTipo('');
+              setColor('');
+              setLlaves('');
+              setObservaciones('');
+              setNombre('');
+              setCelular('');
+              setCorreoCliente('');
+              setServicios([]);
+              setDescuento(0);
+              setNombresServicios('');
     
             console.log('orden generada')
             console.log(dataOrdens)
@@ -331,11 +327,10 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     const handleGenerarFactura = () => {
       const doc = new jsPDF();
     
-      doc.setFont('times'); // Tipo de letra
-      doc.setFontSize(10); // Tamaño de letra
-      doc.setTextColor('#333'); // Color de texto
+      doc.setFont('times'); 
+      doc.setFontSize(10); 
+      doc.setTextColor('#333');
     
-      // Obtener la fecha actual
       const fechaActual = new Date();
       const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
     
@@ -356,10 +351,10 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     
       // Encabezado de los datos del vehículo
       doc.setFontSize(10);
-      doc.text(`Vehículo: `, 150, 40); // Nueva columna
+      doc.text(`Vehículo: `, 150, 40); 
       doc.setFontSize(10);
       doc.text(`${marca} ${color}`, 150, 46)
-      doc.text(`Placa: ${placa}`, 150, 52); // Nueva columna
+      doc.text(`Placa: ${placa}`, 150, 52); 
     
       // doc.text(`Llaves: ${llaves}`, 20, 55); // Puedes añadir más datos si es necesario
       doc.text(`Observaciones: ${observaciones}`, 20, 70);
@@ -369,8 +364,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       
       // Ajustar el ancho de la primera columna de la tabla
       const columnStyles = {
-        0: { cellWidth: 100 }, // Ancho deseado para la primera columna
-        1: { cellWidth: 70 } // Ancho deseado para la segunda columna
+        0: { cellWidth: 100 }, 
+        1: { cellWidth: 70 } 
       };
     
       autoTable(doc, {
@@ -402,7 +397,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
         style={{fontFamily: 'Roboto'}} 
-        className='flex gap-1 ml-auto items-center bg-black text-white font-medium border border-gray-700 hover:bg-transparent hover:text-blue-900 hover:font-medium hover:border-blue-900 py-1 text-sm px-5 rounded-md' >
+        className=' font-roboto flex gap-1 ml-auto items-center bg-black text-white font-medium border border-gray-700 hover:bg-transparent hover:text-blue-900 hover:font-medium hover:border-blue-900 py-1 text-sm px-5 rounded-md' >
         Nueva orden
         <PlusIcon />
     </SheetTrigger>
@@ -419,7 +414,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
               id='orden' 
               onSubmitCapture={handleSubmit} 
               className='flex flex-col gap-10' 
-              style={{fontFamily: 'Overpass Variable'}} 
+              style={{fontFamily: 'Roboto'}} 
             >
                 
                 {seccion === 1 && (

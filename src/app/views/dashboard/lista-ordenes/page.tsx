@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { message, Modal, Select, Button } from "antd";
+import { message, Select, Button } from "antd";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -52,9 +52,9 @@ const OrdenesDashboard = () => {
   const [numeroOrdenesEnEspera, setNumeroOrdenesEnEspera] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
 
-  //Fetch lavadores
   const fetchLavadores = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`; 
 
@@ -70,17 +70,17 @@ const OrdenesDashboard = () => {
     fetchLavadores();
   }, []);
 
-  //Fetch de ordenes en espera
+
   const fetchOrdenesEnEspera = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`; 
 
      fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        setOrdenesEnEspera(data.ordenes);
+        setOrdenesEnEspera(data.ordenes || [] );
         setNumeroOrdenesEnEspera(data.numeroOrdenesEnEspera || 0);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      // .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesEnEspera(0)
   };
 
@@ -88,14 +88,14 @@ const OrdenesDashboard = () => {
     fetchOrdenesEnEspera();  // Fetch initial data
   }, []);
 
-  //Fetch de ordenes en curso
+
   const fetchOrdenesEnCurso = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
 
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        setOrdenesEnCurso(data.ordenes);
+        setOrdenesEnCurso(data.ordenes || [] );
         // setNumeroOrdenesEnEspera(data.numeroOrdenesEnEspera || 0);
       })
       .catch(error => console.error('Error fetching data:', error));
@@ -106,7 +106,7 @@ const OrdenesDashboard = () => {
     fetchOrdenesEnCurso();  // Fetch initial data
   }, []);
 
-  //fech de las ordenes por pagar
+
   const fetchOrdenesPorPagar = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
 
@@ -125,14 +125,13 @@ const OrdenesDashboard = () => {
   }, []);
 
 
-  //Fetch de las ordenes terminadas hoy
   const fetchOrdenesTerminadasHoy = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
 
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        setOrdenesTerminadas(data.ordenes)
+        setOrdenesTerminadas(data.ordenes || [] )
         setTotalRecaudado(data.totalRecaudado || 0); // Actualizar el total recaudado
         setNumeroOrdenesHoy(data.numeroOrdenesHoy || 0); // Actualizar el número de órdenes terminadas
       })
@@ -254,7 +253,14 @@ const OrdenesDashboard = () => {
   };
 
   const reloadPage = () => {
-  window.location.reload();
+      const hideMessage = message.loading('Cargando...', 0);
+  
+      fetchOrdenesEnEspera();
+      fetchOrdenesEnCurso();
+      fetchOrdenesPorPagar();
+      fetchOrdenesTerminadasHoy();
+    
+      setTimeout(hideMessage, 1000);
   };
 
   return (
@@ -302,9 +308,9 @@ const OrdenesDashboard = () => {
             <TableCell className="hidden"> Estado</TableCell>
           </TableRow>
         </TableHeader>
+        {ordenesEnEspera && ordenesEnEspera.length > 0 ? (
         <TableBody>
-          {ordenesEnEspera &&
-            ordenesEnEspera.map((orden: Orden) => (
+            {ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px]">
                 <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
                 <TableCell className="p-1 border-b">
@@ -404,7 +410,15 @@ const OrdenesDashboard = () => {
               </TableRow>
             ))}
         </TableBody>
-
+        ) : (
+          <TableBody>
+              <TableRow>
+                  <TableCell colSpan={6} className="text-center text-gray-500">
+                      
+                  </TableCell>
+              </TableRow>
+          </TableBody>
+        )}
         {/* ORDENES EN CURSO */}
         <OrdenesEnCurso
           ordenesEnCurso={ordenesEnCurso}

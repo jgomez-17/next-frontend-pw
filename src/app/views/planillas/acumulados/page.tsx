@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import ProtectedRoute from '@/app/components/protectedRoute';
+import { message } from 'antd';
 
 interface Acumulado {
     id: number;
@@ -34,7 +35,9 @@ const AcumuladosComponent = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://express-api-pw.onrender.com/api/acumulados?year=${currentYear}&month=${currentMonth}`);
+                const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados?year=${currentYear}&month=${currentMonth}`
+
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos.');
                 }
@@ -69,6 +72,7 @@ const AcumuladosComponent = () => {
             return '';
         }
     };
+    
 
     function formatNumber(number: number) {
         return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
@@ -134,6 +138,9 @@ const AcumuladosComponent = () => {
 
     const reloadPage = () => {
         window.location.reload();
+        const hideMessage = message.loading('Cargando...', 0);
+  
+        setTimeout(hideMessage, 1000);
     };
   
     return (

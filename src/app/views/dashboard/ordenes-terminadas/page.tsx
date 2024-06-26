@@ -28,7 +28,6 @@ interface Orden {
     const [ordenesTerminadas, setOrdenesTerminadas] = useState<Orden[]>([]);
 
 
-  //Fetch de ordenes en terminadas
   const fetchOrdenesTerminadas = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
   

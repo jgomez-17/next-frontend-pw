@@ -35,9 +35,10 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
   actualizarEstadoOrden3,
   cancelarOrden
 }) => (
+  <>
+  {ordenesEnCurso && ordenesEnCurso.length > 0 && (
   <TableBody>
-  {ordenesEnCurso &&
-    ordenesEnCurso.map((orden: Orden) => (
+    {ordenesEnCurso.map((orden: Orden) => (
       <TableRow key={orden.id} className="text-[12px]">
         <TableCell className="max-md:hidden px-4 font-bold w-20 p-2">{orden.id}</TableCell>
         <TableCell className="p-1">
@@ -124,6 +125,8 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
       </TableRow>
     ))}
 </TableBody>
+)}
+</>
 );
 
 export default OrdenesEnCursoTable;

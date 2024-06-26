@@ -2,12 +2,11 @@
 
 import React, {useEffect, useState} from 'react'
 import Navbar from '@/app/views/navbar/page'
-import ProtectedRoute from '@/app/components/protectedRoute'
 import Link from 'next/link'
 import { BackIcon, ReloadIcon } from '@/app/components/ui/iconos'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
-import { message, Modal, Select, Button } from "antd";
+import { message, Button } from "antd";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -39,7 +38,7 @@ const ClientesPage = () => {
     const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
     const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
 
-    //Fetch de ordenes en espera
+
     const fetchOrdenesEnEspera = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`; 
   
@@ -57,7 +56,6 @@ const ClientesPage = () => {
       fetchOrdenesEnEspera();  // Fetch initial data
     }, []);
   
-    //Fetch de ordenes en curso
     const fetchOrdenesEnCurso = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
 
@@ -75,7 +73,6 @@ const ClientesPage = () => {
       fetchOrdenesEnCurso();  // Fetch initial data
     }, []);
   
-    //fech de las ordenes por pagar
     const fetchOrdenesPorPagar = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
   
@@ -93,7 +90,6 @@ const ClientesPage = () => {
       fetchOrdenesPorPagar();
     }, []);
 
-    //Fetch de ordenes en terminadas
     const fetchOrdenesTerminadas = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
 
@@ -103,7 +99,6 @@ const ClientesPage = () => {
           setOrdenesTerminadas(data.ordenes);
         })
         .catch(error => console.error('Error fetching data:', error));
-        console.log('no hay ordenes en espera')
     };
 
     useEffect(() => {
@@ -111,12 +106,18 @@ const ClientesPage = () => {
     }, []);
 
     const reloadPage = () => {
-      window.location.reload();
+      const hideMessage = message.loading('Cargando...', 0);
+  
+      fetchOrdenesEnEspera()
+      fetchOrdenesPorPagar()
+      fetchOrdenesTerminadas()
+      fetchOrdenesEnCurso()
+      
+      setTimeout(hideMessage, 1000);
     };
 
   return (
       <>
-      <ProtectedRoute>
         <Navbar />
         <nav className='mt-20 gap-4 flex w-11/12 m-auto items-center justify-between' style={{ fontFamily: 'Roboto', }}>
             <Link href="/"
@@ -425,7 +426,6 @@ const ClientesPage = () => {
             ))}
         </TableBody>
       </Table>
-      </ProtectedRoute>
       </>
  )
 }

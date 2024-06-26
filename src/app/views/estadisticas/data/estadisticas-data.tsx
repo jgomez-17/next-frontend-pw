@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import { Spin } from 'antd'
 import { Bar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
 
