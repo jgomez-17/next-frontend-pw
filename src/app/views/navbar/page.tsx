@@ -19,7 +19,6 @@ const page = () => {
 
             <Link href="/" className=''>
               <Image
-                loading='lazy'
                 priority
                 className=' md:ml-8 flex pb-1 w-36'
                 src="/prontowash-img.png"
