@@ -13,7 +13,7 @@ const LogoutButton = () => {
     Cookies.remove('rol')
     Cookies.remove('username')
     
-    router.replace('/login')
+    router.replace('/principalPage')
     // window.location.href = '/login'; 
   };
 

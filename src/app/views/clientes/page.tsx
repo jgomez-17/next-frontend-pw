@@ -116,7 +116,6 @@ const ClientesPage = () => {
 
   return (
       <>
-        <Navbar />
         <nav className='mt-20 gap-4 flex w-11/12 m-auto items-center justify-between font-sans'>
             <Link href="/"
                   className='hover:bg-slate-200 px-3 py-0.5 rounded-full'  
@@ -126,7 +125,7 @@ const ClientesPage = () => {
             <Button type='text' onClick={reloadPage}>
               <ReloadIcon />
             </Button>
-            <Link href="/views/clientes/buscarPorPlaca">
+            <Link href="/views/clientes/buscarPorPlaca" className='text-sm bg-slate-100 px-2 py-1 rounded-md font-medium'>
               Buscar servicios
             </Link>
             <h1 className='ml-auto font-bold'>Clientes</h1>

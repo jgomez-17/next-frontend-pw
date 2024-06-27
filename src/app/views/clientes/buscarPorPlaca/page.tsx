@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { es } from "date-fns/locale"; 
-import Navbar from '@/app/views/navbar/page'
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
@@ -87,7 +86,6 @@ const OrdenesPorPlaca: React.FC = () => {
 
   return (
     <>
-    <Navbar />
     <div className="max-w-xl font-sans mt-16 mx-auto p-4 rounded-md">
       <h2 className="text-ms font-semibold max-md:text-center mb-6">Buscar ordenes</h2>
       <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col m-auto max-md:text-center">
