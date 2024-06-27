@@ -3,6 +3,8 @@
 import React from 'react';
 import { FaArrowTrendUp, FaPlay, FaStop } from "react-icons/fa6";
 import { MdOutlinePayment, MdDoneAll } from "react-icons/md";
+import { LuDollarSign } from "react-icons/lu";
+import { IoTimeOutline } from "react-icons/io5";
 import { IoCarSportSharp } from "react-icons/io5";
 import Link from 'next/link';
 
@@ -21,42 +23,42 @@ const CardsStats: React.FC<CardsStatsProps> = ({
   totalRecaudado
 }) => {
   return (
-     <ul className="flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" style={{ fontFamily: 'Roboto'}} >
-         <li className="text-[0.95rem] flex flex-col shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-             <Link href="#" className='h-screen'>
-                <span className='max-md:text-[13px] text-sm'>
+     <ul className="font-sans flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
+          <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+             <Link href="#">
+                <span className='flex items-center mt-2 justify-between font-medium text-sm '>
                   En espera
+                  <IoTimeOutline className='text-gray-400 text-xl' />
                 </span>
-                <IoCarSportSharp className="text-gray-800/60 max-md:text-5xl text-6xl max-md:translate-x-32 translate-y-5 translate-x-44 opacity-30" />
-                <p className='text-4xl font-semibold'> {numeroOrdenesEnEspera} </p>
+                <p className='text-3xl mt-6 font-bold'> {numeroOrdenesEnEspera} </p>
              </Link>
          </li>
-         <li className="text-[0.95rem] shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
+         <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
              <Link href="/views/dashboard/ordenes-por-pagar" className='h-screen'>
-                <span className='max-md:text-[13px] text-sm'>
+                <span className='flex items-center mt-2 justify-between font-medium text-sm '>
                   Por pagar
+                  <MdOutlinePayment className='text-gray-400 text-xl' />
                 </span>
-                <MdOutlinePayment className="text-gray-800/60 max-md:text-5xl text-6xl max-md:translate-x-32 translate-y-5 translate-x-44 opacity-30" />
-                <p className='text-4xl mt-3 font-semibold'> {numeroOrdenesPorPagar} </p>
+                <p className='text-3xl mt-6 font-bold'> {numeroOrdenesPorPagar} </p>
              </Link>
 
            </li>
-           <li className="text-[0.95rem] shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-               <Link href="/views/dashboard/ordenes-terminadas" className='h-screen'>
-                  <span className='max-md:text-[13px] text-sm'>
+           <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+               <Link href="/views/dashboard/ordenes-terminadas">
+                  <span className='flex items-center mt-2 justify-between font-medium text-sm '>
                     Terminadas
+                   <MdDoneAll className='text-gray-400 text-xl' />
                   </span>
-                  <MdDoneAll className="text-gray-800/60 max-md:text-5xl text-6xl max-md:translate-x-32 translate-y-5 translate-x-44 opacity-30" />
-                  <p className='text-4xl mt-3 font-semibold'> {numeroOrdenesHoy} </p>
+                  <p className='text-3xl mt-6 font-bold'> {numeroOrdenesHoy} </p>
                </Link>
            </li>
-           <li className="text-[0.95rem] shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[160px] h-[130px] p-2 md:p-4">
-               <Link href="#" className='h-screen'>
-                  <span className=' max-md:text-[13px] text-sm'>
+           <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] md:p-4">
+               <Link href="#">
+                  <span className='flex items-center mt-2 justify-between font-medium text-sm '>
                     Total vendido hoy
+                    <LuDollarSign className='text-gray-400 text-xl'  />
                   </span>
-                  <FaArrowTrendUp className="text-gray-800/60 max-md:text-5xl text-6xl max-md:translate-x-32 translate-y-2 translate-x-44 opacity-30" />
-                  <p className='text-2xl mt-3 font-bold'> {new Intl.NumberFormat("es-CO", {
+                  <p className='text-3xl mt-6 font-bold'> {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
                         minimumFractionDigits: 0,

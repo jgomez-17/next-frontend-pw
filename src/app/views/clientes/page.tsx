@@ -10,8 +10,6 @@ import { message, Button } from "antd";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-
-
 interface Orden {
   id: number;
   fechaOrden: string; // Asegúrate de que esta propiedad esté incluida
@@ -119,7 +117,7 @@ const ClientesPage = () => {
   return (
       <>
         <Navbar />
-        <nav className='mt-20 gap-4 flex w-11/12 m-auto items-center justify-between' style={{ fontFamily: 'Roboto', }}>
+        <nav className='mt-20 gap-4 flex w-11/12 m-auto items-center justify-between font-sans'>
             <Link href="/"
                   className='hover:bg-slate-200 px-3 py-0.5 rounded-full'  
             >
@@ -128,9 +126,12 @@ const ClientesPage = () => {
             <Button type='text' onClick={reloadPage}>
               <ReloadIcon />
             </Button>
+            <Link href="/views/clientes/buscarPorPlaca">
+              Buscar servicios
+            </Link>
             <h1 className='ml-auto font-bold'>Clientes</h1>
         </nav>
-        <Table className=" w-11/12 m-auto mt-4" style={{ fontFamily: 'Roboto'}}>
+        <Table className=" w-11/12 m-auto mt-4 font-sans">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm max-md:text-[11px]">
             <TableCell className="px-1 w-[5%] max-md:hidden max-md:justify-center">#</TableCell>

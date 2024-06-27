@@ -269,7 +269,6 @@ const OrdenesDashboard = () => {
       <Navbar />
 
       <nav 
-        style={{ fontFamily: 'Roboto',}}
         className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 "
       >
 
@@ -297,7 +296,7 @@ const OrdenesDashboard = () => {
       />
       
 
-      <Table className=" w-11/12 m-auto mt-4" style={{ fontFamily: 'Roboto'}}>
+      <Table className=" w-11/12 m-auto mt-4 font-sans">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm">
             <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
@@ -349,7 +348,7 @@ const OrdenesDashboard = () => {
                 <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
                   <section className="gap-4 w-max flex m-auto">
                   <Select
-                      className="my-auto max-md:hidden"
+                      className="my-auto max-md:hidden font-sans text-xs"
                       mode="multiple"
                       placeholder="Asignar lavadores"
                       value={selectedEmployees[orden.id] || []}

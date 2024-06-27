@@ -15,7 +15,7 @@ const AccesoDenegadoPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen" style={{ fontFamily: 'Fira Code Variable'}}>
+    <div className="flex flex-col items-center justify-center h-screen font-sans">
       <div className="max-w-md p-6 rounded-lg text-center">
         <BsEmojiGrimace className=' text-5xl m-auto mb-4' />
         <p className="text-gray-700 mb-4">

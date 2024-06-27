@@ -52,11 +52,9 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
         visible={visible}
         onCancel={handleCancel}
         footer={null}
-        style={{ fontFamily: 'Fira Sans'}}
       >
         <section
-          style={{ fontFamily: 'Roboto', }}
-          className="bg-slate-50/10 p-3 rounded-md"
+          className="bg-slate-50/10 font-sans p-3 rounded-md"
         >
           <span className="flex font-bold gap-2 my-1">
             Orden

@@ -275,10 +275,10 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           nombre_servicios: nombresServicios,
           servicios: servicios.map(servicio => ({
             nombre_servicio: servicio.nombre,
-            costo: servicio.costo
+            costo: servicio.costo,
+            descuento: descuento
           })),
           costo: costoConDescuento,
-          descuento: descuento
         };
         
           try {
@@ -396,14 +396,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
-        style={{fontFamily: 'Roboto'}} 
-        className=' font-roboto flex gap-1 ml-auto items-center bg-black text-white font-medium border border-gray-700 hover:bg-transparent hover:text-blue-900 hover:font-medium hover:border-blue-900 py-1 text-sm px-5 rounded-md' >
+        className='font-sans flex gap-1 ml-auto items-center bg-black text-white border border-gray-700 hover:bg-transparent hover:text-black py-1 text-sm px-5 rounded-md' >
         Nueva orden
         <PlusIcon />
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto' >
+      className='max-md:w-svw overflow-y-auto font-sans' >
         <SheetHeader>
         <SheetTitle>Crear nueva orden</SheetTitle>
         <SheetDescription className='m-auto'>
@@ -413,8 +412,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             <Form 
               id='orden' 
               onSubmitCapture={handleSubmit} 
-              className='flex flex-col gap-10' 
-              style={{fontFamily: 'Roboto'}} 
+              className='flex flex-col gap-10 font-sans' 
             >
                 
                 {seccion === 1 && (
