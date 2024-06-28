@@ -6,6 +6,8 @@ import { format } from "date-fns";
 import { es } from "date-fns/locale"; 
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { DownloadIcon } from '@/app/components/ui/iconos';
 
 type Orden = {
   id: number;
@@ -82,72 +84,88 @@ const OrdenesPorPlaca: React.FC = () => {
   };
 
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
 
   return (
     <>
-    <div className="max-w-xl font-sans mt-16 mx-auto p-4 rounded-md">
-      <h2 className="text-ms font-semibold max-md:text-center mb-6">Buscar ordenes</h2>
-      <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col m-auto max-md:text-center">
-        <p className=' text-sm font-medium'> Ingrese la placa del vehiculo</p>
-        <label className="flex items-center gap-3 w-max">
-          <Input
-            type="text"
-            className="uppercase w-36 h-8 my-2"
-            value={placa}
-            onChange={(e) => {
-              let inputValue = e.target.value.toUpperCase();
-              inputValue = inputValue.replace(/[^A-Z, 0-9]/g, '');
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
-              if (inputValue.length > 3) {
-                inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
-              }
+            <DialogTrigger className='transition text-xs flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
+              Descargar Factura 
+              <DownloadIcon />
+            </DialogTrigger>
 
-              inputValue = inputValue.replace(/[^A-Z0-9\-]/g, '');
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle> </DialogTitle>
+            <DialogDescription>
 
-              if (inputValue.includes('-')) {
-                const parts = inputValue.split('-');
-                parts[1] = parts[1].replace(/[^0-9]/g, '');
-                inputValue = parts.join('-');
-              }
+            </DialogDescription>
+          </DialogHeader>
+          <div className="max-w-xl font-geist mx-auto p-4 rounded-md">
+              <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col m-auto max-md:text-center">
+                <p className=' text-sm font-medium'> Ingrese la placa del vehiculo</p>
+                <label className="flex items-center gap-3 w-max">
+                  <Input
+                    type="text"
+                    className="uppercase w-36 h-8 my-4"
+                    value={placa}
+                    onChange={(e) => {
+                      let inputValue = e.target.value.toUpperCase();
+                      inputValue = inputValue.replace(/[^A-Z, 0-9]/g, '');
 
-              inputValue = inputValue.slice(0, 7);
-              setPlaca(inputValue);
-            }} 
-            maxLength={7} // Permitir 3 letras, 1 guión y 3 números
-            required 
-          />
-        <Button htmlType='submit' type='default' className=' bg-black text-white'>
-          Buscar
-        </Button>
-        </label>
-      </form>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      {ordenes && (
-        <div>
-          <h3 className="text-sm max-md:text-center font-medium mb-2 text-gray-600">Historial</h3>
-          <ul className="divide-y divide-gray-200">
-            {ordenes.map((orden) => (
-              <li key={orden.id} className="py-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <strong className="block text-sm">{orden.vehiculo.marca}</strong>
-                    <p className="text-xs text-gray-500">{orden.vehiculo.placa}</p>
-                    <p className="text-xs text-gray-500">{orden.servicio.nombre}</p>
-                    {/* Mostrar más detalles según sea necesario */}
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
-                    <p className="text-xs text-gray-500 capitalize">{orden.cliente.nombre}</p>
+                      if (inputValue.length > 3) {
+                        inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
+                      }
 
-                  </div>
+                      inputValue = inputValue.replace(/[^A-Z0-9\-]/g, '');
+
+                      if (inputValue.includes('-')) {
+                        const parts = inputValue.split('-');
+                        parts[1] = parts[1].replace(/[^0-9]/g, '');
+                        inputValue = parts.join('-');
+                      }
+
+                      inputValue = inputValue.slice(0, 7);
+                      setPlaca(inputValue);
+                    }} 
+                    maxLength={7} // Permitir 3 letras, 1 guión y 3 números
+                    required 
+                  />
+                <Button htmlType='submit' type='default' className=' bg-black text-white'>
+                  Buscar
+                </Button>
+                </label>
+              </form>
+              {error && <p className="text-red-500 mb-4">{error}</p>}
+              {ordenes && (
+                <div>
+                  <h3 className="text-sm max-md:text-center font-medium mb-2 text-gray-600">Historial</h3>
+                  <ul className="divide-y divide-gray-200">
+                    {ordenes.map((orden) => (
+                      <li key={orden.id} className="py-4 border-b">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <strong className="block text-sm">{orden.vehiculo.marca}</strong>
+                            <p className="text-xs text-gray-500">{orden.vehiculo.placa}</p>
+                            <p className="text-xs text-gray-500">{orden.servicio.nombre}</p>
+                            {/* Mostrar más detalles según sea necesario */}
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
+                            <p className="text-xs text-gray-500 capitalize">{orden.cliente.nombre}</p>
+
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+              )}
+            </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

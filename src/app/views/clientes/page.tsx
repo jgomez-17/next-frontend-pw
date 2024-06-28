@@ -9,6 +9,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { message, Button } from "antd";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { DownloadIcon } from '@/app/components/ui/iconos'
+import Historial from '@/app/views/clientes/buscarPorPlaca/page'
 
 interface Orden {
   id: number;
@@ -38,8 +40,8 @@ const ClientesPage = () => {
 
 
     const fetchOrdenesEnEspera = () => {
-      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`; 
-  
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`;
+
        fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -49,13 +51,13 @@ const ClientesPage = () => {
         .catch(error => console.error('Error fetching data:', error));
         setNumeroOrdenesEnEspera(0)
     };
-  
+
     useEffect(() => {
       fetchOrdenesEnEspera();  // Fetch initial data
     }, []);
-  
+
     const fetchOrdenesEnCurso = () => {
-      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`;
 
       fetch(apiUrl)
         .then(response => response.json())
@@ -66,14 +68,14 @@ const ClientesPage = () => {
         .catch(error => console.error('Error fetching data:', error));
         // setNumeroOrdenesEnEspera(0)
     };
-    
+
     useEffect(() => {
       fetchOrdenesEnCurso();  // Fetch initial data
     }, []);
-  
+
     const fetchOrdenesPorPagar = () => {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
-  
+
       fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
@@ -83,7 +85,7 @@ const ClientesPage = () => {
       .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesPorPagar(0)
     };
-  
+
     useEffect(() => {
       fetchOrdenesPorPagar();
     }, []);
@@ -105,32 +107,35 @@ const ClientesPage = () => {
 
     const reloadPage = () => {
       const hideMessage = message.loading('Cargando...', 0);
-  
+
       fetchOrdenesEnEspera()
       fetchOrdenesPorPagar()
       fetchOrdenesTerminadas()
       fetchOrdenesEnCurso()
-      
+
       setTimeout(hideMessage, 1000);
     };
 
   return (
       <>
-        <nav className='mt-20 gap-4 flex w-11/12 m-auto items-center justify-between font-sans'>
+        <h1 className='font-geist text-center my-4 font-bold tracking-tighter leading-tight text-3xl'>Bienvenido a Prontowash</h1>
+        <nav className='mt-4 gap-4 flex w-11/12 m-auto items-center justify-between font-geist'>
             <Link href="/"
-                  className='hover:bg-slate-200 px-3 py-0.5 rounded-full'  
+                  className='hover:bg-slate-200 px-3 py-0.5 rounded-full'
             >
                 <BackIcon />
             </Link>
             <Button type='text' onClick={reloadPage}>
               <ReloadIcon />
             </Button>
-            <Link href="/views/clientes/buscarPorPlaca" className='text-sm bg-slate-100 px-2 py-1 rounded-md font-medium'>
-              Buscar servicios
-            </Link>
-            <h1 className='ml-auto font-bold'>Clientes</h1>
+            {/* <Link href="/views/clientes/buscarPorPlaca" className='text-xs flex items-center gap-2 bg-black text-white px-3 py-1 rounded-sm font-medium'>
+              Generar factura
+              <DownloadIcon />
+            </Link> */}
+            <Historial />
+            <h1 className='ml-auto font-bold'>Estado del servicio</h1>
         </nav>
-        <Table className=" w-11/12 m-auto mt-4 font-sans">
+        <Table className=" w-11/12 m-auto mt-4 font-geist">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm max-md:text-[11px]">
             <TableCell className="px-1 w-[5%] max-md:hidden max-md:justify-center">#</TableCell>
@@ -176,7 +181,7 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
                 <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
@@ -216,7 +221,7 @@ const ClientesPage = () => {
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden p-0.5 font-bold w-20 border-b">{orden.id}</TableCell>
+                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
                 <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
@@ -247,9 +252,9 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
                 <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
@@ -282,12 +287,12 @@ const ClientesPage = () => {
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>        
+        </TableBody>
         <TableBody>
           {ordenesPorPagar &&
             ordenesPorPagar.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden p-0.5 font-bold border-b">{orden.id}</TableCell>
+                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
                 <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
@@ -318,9 +323,9 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
                 <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
@@ -358,7 +363,7 @@ const ClientesPage = () => {
           {ordenesTerminadas &&
             ordenesTerminadas.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden p-0.5 font-bold border-b">{orden.id}</TableCell>
+                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
                 <TableCell className="p-0.5 border-b max-md:hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
@@ -389,9 +394,9 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
                       <p> {orden.empleado} </p>
                 </TableCell>
                 <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">

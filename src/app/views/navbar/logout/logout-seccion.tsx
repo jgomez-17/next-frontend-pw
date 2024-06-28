@@ -41,11 +41,11 @@ export function NavigationMenuDemo() {
   }
 
   return (
-    <NavigationMenu className=" text-sm font-sans">
+    <NavigationMenu className=" text-sm font-geist">
       <NavigationMenuList className="">
         <NavigationMenuItem>
           <NavigationMenuTrigger className="px-6 gap-3 capitalize text-blue-600 hover:text-blue-600 rounded-md h-8 bg-blue-600/5">
-            {rol && <p className="font-semibold text-sm">{rol}</p>}
+            {rol && <p className="text-sm">{rol}</p>}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="">
             <ul className="">

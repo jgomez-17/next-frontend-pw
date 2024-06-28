@@ -53,62 +53,54 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
         onCancel={handleCancel}
         footer={null}
       >
-        <section
-          className="bg-slate-50/10 font-sans p-3 rounded-md"
+
+
+        <main
+          className="mt-2 gap-2 font-geist flex"
         >
-          <span className="flex font-bold gap-2 my-1">
-            Orden
-            <p>{orden.id}</p>
-          </span>
-
-          <span className="font-bold">
-            Fecha 
-            <p className="font-normal">{formattedDate}</p>
-          </span>
-
-          <span className="flex font-bold gap-2 my-1">
-            Vehículo:
-            <p className="font-normal">{orden.vehiculo.tipo}</p>
-            <p className="font-normal">{orden.vehiculo.marca}</p>
-            <p className="font-normal">{orden.vehiculo.color}</p>
-          </span>
-
-          <span className="flex gap-2 font-bold my-1">
-            Propietario:
-            <p className="capitalize font-normal">
-              {orden.cliente.nombre}
+          
+        <section className="flex flex-col w-full gap-4">
+          <p className="inline-block font-geist text-xs">
+            Orden # {orden.id}
+          </p>
+            <div className="text-xs">
+              <span>Vehiculo:</span>
+              <span className="flex h-max gap-1 text-gray-500 font-sans ">
+                <p className=""> {orden.vehiculo.tipo} </p> 
+                <p className=""> {orden.vehiculo.marca} </p> 
+                <p className=""> {orden.vehiculo.color} </p> 
+              </span>
+            </div>
+          <div className="text-xs">
+            <span> Servicio: </span>
+            <p className=" text-gray-500 font-sans">
+              {orden.servicio.nombre_servicios}
             </p>
-          </span>
+          </div>
+            <p className="text-xs">
+              {orden.vehiculo.llaves} dejó llaves
+          </p>
+        </section>
 
-          <span className="flex items-center gap-2 font-bold">
-            Celular: 
-            <p className="font-normal text-xs">
-              {orden.cliente.celular}
-            </p>
-          </span>
-
-          <span className="font-bold flex gap-2 my-1">
-            Dejó llaves?
-            <p className="font-normal">
-              {orden.vehiculo.llaves}
-            </p>
-          </span>
-
-          <span className="flex gap-2 font-bold my-1">
-            Asignado a:
-            <p className="font-normal">
+        <section className=" flex flex-col w-full gap-4">
+          <p className="text-xs float-end mr-6 text-gray-500 font-sans">
+                {formattedDate}
+          </p>
+          <div className="text-xs flex flex-col gap-1">
+            <span>Cliente:</span>
+            <span className="capitalize text-xs text-gray-500 font-sans">
+                {orden.cliente.nombre} <br />
+                <p className="text-[11px]">{orden.cliente.celular}</p>
+            </span>
+          </div>
+          <span className="flex gap-2 text-xs">
+            Lavador:
+            <p className="font-sans capitalize text-gray-500 ">
               {orden.empleado}
             </p>
           </span>
 
-          <span className="font-bold flex gap-2 my-1">
-            Servicio/s:
-            <p className="font-normal">
-              {orden.servicio.nombre_servicios}
-            </p>
-          </span>
-
-          <span className={`flex w-max px-2 py-1 my-3 rounded-md font-medium ${
+          <span className={` w-max px-2 rounded-md font-medium text-xs ${
             orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
             orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
             orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
@@ -117,9 +109,19 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             }`}>
             {orden.estado}
           </span>
-
         </section>
 
+
+
+          
+
+
+
+
+
+
+
+        </main>
       </Modal>
     </>
   );

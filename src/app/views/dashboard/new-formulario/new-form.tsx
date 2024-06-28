@@ -396,13 +396,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
-        className='font-sans flex gap-1 ml-auto items-center bg-black text-white border border-gray-700 hover:bg-transparent hover:text-black py-1 text-sm px-5 rounded-md' >
+        className='font-sans flex gap-1 ml-auto items-center bg-black text-white border border-gray-700 hover:bg-transparent hover:text-black py-1 text-xs px-5 rounded-md' >
         Nueva orden
         <PlusIcon />
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto font-sans' >
+      className='max-md:w-svw overflow-y-auto font-geist' >
         <SheetHeader>
         <SheetTitle>Crear nueva orden</SheetTitle>
         <SheetDescription className='m-auto'>
@@ -412,7 +412,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             <Form 
               id='orden' 
               onSubmitCapture={handleSubmit} 
-              className='flex flex-col gap-10 font-sans' 
+              className='flex flex-col gap-10 font-geist text-xs' 
             >
                 
                 {seccion === 1 && (
@@ -470,7 +470,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         </span>
                         
                         <Input 
-                          className='input uppercase w-[150px]' 
+                          className='input uppercase w-[150px] my-2' 
                           type="text" 
                           value={placa} 
                           onChange={(e) => {
@@ -507,7 +507,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={marca}
                             onValueChange={(value) => setMarca(value)}
                         >
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-[180px] my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -552,7 +552,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={tipo}
                             onValueChange={(value) => setTipo(value)}
                         >
-                            <SelectTrigger className="w-[150px]">
+                            <SelectTrigger className="w-[150px] my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -568,7 +568,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={color}
                             onValueChange={(value) => setColor(value)}
                         >
-                            <SelectTrigger className="w-[180px]">
+                            <SelectTrigger className="w-[180px] my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -593,7 +593,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={llaves}
                             onValueChange={(value) => setLlaves(value)}
                         >
-                            <SelectTrigger className="w-[130px]">
+                            <SelectTrigger className="w-[130px] my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -605,7 +605,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
                       <label>
                         <span className='ml-1 text-zinc-500'>Observaciones</span>
-                        <Textarea rows={2} value={observaciones} onChange={(e) => setObservaciones(e.target.value)}/>
+                        <Textarea className='my-2' rows={2} value={observaciones} onChange={(e) => setObservaciones(e.target.value)}/>
                       </label>
                   </fieldset>
 
@@ -613,7 +613,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     <legend>Datos del cliente</legend>
                     <label>
                       <span className='ml-1 text-zinc-500'>Nombre</span>
-                      <Input className='input capitalize max-md:w-40 ' 
+                      <Input className='capitalize max-md:w-40 my-2' 
                         type="text" value={nombre} 
                         onChange={(e) => setNombre(e.target.value)} 
                         required
@@ -622,7 +622,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     <label>
                       <span className='ml-1 text-zinc-500'>Celular</span>
                       <Input 
-                        className='input max-md:w-40'
+                        className='max-md:w-40 my-2'
                         type="text" 
                         value={celular} 
                         onChange={(e) => {
@@ -632,28 +632,17 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         }} 
                         maxLength={10}             />
                     </label>
-                    {/* <label>
-                      <span className='ml-1 text-zinc-500'>Celular</span>
-                      <Input 
-                        className='input max-md:w-40'
-                        type="text" 
-                        value={celular} 
-                        onChange={(e) => {
-                          const formattedValue = e.target.value.replace(/\D/g, '');
-                          const trimmedValue = formattedValue.slice(0, 10);
-                          setCelular(trimmedValue);
-                        }} 
-                        maxLength={10}             />
-                    </label> */}
+
                     <label>
                         <span className='ml-1 text-zinc-500'>Correo</span>
                         <Input 
-                          className='input'
+                          className='my-2'
                           type="email" 
                           value={correoCliente} 
                           onChange={(e) => setCorreoCliente(e.target.value)} 
                         />
                     </label>
+
                   </fieldset>
 
                   <section className='flex max-w-min m-auto gap-3'>
@@ -680,13 +669,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     <legend>Datos del Servicio</legend>
                       <section className='w-max gap-7 mt-0 rounded-md flex flex-col'>
                       <label>
-                        <span> Servicios </span>
+                        <span className='text-zinc-500'> Servicios </span>
                         <div className='flex items-center gap-4'>
                         <Select
                             value={servicioSeleccionado}
                             onValueChange={(value) => setServicioSeleccionado(value)}
                         >
-                            <SelectTrigger className="w-[350px] max-md:w-[280px]">
+                            <SelectTrigger className="w-[350px] max-md:w-[280px] my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -709,11 +698,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                       </label>
 
                       <label>
-                          <span>
+                          <span className='text-zinc-500'>
                             Aplicar descuento
                           </span>
                           <Input 
-                            className='w-36'
+                            className='w-36 my-2'
                             placeholder='$'
                             type="number" 
                             value={descuento || ''} 

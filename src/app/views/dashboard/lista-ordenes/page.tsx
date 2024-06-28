@@ -269,7 +269,7 @@ const OrdenesDashboard = () => {
       <Navbar />
 
       <nav 
-        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 "
+        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 font-geist "
       >
 
 
@@ -280,7 +280,7 @@ const OrdenesDashboard = () => {
           <article className="flex items-center gap-4">
           <Link 
             href="/views/planillas/cierre-diario"
-            className="text-sm font-medium border hover:bg-slate-50 hover:border-transparent py-1.5 px-5 rounded-md"
+            className="text-xs font-medium border hover:bg-slate-50 hover:border-transparent py-2 px-5 rounded-md"
           >
             Cierre
           </Link>
@@ -296,7 +296,7 @@ const OrdenesDashboard = () => {
       />
       
 
-      <Table className=" w-11/12 m-auto mt-4 font-sans">
+      <Table className=" w-11/12 m-auto mt-4 font-geist">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm">
             <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
@@ -317,14 +317,14 @@ const OrdenesDashboard = () => {
                     <p className="font-semibold flex flex-col capitalize">
                       {orden.cliente.nombre}
                     </p>
-                    <p className="">{orden.cliente.celular}</p>
+                    <p className="text-gray-500 font-sans">{orden.cliente.celular}</p>
                   </section>
                 </TableCell>
                 <TableCell className="p-1 border-b">
                   <p className="w-full font-semibold">
                     {orden.vehiculo.placa}
                   </p>
-                  <section className="gap-1 md:flex">
+                  <section className="gap-1 md:flex text-gray-500 font-sans">
                     <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
                     <p>{orden.vehiculo.marca}</p>
                     <p className="max-md:hidden">{orden.vehiculo.color}</p>
@@ -343,7 +343,7 @@ const OrdenesDashboard = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:hidden">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:hidden text-gray-500 font-sans">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
                 <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
                   <section className="gap-4 w-max flex m-auto">

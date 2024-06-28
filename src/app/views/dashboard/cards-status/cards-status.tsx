@@ -23,41 +23,42 @@ const CardsStats: React.FC<CardsStatsProps> = ({
   totalRecaudado
 }) => {
   return (
-     <ul className="font-sans flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
-          <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
-             <Link href="#">
-                <span className='flex items-center mt-2 justify-between font-medium text-sm '>
+    <>
+     <ul className="font-geist flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
+          <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+             <Link href="#" className='w-full'>
+                <span className='mt-2 font-medium text-xs inline-block'>
                   En espera
-                  <IoTimeOutline className='text-gray-400 text-xl' />
                 </span>
+                  <IoTimeOutline className='text-gray-500 text-xl inline-block float-end mt-2' />
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesEnEspera} </p>
              </Link>
          </li>
-         <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
-             <Link href="/views/dashboard/ordenes-por-pagar" className='h-screen'>
-                <span className='flex items-center mt-2 justify-between font-medium text-sm '>
+         <li className=" shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+             <Link href="/views/dashboard/ordenes-por-pagar" className='w-full'>
+                <span className='mt-2 font-medium text-xs inline-block'>
                   Por pagar
-                  <MdOutlinePayment className='text-gray-400 text-xl' />
                 </span>
+                  <MdOutlinePayment className='text-gray-500 text-xl inline-block float-end mt-2' />
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesPorPagar} </p>
              </Link>
 
            </li>
-           <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
-               <Link href="/views/dashboard/ordenes-terminadas">
-                  <span className='flex items-center mt-2 justify-between font-medium text-sm '>
+           <li className=" shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+               <Link href="/views/dashboard/ordenes-terminadas" className='w-full'>
+                  <span className='mt-2 font-medium text-xs inline-block'>
                     Terminadas
-                   <MdDoneAll className='text-gray-400 text-xl' />
                   </span>
+                   <MdDoneAll className='text-gray-500 text-xl inline-block mt-2 float-end' />
                   <p className='text-3xl mt-6 font-bold'> {numeroOrdenesHoy} </p>
                </Link>
            </li>
-           <li className=" shadow hover:shadow-sm rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] md:p-4">
-               <Link href="#">
-                  <span className='flex items-center mt-2 justify-between font-medium text-sm '>
+           <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+               <Link href="#" className='w-full'>
+                  <span className='inline-block mt-2 font-medium text-xs '>
                     Total vendido hoy
-                    <LuDollarSign className='text-gray-400 text-xl'  />
                   </span>
+                    <LuDollarSign className='inline-block float-end mt-2 text-gray-500 text-xl'  />
                   <p className='text-3xl mt-6 font-bold'> {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",
@@ -67,6 +68,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
                </Link>
            </li>
      </ul>
+     </>
   );
 };
 
