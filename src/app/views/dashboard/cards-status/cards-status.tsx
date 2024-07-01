@@ -24,7 +24,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
 }) => {
   return (
     <>
-     <ul className="font-geist flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
+     <ul className=" flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
           <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
              <Link href="#" className='w-full'>
                 <span className='mt-2 font-medium text-xs inline-block'>

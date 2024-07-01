@@ -56,46 +56,46 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
 
 
         <main
-          className="mt-2 gap-2 font-geist flex"
+          className="mt-2 gap-2 flex"
         >
           
         <section className="flex flex-col w-full gap-4">
-          <p className="inline-block font-geist text-xs">
+          <p className="inline-block font-geist text-xs font-medium">
             Orden # {orden.id}
           </p>
             <div className="text-xs">
-              <span>Vehiculo:</span>
-              <span className="flex h-max gap-1 text-gray-500 font-sans ">
+              <span className="font-medium">Vehiculo:</span>
+              <span className="flex h-max gap-1 text-gray-500">
                 <p className=""> {orden.vehiculo.tipo} </p> 
                 <p className=""> {orden.vehiculo.marca} </p> 
                 <p className=""> {orden.vehiculo.color} </p> 
               </span>
             </div>
           <div className="text-xs">
-            <span> Servicio: </span>
-            <p className=" text-gray-500 font-sans">
+            <span className="font-medium"> Servicio: </span>
+            <p className=" text-gray-500">
               {orden.servicio.nombre_servicios}
             </p>
           </div>
-            <p className="text-xs">
+            <p className="text-xs font-medium">
               {orden.vehiculo.llaves} dejó llaves
           </p>
         </section>
 
         <section className=" flex flex-col w-full gap-4">
-          <p className="text-xs float-end mr-6 text-gray-500 font-sans">
+          <p className="text-xs float-end mr-6 text-gray-500 ">
                 {formattedDate}
           </p>
           <div className="text-xs flex flex-col gap-1">
-            <span>Cliente:</span>
-            <span className="capitalize text-xs text-gray-500 font-sans">
+            <span className="font-medium">Cliente:</span>
+            <span className="capitalize text-xs text-gray-500 ">
                 {orden.cliente.nombre} <br />
                 <p className="text-[11px]">{orden.cliente.celular}</p>
             </span>
           </div>
-          <span className="flex gap-2 text-xs">
+          <span className="flex gap-2 text-xs font-medium">
             Lavador:
-            <p className="font-sans capitalize text-gray-500 ">
+            <p className="capitalize text-gray-500 font-normal ">
               {orden.empleado}
             </p>
           </span>

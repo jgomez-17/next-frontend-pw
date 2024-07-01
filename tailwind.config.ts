@@ -20,9 +20,6 @@ const config = {
       },
     },
     extend: {
-      fontFamily: {
-        geist: ['Geist Sans', ...defaultTheme.fontFamily.sans],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

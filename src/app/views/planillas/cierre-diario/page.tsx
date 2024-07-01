@@ -279,6 +279,7 @@ const GenerarPlanilla = () => {
               body: [...tableData, totalRow, netoLavadorRow, totalRestanteRow],
               head: [lavadorRow, ['Id', 'Vehículo', 'Placa', 'Valor']], // Agregar lavadorRow como parte del head
               startY: posY,
+              theme: 'grid',
               headStyles: { fillColor: [226, 232, 240], font: 'helvetica', textColor: [0, 0, 0], fontSize: 8, fontStyle: 'bold' },
               columnStyles: {
                   0: { cellWidth: 5, },
@@ -343,8 +344,7 @@ const GenerarPlanilla = () => {
       <Navbar /> 
 
       <nav 
-        className="w-11/12 max-md:w-full top-[70px] left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-20 py-2 fixed"
-        style={{ fontFamily: 'Roboto'}}
+        className="w-11/12 max-md:w-full top-[65px] left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-20 py-2 fixed"
       >
         <Link
             className='py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
@@ -364,51 +364,53 @@ const GenerarPlanilla = () => {
         <h1 className='w-max flex font-bold text-md max-md:hidden'>Planillario de Gestion</h1>
       </nav>
 
-      <article id="pdf-content" style={{ fontFamily: 'Roboto'}}>
+      <article id="pdf-content">
 
       <section 
-          className="w-11/12 max-md:w-full max-md:mx-1 gap-1 flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
+          className="w-11/12 max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
       >
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Servicios:</strong>{numeroOrdenesHoy}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Vendido:</strong> {formatNumber(totalRecaudado)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Spa:</strong> {formatNumber(totalSpa)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Satelital:</strong> {formatNumber(totalSatelital)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Efectivo:</strong> {formatNumber(totalEfectivo)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Bancolombia:</strong> {formatNumber(totalBancolombia)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Nequi:</strong> {formatNumber(totalNequi)}</p>
-        <p className="flex flex-col gap-2 max-md:px-1 rounded"><strong>Administración:</strong>
+        <p className="flex w-16 flex-col gap-2 max-md:px-1 rounded"><strong>Servicios:</strong>{numeroOrdenesHoy}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Vendido:</strong> {formatNumber(totalRecaudado)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Spa:</strong> {formatNumber(totalSpa)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Satelital:</strong> {formatNumber(totalSatelital)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Efectivo:</strong> {formatNumber(totalEfectivo)}</p>
+        <p className="flex w-24 flex-col gap-2 max-md:px-1 rounded"><strong>Bancolombia:</strong> {formatNumber(totalBancolombia)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Nequi:</strong> {formatNumber(totalNequi)}</p>
+        <p className="flex w-24 flex-col gap-1 rounded"><strong>Administración:</strong>
           <Input
               value={pagoAdministracion.toString()}
               onChange={(e) => setPagoAdministracion(Number(e.target.value))}
-              className="h-6 w-28 text-xs"
+              className="h-6 w-24 text-xs"
             />
         </p>
-        <p className="flex flex-col gap-2"><strong>Ventas:</strong>
+        <p className="flex w-24 flex-col gap-1"><strong>Ventas:</strong>
           <Input
               value={pagoVentas.toString()}
               onChange={(e) => setPagoVentas(Number(e.target.value))}
-              className=" h-6 w-28 text-xs"
+              className=" h-6 w-24 text-xs"
           />      
         </p>
     
-        <p className="flex flex-col gap-2"><strong>Meta:</strong>
+        <p className="flex w-24 flex-col gap-1"><strong>Meta:</strong>
           <Input
               value={meta.toString()}
               onChange={(e) => setMeta(Number(e.target.value))}
-              className=" h-6 w-28 text-xs"
+              className=" h-6 w-24 text-xs"
           />
         </p>
-        <p className="flex flex-col gap-2"><strong>Adicionales:</strong>
+
+        <p className="flex w-24 flex-col gap-1"><strong>Adicionales:</strong>
           <Input
               value={gastosAdicionales.toString()}
               onChange={(e) => setGastosAdicionales(Number(e.target.value))}
-              className=" h-6 w-28 text-xs"
+              className=" h-6 w-24 text-xs"
           />
         </p>
-        <p className="flex flex-col gap-2"><strong>Total Restante:</strong> {formatNumber(totalRestanteGeneral)}</p>
+
+        <p className="flex w-24 flex-col gap-1"><strong>Total Restante:</strong> {formatNumber(totalRestanteGeneral)}</p>
       </section>
 
-      <main className="w-11/12 m-auto flex flex-wrap gap-8 mt-4">
+      <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
         {Object.keys(ordenesPorLavador).sort((a, b) => {
           const lavadorA = lavadores.find(l => l.nombre === a);
           const lavadorB = lavadores.find(l => l.nombre === b);
@@ -421,14 +423,14 @@ const GenerarPlanilla = () => {
           const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
           const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
           return (
-            <div key={nombreLavador} className="mb-8 ml-2 text-sm">
-              <div className="flex items-center justify-between">
-                <h2 className="font-semibold mb-2 capitalize">{nombreLavador}</h2>
+            <div key={nombreLavador} className="text-sm">
+              <div className="flex items-center justify-between mb-1">
+                <h2 className="font-semibold pl-1 capitalize">{nombreLavador}</h2>
                 <Select
                   defaultValue={lavador.seccion}
                   onValueChange={(value) => handleSectionChange(nombreLavador, value)}
                 >
-                  <SelectTrigger className="w-[100px] h-7">
+                  <SelectTrigger className="w-[100px] text-xs h-6">
                     <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
@@ -437,10 +439,10 @@ const GenerarPlanilla = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Table className="border">
+              <Table className="border text-xs">
                 <TableHeader>
-                  <TableRow>
-                    <TableCell className="px-2 w-10 py-1 text-xs items-center">Id</TableCell>
+                  <TableRow className=" font-medium">
+                    <TableCell className="px-2 w-10 py-1 items-center"> # </TableCell>
                     <TableCell className="w-24 py-1">Vehículo</TableCell>
                     <TableCell className="w-22 py-1">Placa</TableCell>
                     <TableCell className="w-20 py-1">Valor</TableCell>
@@ -476,20 +478,20 @@ const GenerarPlanilla = () => {
                     </TableRow>
                   ))}
                   <TableRow>
-                    <TableCell colSpan={3} className="font-bold py-0 px-2">Totales</TableCell>
-                    <TableCell className="font-bold py-2">
+                    <TableCell colSpan={3} className="font-medium py-0 px-2">Totales</TableCell>
+                    <TableCell className="font-medium py-2">
                       {formatNumber(totalCosto)}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={3} className="font-bold py-0 px-2">Neto Lavador</TableCell>
-                    <TableCell className="font-bold py-2">
+                    <TableCell colSpan={3} className="font-medium py-0 px-2">Neto Lavador</TableCell>
+                    <TableCell className="font-medium py-2">
                       {formatNumber(totalGanancia)}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={3} className="font-bold py-0 px-2"></TableCell>
-                    <TableCell className="font-bold py-2">
+                    <TableCell colSpan={3} className="font-medium py-0 px-2"></TableCell>
+                    <TableCell className="font-medium py-2">
                       {formatNumber(totalRestante)}
                     </TableCell>
                   </TableRow>

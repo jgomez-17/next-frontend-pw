@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+// import '../../public/fonts/fonts.css'
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
 

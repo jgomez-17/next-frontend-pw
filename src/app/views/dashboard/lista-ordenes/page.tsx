@@ -296,7 +296,7 @@ const OrdenesDashboard = () => {
       />
       
 
-      <Table className=" w-11/12 m-auto mt-4 font-geist">
+      <Table className=" w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm">
             <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>

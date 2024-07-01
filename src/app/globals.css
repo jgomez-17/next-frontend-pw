@@ -2,16 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "@fontsource/geist-sans"; /* Importa el archivo principal de la fuente */
-
-
-/* :root {
+ :root {
   --font-sans: 'Inter', sans-serif;
 }
 
 .font-sans {
   font-family: var(--font-sans);
-} */
+} 
 
 
   @layer base {

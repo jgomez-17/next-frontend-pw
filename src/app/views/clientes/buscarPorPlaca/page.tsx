@@ -5,9 +5,12 @@ import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { es } from "date-fns/locale"; 
 import { CheckCircleOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { DownloadIcon } from '@/app/components/ui/iconos';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { DownloadIcon, SearchIcon } from '@/app/components/ui/iconos';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 type Orden = {
   id: number;
@@ -86,6 +89,87 @@ const OrdenesPorPlaca: React.FC = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
+  };
+
+  // Función para generar el PDF
+  const generarPDF = () => {
+      if (!ordenes || ordenes.length === 0) return;
+  
+      const doc = new jsPDF();
+  
+      // Fecha actual formateada
+      const fechaActual = new Date();
+      const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`;
+  
+      // Datos del primer cliente y vehículo encontrados
+      const primerOrden = ordenes[0];
+      const { cliente, vehiculo, servicio } = primerOrden;
+  
+      // Encabezado
+      doc.setFontSize(18);
+      doc.setFont('times'); 
+      doc.text('Factura', 20, 20);
+  
+      // Fecha
+      doc.setFontSize(10);
+      doc.text(`Fecha: ${fechaFormateada}`, 150, 22);
+  
+      // Datos del cliente
+      doc.setFontSize(10);
+      doc.text(`Facturar a:`, 20, 40);
+      doc.text(`${cliente.nombre}`, 20, 46);
+      doc.text(`${cliente.celular}`, 20, 52);
+  
+      // Datos del vehículo
+      doc.text(`Vehículo: `, 150, 40);
+      doc.text(`${vehiculo.tipo} ${vehiculo.marca} ${vehiculo.color}`, 150, 46);
+      doc.text(`Placa: ${vehiculo.placa}`, 150, 51);
+  
+      // Observaciones del vehículo (si las hay)
+      if (vehiculo.observaciones) {
+        doc.text(`Observaciones: ${vehiculo.observaciones}`, 150, 52);
+      }
+  
+      // Detalles de los servicios
+      const serviciosData = ordenes.map((orden) => [
+        orden.servicio.nombre,
+        formatNumber(orden.servicio.costo)
+      ]);
+      const columnStyles = {
+        0: { cellWidth: 100 },
+        1: { cellWidth: 70 }
+      };
+  
+      // Calcular subtotal, descuento y total
+      const subtotal = ordenes.reduce((acc, curr) => acc + curr.servicio.costo, 0);
+      const descuento = servicio.descuento || 0;
+      const total = subtotal - descuento;
+  
+      // Generar tabla de servicios
+      autoTable(doc, {
+        head: [['Servicio', 'Costo Unitario']],
+        body: serviciosData,
+        startY: 80,
+        theme: 'plain',
+        margin: { left: 20 },
+        headStyles: { fillColor: [226, 232, 240], font: 'times', textColor: [0, 0, 0], fontStyle: 'bold' },
+        columnStyles: columnStyles,
+        bodyStyles: {font: 'times'},
+        didDrawPage: (data) => {
+          // Totales
+          const cursorY = data.cursor?.y ?? 10;
+          const totalY = cursorY + 10;
+          doc.text(`Subtotal: ${formatNumber(subtotal)}`, 22, totalY);
+          doc.text(`Descuento: ${formatNumber(descuento)}`, 22, totalY + 5);
+          doc.text(`Total: ${formatNumber(total)}`, 22, totalY + 10);
+        }
+      });
+  
+      // Guardar o mostrar el PDF
+      doc.save(`Factura_${placa}.pdf`);
+    };
 
   return (
     <>
@@ -103,9 +187,9 @@ const OrdenesPorPlaca: React.FC = () => {
 
             </DialogDescription>
           </DialogHeader>
-          <div className="max-w-xl font-geist mx-auto p-4 rounded-md">
-              <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col m-auto max-md:text-center">
-                <p className=' text-sm font-medium'> Ingrese la placa del vehiculo</p>
+          <div className="w-full mx-auto rounded-md">
+              <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col">
+                <p className='text-sm font-medium'> Ingrese la placa del vehiculo</p>
                 <label className="flex items-center gap-3 w-max">
                   <Input
                     type="text"
@@ -133,34 +217,52 @@ const OrdenesPorPlaca: React.FC = () => {
                     maxLength={7} // Permitir 3 letras, 1 guión y 3 números
                     required 
                   />
-                <Button htmlType='submit' type='default' className=' bg-black text-white'>
-                  Buscar
+                <Button type='submit' variant={'default'}  className=' bg-black text-white h-8 text-xs'>
+                  <SearchIcon />
                 </Button>
                 </label>
               </form>
-              {error && <p className="text-red-500 mb-4">{error}</p>}
+              {error && <p className=" mb-4">{error}</p>}
               {ordenes && (
-                <div>
-                  <h3 className="text-sm max-md:text-center font-medium mb-2 text-gray-600">Historial</h3>
-                  <ul className="divide-y divide-gray-200">
+                <div className='w-full'>
+                  <div className='flex items-center justify-between'>
+                    <h3 className="text-sm font-medium text-gray-600">Historial </h3>
+                    <p className='text-xs font-light text-gray-500'>(seleccione su nombre para descargar su recibo)</p>
+                  </div>
+                  <Accordion type="single" collapsible className="w-full">
                     {ordenes.map((orden) => (
-                      <li key={orden.id} className="py-4 border-b">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <strong className="block text-sm">{orden.vehiculo.marca}</strong>
-                            <p className="text-xs text-gray-500">{orden.vehiculo.placa}</p>
-                            <p className="text-xs text-gray-500">{orden.servicio.nombre}</p>
-                            {/* Mostrar más detalles según sea necesario */}
+                      <AccordionItem key={orden.id} value={`item-${orden.id}`}>
+                        <AccordionTrigger>
+                          <div className="flex items-center w-full py-4">
+                            <div className="flex items-center justify-between w-full pr-4">
+                              <Button 
+                                onClick={generarPDF}
+                                className="block font-semibold text-xs capitalize p-0 h-4 bg-white text-black hover:bg-white"
+                              >
+                                {orden.cliente.nombre}
+                              </Button>
+                              <p className="text-[11px] md:text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
-                            <p className="text-xs text-gray-500 capitalize">{orden.cliente.nombre}</p>
-
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <div className="py-2">
+                            <div className="flex items-start justify-between w-full">
+                              <div className="w-[40%]">
+                                <p className="text-[11px] md:text-xs text-gray-500">{orden.vehiculo.marca}</p>
+                                <p className="text-[11px] md:text-xs text-gray-500">{orden.vehiculo.placa}</p>
+                                {/* Mostrar más detalles según sea necesario */}
+                              </div>
+                              <div className="w-[60%] flex flex-col gap-1">
+                                <p className="text-[11px] md:text-xs text-gray-500 leading-tight">{orden.servicio.nombre}</p>
+                                {/* Mostrar más detalles adicionales aquí */}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </li>
+                        </AccordionContent>
+                      </AccordionItem>
                     ))}
-                  </ul>
+                  </Accordion>
                 </div>
               )}
             </div>

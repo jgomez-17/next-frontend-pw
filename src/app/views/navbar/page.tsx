@@ -12,26 +12,24 @@ const page = () => {
   return (
     <>
         <ul 
-          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 p-1 flex fixed top-0 w-full max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30 font-sans'
+          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 flex fixed top-0 w-full max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'
         >
-          <article className='flex gap-4'>
-
+          <article className='flex md:ml-8'>
             <Link href="/" className=''>
               <Image
                 priority
-                className=' md:ml-8 flex pb-1 w-36'
+                className='flex w-[170px]'
                 src="/prontowash-img.png"
                 alt='logo'
                 width={500}
                 height={300}
               ></Image>
             </Link>
-
           </article>
 
-          <article className='flex ml-auto gap-2 max-md:gap-0'>
+          <article className='flex ml-auto h-12 gap-2 max-md:gap-0 w-max'>
             <Link href="/views/clientes"
-                  className='flex px-3 rounded-md items-center text-sm gap-2 hover:bg-gray-100'
+                  className='flex px-4 rounded-md items-center text-sm gap-2 hover:bg-gray-100 max-md:hidden'
             > 
               <UsersIcon />              
             </Link>

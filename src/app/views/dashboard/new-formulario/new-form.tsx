@@ -279,6 +279,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             descuento: descuento
           })),
           costo: costoConDescuento,
+          descuento: descuento
         };
         
           try {

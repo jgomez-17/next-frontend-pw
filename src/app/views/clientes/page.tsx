@@ -11,6 +11,7 @@ import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { DownloadIcon } from '@/app/components/ui/iconos'
 import Historial from '@/app/views/clientes/buscarPorPlaca/page'
+import Image from 'next/image'
 
 interface Orden {
   id: number;
@@ -118,14 +119,21 @@ const ClientesPage = () => {
 
   return (
       <>
-        <h1 className='font-geist text-center my-4 font-bold tracking-tighter leading-tight text-3xl'>Bienvenido a Prontowash</h1>
-        <nav className='mt-4 gap-4 flex w-11/12 m-auto items-center justify-between font-geist'>
+          <Image
+            priority
+            className='w-44 m-auto'
+            src="/prontowash-img.png"
+            alt='logo'
+            width={500}
+            height={300}
+          ></Image>        
+          <nav className='mt-4 gap-4 flex w-11/12 m-auto items-center justify-between font-geist'>
             <Link href="/"
                   className='hover:bg-slate-200 px-3 py-0.5 rounded-full'
             >
                 <BackIcon />
             </Link>
-            <Button type='text' onClick={reloadPage}>
+            <Button type='text' onClick={reloadPage} className=' max-md:mr-auto'>
               <ReloadIcon />
             </Button>
             {/* <Link href="/views/clientes/buscarPorPlaca" className='text-xs flex items-center gap-2 bg-black text-white px-3 py-1 rounded-sm font-medium'>
@@ -133,7 +141,7 @@ const ClientesPage = () => {
               <DownloadIcon />
             </Link> */}
             <Historial />
-            <h1 className='ml-auto font-bold'>Estado del servicio</h1>
+            <h1 className='ml-auto font-bold max-md:hidden'>Estado del servicio</h1>
         </nav>
         <Table className=" w-11/12 m-auto mt-4 font-geist">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">

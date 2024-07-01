@@ -51,7 +51,7 @@ interface Orden {
         <nav className='roundedflex-col flex justify-between w-11/12 m-auto mt-20'style={{ fontFamily: 'Roboto'}}>
           <Link
             className='flex px-3 py-2 rounded-full font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
-            href="/views/dashboard/lista-ordenes">
+            href="/">
             <MdOutlineArrowBackIos />
           </Link>
           <h1 className=' font-bold pt-1 text-[0.9rem]'>

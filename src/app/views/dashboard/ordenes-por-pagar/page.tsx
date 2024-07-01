@@ -97,7 +97,7 @@ const OrdenesPorPagar = () => {
 
   return (
     <>
-    <ProtectedRoute>
+    <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
       <Navbar />
       <section className='mt-20' style={{ fontFamily: 'Roboto'}}>
         <nav className='rounded flex justify-between w-11/12 m-auto'>
@@ -116,21 +116,22 @@ const OrdenesPorPagar = () => {
               <TableCell className="max-md:hidden w-24 px-1 text-center">#</TableCell>
               <TableCell className="w-36 px-1">Cliente</TableCell>
               <TableCell className="w-52 px-1">Vehículo</TableCell>
-              <TableCell className="md:w-72 px-1 max-md:w-80">Servicio</TableCell>
-              <TableCell> </TableCell>
+              <TableCell className="md:w-72 px-1 max-md:text-center max-md:w-80">Servicio</TableCell>
+              <TableCell className=' max-md:hidden'> </TableCell>
+              <TableCell className='w-36'> </TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
             {ordenesPorPagar && ordenesPorPagar.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px]">
-                <TableCell className="max-md:hidden w-16 p-2 font-bold text-center border-b-1">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b-1 border-black">
+                <TableCell className="max-md:hidden w-16 p-2 font-bold text-center border-b">{orden.id}</TableCell>
+                <TableCell className="p-1 border-b">
                       <span className="font-semibold flex flex-col capitalize">
                         {orden.cliente.nombre}
                       </span>
                       <span>{orden.cliente.celular}</span>
-                  </TableCell>
-                  <TableCell className="p-1 border-b-1">
+                </TableCell>
+                <TableCell className="p-1 border-b">
                     <span className="w-full font-semibold">
                       {orden.vehiculo.placa}
                     </span>
@@ -142,9 +143,9 @@ const OrdenesPorPagar = () => {
                     <span className="hidden">
                       {orden.vehiculo.llaves} <span>dejó llaves</span>
                     </span>
-                  </TableCell>
-                  <TableCell className="p-1 border-b-1">
-                    <section className='flex flex-col max-md:items-center gap-2'>
+                </TableCell>
+                <TableCell className="p-1 border-b">
+                    <section className='flex flex-col max-md:items-center'>
                       <span className="font-bold  flex flex-col">
                         {new Intl.NumberFormat("es-CO", {
                           style: "currency",
@@ -154,22 +155,22 @@ const OrdenesPorPagar = () => {
                       </span>
                       <span className="max-md:text-[0.8rem] max-md:hidden">{orden.servicio.nombre_servicios}</span>
                     </section>
-                  </TableCell>
-                  <TableCell className="gap-2 items-start max-md:items-start text-xs border-b-1 border-black">
-                      <section className='flex gap-4 items-center'>
+                </TableCell>
+                <TableCell className="py-1 text-xs border-b max-md:hidden">
+                      <section className='flex max-md:flex-col justify-start w-max gap-2 items-center max-md:hidden'>
                           <Radio.Group 
                             value={metodosPago[orden.id] || ''}
                             buttonStyle="solid"
                             className='flex w-max my-auto items-center'
                             onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
                             >
-                            <Radio.Button title='Efectivo' className='flex items-center' value="Efectivo">
+                            <Radio.Button title='Efectivo' className='flex items-center px-3' value="Efectivo">
                               <GiMoneyStack className=' text-[18px]' />
                             </Radio.Button>
-                            <Radio.Button title='Bancolombia' className='flex items-center' value="Bancolombia">
+                            <Radio.Button title='Bancolombia' className='flex items-center px-1' value="Bancolombia">
                               <BancolombiaIcon />
                             </Radio.Button>
-                            <Radio.Button title='Nequi' className='flex items-center' value="Nequi">
+                            <Radio.Button title='Nequi' className='flex items-center px-1' value="Nequi">
                               <NequiIcon />
                             </Radio.Button>
                             {/* <Radio.Button title='Transferencia' className='flex items-center' value="Transferencia">
@@ -177,24 +178,28 @@ const OrdenesPorPagar = () => {
                             </Radio.Button> */}
                           </Radio.Group>
                             <Button
-                              className='flex items-center h-8 text-xs bg-black text-white'
+                              className='flex items-center h-7 text-xs bg-black text-white'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
-                            Pagar
+                              Pagar
                             </Button>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger className="max-md:m-auto">
-                                <BsThreeDotsVertical className=" text-2xl" />
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent>
-                              <DropdownMenuItem>
-                                <span onClick={(e) => e.stopPropagation()}>
-                                  <DetallesOrden orden={orden} />
-                                </span>
-                              </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
                       </section>
+                      
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="max-md:m-auto hidden">
+                          <BsThreeDotsVertical className=" text-2xl" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <span onClick={(e) => e.stopPropagation()}>
+                            <DetallesOrden orden={orden} />
+                          </span>
+                        </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                </TableCell>
+                <TableCell className='border-b'>
+                  <DetallesOrden orden={orden} />
                 </TableCell>
               </TableRow>
             ))}

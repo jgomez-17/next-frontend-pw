@@ -3,6 +3,10 @@
 import React, { useEffect, useState} from 'react'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger,} from "@/components/ui/sheet"
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import { message } from 'antd';
+import { Button } from '@/components/ui/button';
+import { ReloadIcon } from '@/app/components/ui/iconos';
+
 interface Orden {
     id: number;
     fechaOrden: string;
@@ -39,15 +43,29 @@ const ResumenOrdenes = () => {
       fetchOrdenesTerminadas();  // Fetch initial data
     }, []);
 
+    const reloadPage = () => {
+      const hideMessage = message.loading('Cargando...', 0);
+  
+      fetchOrdenesTerminadas();
+
+    
+      setTimeout(hideMessage, 1000);
+  };
+
 
   return (
     <Sheet>
-    <SheetTrigger className='text-xs max-md:mr-auto border h-8 hover:bg-slate-200 px-5 py-2 rounded-md font-bold'>
+    <SheetTrigger className='text-xs max-md:mr-auto border h-8 hover:bg-slate-200 px-5 py-2 rounded-md font-medium'>
         Ordenes
     </SheetTrigger>
     <SheetContent className='overflow-y-auto' style={{ fontFamily: 'Roboto'}}>
         <SheetHeader>
-        <SheetTitle>Servicios realizados hoy</SheetTitle>
+        <SheetTitle className='flex items-center gap-2'>
+          <Button variant={'ghost'} onClick={reloadPage}>
+            <ReloadIcon />
+          </Button>
+          Servicios realizados hoy
+        </SheetTitle>
         <SheetDescription>
 
         </SheetDescription>
