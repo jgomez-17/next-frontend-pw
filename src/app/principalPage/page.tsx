@@ -20,7 +20,7 @@ const PrincipalPage = () => {
               <Link href="/login" className='py-1 text-center bg-blue-950 text-white'>
                   Ingresar como empleado
               </Link>
-              <Link href="/views/clientes" className='py-1 text-center underline hover:text-blue-900'>
+              <Link href="/views/clientes" className='py-1 font-medium text-center underline hover:text-blue-900'>
                   Continuar como cliente
               </Link>
           </div>

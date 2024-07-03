@@ -61,7 +61,7 @@ const OrdenesDashboard = () => {
     fetch(apiUrl)
       .then(response => response.json())
       .then((data: { body: Lavador[] }) => {
-        setLavadores(data.body);
+        setLavadores(data.body || '');
       })
       .catch(error => console.error('Error al obtener datos de lavadores:', error));
   };
@@ -77,9 +77,10 @@ const OrdenesDashboard = () => {
      fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        setOrdenesEnEspera(data.ordenes || [] );
+        setOrdenesEnEspera(data.ordenes);
         setNumeroOrdenesEnEspera(data.numeroOrdenesEnEspera || 0);
       })
+
       // .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesEnEspera(0)
   };

@@ -31,6 +31,7 @@ interface Orden {
       correo: string;
     };
     vehiculo: {
+      placa: string;
       marca: string;
       tipo: string;
       color: string;
@@ -291,11 +292,12 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                },
                body: JSON.stringify({ data: dataOrdens })
              });
-        
+
+             
              if (!responseOrdenes.ok) {
                console.error('Error en la petición:', responseOrdenes.statusText);
-             }
-             
+              }
+
         
             // resetea el formulario si las solicitudes son exitosas
               setPlaca('');
@@ -338,6 +340,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       // Encabezado
       doc.setFontSize(18);
       doc.text('Factura', 20, 20);
+      // doc.text(`Orden ID: ${orderId}`, 20, 60);
     
       // Encabezado de los datos del cliente
       doc.setFontSize(12);

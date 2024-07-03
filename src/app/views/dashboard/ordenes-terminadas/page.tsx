@@ -37,7 +37,6 @@ interface Orden {
           setOrdenesTerminadas(data.ordenes);
         })
         .catch(error => console.error('Error fetching data:', error));
-        console.log('no hay ordenes en espera')
   };
   
   useEffect(() => {

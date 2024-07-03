@@ -206,9 +206,7 @@ const Page: React.FC = () => {
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
-      </Dialog>
-
-      <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
+        <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
           <thead>
             <tr className='text-sm'>
               <th className='w-14 text-left p-1 border-b hidden'>ID</th>
@@ -245,6 +243,7 @@ const Page: React.FC = () => {
             ))}
           </tbody>
         </table>
+      </Dialog>
         </section>
       </ProtectedRoute>
     </>

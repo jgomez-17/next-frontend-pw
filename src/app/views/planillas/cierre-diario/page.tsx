@@ -361,7 +361,7 @@ const GenerarPlanilla = () => {
           Guardar y descargar
           <DownloadIcon />
         </Button>
-        <h1 className='w-max flex font-bold text-md max-md:hidden'>Planillario de Gestion</h1>
+        <h1 className='w-max flex font-semibold text-md max-md:hidden'>Planillario de Gestion</h1>
       </nav>
 
       <article id="pdf-content">
@@ -369,21 +369,21 @@ const GenerarPlanilla = () => {
       <section 
           className="w-11/12 max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
       >
-        <p className="flex w-16 flex-col gap-2 max-md:px-1 rounded"><strong>Servicios:</strong>{numeroOrdenesHoy}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Vendido:</strong> {formatNumber(totalRecaudado)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Spa:</strong> {formatNumber(totalSpa)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Satelital:</strong> {formatNumber(totalSatelital)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Efectivo:</strong> {formatNumber(totalEfectivo)}</p>
-        <p className="flex w-24 flex-col gap-2 max-md:px-1 rounded"><strong>Bancolombia:</strong> {formatNumber(totalBancolombia)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><strong>Nequi:</strong> {formatNumber(totalNequi)}</p>
-        <p className="flex w-24 flex-col gap-1 rounded"><strong>Administración:</strong>
+        <p className="flex w-16 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
+        <p className="flex w-24 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
+        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
+        <p className="flex w-24 flex-col gap-1 rounded"><span className="font-medium">Administración:</span>
           <Input
               value={pagoAdministracion.toString()}
               onChange={(e) => setPagoAdministracion(Number(e.target.value))}
               className="h-6 w-24 text-xs"
             />
         </p>
-        <p className="flex w-24 flex-col gap-1"><strong>Ventas:</strong>
+        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Ventas:</span>
           <Input
               value={pagoVentas.toString()}
               onChange={(e) => setPagoVentas(Number(e.target.value))}
@@ -391,7 +391,7 @@ const GenerarPlanilla = () => {
           />      
         </p>
     
-        <p className="flex w-24 flex-col gap-1"><strong>Meta:</strong>
+        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Meta:</span>
           <Input
               value={meta.toString()}
               onChange={(e) => setMeta(Number(e.target.value))}
@@ -399,7 +399,7 @@ const GenerarPlanilla = () => {
           />
         </p>
 
-        <p className="flex w-24 flex-col gap-1"><strong>Adicionales:</strong>
+        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Adicionales:</span>
           <Input
               value={gastosAdicionales.toString()}
               onChange={(e) => setGastosAdicionales(Number(e.target.value))}
@@ -407,7 +407,7 @@ const GenerarPlanilla = () => {
           />
         </p>
 
-        <p className="flex w-24 flex-col gap-1"><strong>Total Restante:</strong> {formatNumber(totalRestanteGeneral)}</p>
+        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Total Restante:</span> {formatNumber(totalRestanteGeneral)}</p>
       </section>
 
       <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">

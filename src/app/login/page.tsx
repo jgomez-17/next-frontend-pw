@@ -43,7 +43,6 @@ const LoginPage = () => {
             });
 
             const data = await response.json();
-            console.log(data)
 
             if (response.ok) {
                 const { token, usuario: user, nombre, rol, activo } = data.token;
@@ -53,13 +52,7 @@ const LoginPage = () => {
                 Cookies.set('rol', rol, { expires});
                 Cookies.set('username', usuario, { expires});
 
-                 console.log(token);
-                 console.log('Usuario:', usuario)
-                 console.log('Nombre:', nombre);
-                 console.log('Rol:', rol);
-                 console.log('Activo:', activo);
-
-                router.replace('/views/dashboard/lista-ordenes');
+                router.replace('/');
                 // window.location.href = '/views/dashboard/lista-ordenes';
             } else {
                 setError(data.message || 'Error al iniciar sesión');

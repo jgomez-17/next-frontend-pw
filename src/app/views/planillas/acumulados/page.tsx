@@ -61,6 +61,10 @@ const AcumuladosComponent = () => {
 
     const obtenerNombreDia = (fecha: string) => {
         try {
+            if(!fecha) {
+                throw new Error('fecha no proporcionada')
+            }
+
             const date = new Date(fecha);
             if (isNaN(date.getTime())) {
                 throw new Error('Fecha no válida');
@@ -182,7 +186,8 @@ const AcumuladosComponent = () => {
                                 return itemDay === day; // Comparar con el día del mes actual iterado
                             });
 
-                            const nombreDiaSemana = obtenerNombreDia(record?.fecha || '');
+                            const nombreDiaSemana = record && record.fecha ? obtenerNombreDia(record.fecha) : '';
+                            // const nombreDiaSemana = obtenerNombreDia(record?.fecha || '');
 
                             return (
                                 <TableRow key={day}>
