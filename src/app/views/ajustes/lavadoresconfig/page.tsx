@@ -168,7 +168,7 @@ const Page: React.FC = () => {
     <>
       <ProtectedRoute>
         <Navbar />
-        <section className='mt-20 w-11/12 m-auto max-md:p-0 md:ml-10 ' style={{ fontFamily: 'Roboto' }}>
+        <section className='mt-20 w-11/12 m-auto max-md:p-0 md:ml-10 '>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <nav className='flex w-full m-auto gap-4 justify-between items-center'>
             <Link

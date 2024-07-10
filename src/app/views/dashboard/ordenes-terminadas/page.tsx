@@ -2,11 +2,14 @@
 
 import React, {useState, useEffect} from 'react';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from '@/components/ui/button';
+import { message } from 'antd';
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import Link from 'next/link';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
+import { ReloadIcon } from '@/app/components/ui/iconos';
 
 interface Orden {
   id: number;
@@ -43,21 +46,32 @@ interface Orden {
     fetchOrdenesTerminadas();  // Fetch initial data
   }, []);
 
+  const reloadPage = () => {
+    const hideMessage = message.loading('Cargando...', 0);
+
+    fetchOrdenesTerminadas();
+  
+    setTimeout(hideMessage, 1000);
+  };
+
   return (
     <>
       <ProtectedRoute>
         <Navbar />
-        <nav className='roundedflex-col flex justify-between w-11/12 m-auto mt-20'style={{ fontFamily: 'Roboto'}}>
+        <nav className='roundedflex-col flex justify-between w-11/12 m-auto mt-20 gap-4'>
           <Link
             className='flex px-3 py-2 rounded-full font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
             href="/">
             <MdOutlineArrowBackIos />
           </Link>
+          <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
+            <ReloadIcon />
+          </Button>
           <h1 className=' font-bold pt-1 text-[0.9rem]'>
             Ordenes de hoy
           </h1>
         </nav>
-        <Table className=" w-11/12 m-auto mt-5 " style={{ fontFamily: 'Roboto'}}>
+        <Table className=" w-11/12 m-auto mt-5 ">
             <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
               <TableRow className=" text-sm">
                 <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>

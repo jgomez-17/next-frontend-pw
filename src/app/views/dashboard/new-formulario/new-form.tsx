@@ -318,6 +318,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             message.success('Orden generada')
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
+            retrocederSeccion();
             handleGenerarFactura();            
   
         } catch (error) {
@@ -357,7 +358,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       doc.setFontSize(10);
       doc.text(`Vehículo: `, 150, 40); 
       doc.setFontSize(10);
-      doc.text(`${marca} ${color}`, 150, 46)
+      doc.text(`${tipo} ${marca} ${color}`, 150, 46)
       doc.text(`Placa: ${placa}`, 150, 52); 
     
       // doc.text(`Llaves: ${llaves}`, 20, 55); // Puedes añadir más datos si es necesario
@@ -375,16 +376,19 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       autoTable(doc, {
         head: [['Servicio', 'Costo Unitario']],
         body: serviciosData,
+        theme: 'plain',
         startY: 80, // Ajustar el startY para dejar espacio entre los datos y la tabla
         margin: { left: 20 }, // Mueve la tabla a la derecha
+        headStyles: { fillColor: [226, 232, 240], font: 'times', textColor: [0, 0, 0], fontStyle: 'bold' },
+        bodyStyles: { font: 'times' },
         columnStyles: columnStyles,
         didDrawPage: (data) => {
           // Totales
           const cursorY = data.cursor?.y ?? 80;
           const totalY = cursorY + 10;
-          doc.text(`Subtotal: ${formatCurrency(costoServicios)}`, 20, totalY);
-          doc.text(`Descuento: ${formatCurrency(descuento)}`, 20, totalY + 5);
-          doc.text(`Total: ${formatCurrency(costoConDescuento)}`, 20, totalY + 10);
+          doc.text(`Subtotal: ${formatCurrency(costoServicios)}`, 22, totalY);
+          doc.text(`Descuento: ${formatCurrency(descuento)}`, 22, totalY + 5);
+          doc.text(`Total: ${formatCurrency(costoConDescuento)}`, 22, totalY + 10);
         }
       });
     

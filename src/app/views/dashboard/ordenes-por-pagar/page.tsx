@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
 import { BsCashCoin } from "react-icons/bs";
-import { DaviplataIcon, NequiIcon, BancolombiaIcon } from '@/app/components/ui/iconos'
+import { DaviplataIcon, NequiIcon, BancolombiaIcon, ReloadIcon } from '@/app/components/ui/iconos'
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -95,17 +95,28 @@ const OrdenesPorPagar = () => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
   };
 
+  const reloadPage = () => {
+    const hideMessage = message.loading('Cargando...', 0);
+
+    fetchOrdenesPorPagar();
+  
+    setTimeout(hideMessage, 1000);
+  };
+
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
       <Navbar />
-      <section className='mt-20' style={{ fontFamily: 'Roboto'}}>
-        <nav className='rounded flex justify-between w-11/12 m-auto'>
+      <section className='mt-20'>
+        <nav className='rounded flex justify-between w-11/12 m-auto gap-4'>
           <Link
             className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
             href="/">
             <BackIcon />
           </Link>
+          <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
+            <ReloadIcon />
+          </Button>
           <span className='font-bold p-1 text-[0.9rem]'> 
             Ordenes por pagar
           </span>

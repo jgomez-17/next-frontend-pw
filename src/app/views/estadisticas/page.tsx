@@ -32,7 +32,7 @@ const EstadisticasPage: React.FC = () => {
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <Navbar />
-            <main style={{ fontFamily: 'Roboto',}} className='mt-20'>
+            <main className='mt-20'>
                 <nav className='flex w-11/12 max-md:w-full max-md:px-1 gap-4 m-auto items-center justify-between'>
                     
                     <form onSubmit={handleSubmit} className='flex max-md:text-sm'>

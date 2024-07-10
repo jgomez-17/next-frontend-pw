@@ -248,7 +248,7 @@ const GenerarPlanilla = () => {
           ];
 
           const totalRow = [
-              'Totales:',
+              'Totales',
               '',
               '',
               formatNumber(totalCosto)
@@ -277,7 +277,7 @@ const GenerarPlanilla = () => {
 
           autoTable(doc, {
               body: [...tableData, totalRow, netoLavadorRow, totalRestanteRow],
-              head: [lavadorRow, ['Id', 'Vehículo', 'Placa', 'Valor']], // Agregar lavadorRow como parte del head
+              head: [lavadorRow, ['#', 'Vehículo', 'Placa', 'Valor']], // Agregar lavadorRow como parte del head
               startY: posY,
               theme: 'grid',
               headStyles: { fillColor: [226, 232, 240], font: 'helvetica', textColor: [0, 0, 0], fontSize: 8, fontStyle: 'bold' },
@@ -369,13 +369,13 @@ const GenerarPlanilla = () => {
       <section 
           className="w-11/12 max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
       >
-        <p className="flex w-16 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
-        <p className="flex w-24 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
-        <p className="flex w-20 flex-col gap-2 max-md:px-1 rounded"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
+        <p className="flex w-16 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
+        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
+        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
+        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
+        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
+        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
+        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
         <p className="flex w-24 flex-col gap-1 rounded"><span className="font-medium">Administración:</span>
           <Input
               value={pagoAdministracion.toString()}
@@ -407,7 +407,7 @@ const GenerarPlanilla = () => {
           />
         </p>
 
-        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Total Restante:</span> {formatNumber(totalRestanteGeneral)}</p>
+        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Total Restante:</span> {formatNumber(totalRestanteGeneral)}</p>
       </section>
 
       <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
@@ -430,7 +430,7 @@ const GenerarPlanilla = () => {
                   defaultValue={lavador.seccion}
                   onValueChange={(value) => handleSectionChange(nombreLavador, value)}
                 >
-                  <SelectTrigger className="w-[100px] text-xs h-6">
+                  <SelectTrigger className="w-[100px] text-xs h-6 rounded-none">
                     <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
