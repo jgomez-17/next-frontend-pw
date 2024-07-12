@@ -14,16 +14,14 @@ const LogoutButton = () => {
     Cookies.remove('username')
     
     router.replace('/principalPage')
-    // window.location.href = '/login'; 
   };
 
   return (
     <Button 
       onClick={handleLogout}
-      className='flex font-sans items-center hover:text-red-700 bg-transparent hover:bg-transparent text-black text-xs gap-2 rounded-full'
+      className='flex w-28 items-center bg-red-700 hover:bg-red-800 text-xs max-md:rounded-lg h-8'
       >
         Cerrar sesion
-      <LogoutIcon />
     </Button>
   );
 };

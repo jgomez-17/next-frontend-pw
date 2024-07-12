@@ -8,10 +8,10 @@ import Navbar from '@/app/views/navbar/page';
 import { BackIcon, DownloadIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
+import { generarPDF } from './crearPDF-acum';
 
 interface Acumulado {
     id: number;
@@ -84,64 +84,15 @@ const AcumuladosComponent = () => {
 
     const totalAcumulado = data.length > 0 ? data[data.length - 1] : null;
 
-    const generarPDF = () => {
-        const doc = new jsPDF();
-
-        // Título y fecha
-        doc.setFontSize(12);
-        doc.setFont('times');
-        doc.text(`Acumulado de ventas Prontowash`, 14, 20);
-        doc.setFontSize(10);
-        doc.text(` ${mesYAnio}`, 180, 20);
-
-        // Construir datos para la tabla
-        const tableData = data.map(item => [
-            obtenerNombreDia(item.fecha), // Día de la semana
-            new Date(item.fecha).getDate(), // Día del mes
-            formatNumber(item.venta_diaria), // Venta diaria
-            formatNumber(item.acum_venta_diaria), // Acumulado venta diaria
-            formatNumber(item.prontowash), // Prontowash
-            formatNumber(item.acum_prontowash), // Acumulado prontowash
-            item.servicios.toString(), // Servicios
-            item.acum_servicios.toString(), // Acumulado servicios
-        ]);
-
-        // Totales
-        const totalRow = [
-            'Totales',
-            '',
-            '',
-            formatNumber(totalAcumulado?.acum_venta_diaria || 0), // Acumulado venta diaria
-            '',
-            formatNumber(totalAcumulado?.acum_prontowash || 0), // Acumulado prontowash
-            '',
-            totalAcumulado?.acum_servicios.toString() || '0', // Acumulado servicios
-        ];
-
-        tableData.push(totalRow);
-
-        // Generar la tabla
-        autoTable(doc, {
-            startY: 30,
-            head: [
-                ['D/S', 'Día', 'Venta Diaria', 'Acum. Venta Diaria', 'Prontowash', 'Acum. Prontowash', 'Servicios', 'Acum. Servicios']
-            ],
-            body: tableData,
-            theme: 'grid',
-            headStyles: { fillColor: [226, 232, 240], textColor: [0, 0, 0], fontSize: 9, fontStyle: 'bold', font: 'times' },
-            styles: { fontSize: 8, font: 'helvetica' },
-            margin: { top: 25 },
-        });
-
-        // Descargar el PDF
-        doc.save(`acumulado_ventas_${mesYAnio}.pdf`);
-    };
-
     const reloadPage = () => {
         window.location.reload();
         const hideMessage = message.loading('Cargando...', 0);
 
         setTimeout(hideMessage, 1000);
+    };
+
+    const GenerarPDF = () => {
+        generarPDF(data, mesYAnio, totalAcumulado, obtenerNombreDia, formatNumber);
     };
 
     return (
@@ -156,7 +107,7 @@ const AcumuladosComponent = () => {
                     <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
                         <ReloadIcon />
                     </Button>
-                    <Button onClick={generarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
+                    <Button onClick={GenerarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
                         Descargar PDF
                         <DownloadIcon />
                     </Button>

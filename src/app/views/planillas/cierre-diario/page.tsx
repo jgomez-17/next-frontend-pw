@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; 
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from "@/app/components/protectedRoute";
 import { DownloadIcon, DeleteIcon, BackIcon } from "@/app/components/ui/iconos";
 import Link from "next/link";
+import { generarPDF } from "./crearPDF-cierre";
 
 interface Orden {
   id: number;
@@ -172,136 +171,24 @@ const GenerarPlanilla = () => {
   const formatNumber = (number: number) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
   };
-  
+
   const handleGenerarPDF = () => {
-      const doc = new jsPDF();
+    const totales = {
+      totalRecaudado,
+      totalSpa,
+      totalSatelital,
+      numeroOrdenesHoy,
+      totalEfectivo,
+      totalNequi,
+      totalBancolombia,
+      pagoAdministracion,
+      pagoVentas,
+      meta,
+      gastosAdicionales,
+      totalRestanteGeneral,
+    };
 
-      const fechaHoy = new Date().toLocaleDateString('es-CO');
-      const resumenData = [
-          { label: 'Vendido:', value: formatNumber(totalRecaudado) },
-          { label: 'SPA:', value: formatNumber(totalSpa) },
-          { label: 'Satelital:', value: formatNumber(totalSatelital) },
-          { label: 'Servicios:', value: numeroOrdenesHoy },
-          { label: 'Efectivo:', value: formatNumber(totalEfectivo) },
-          { label: 'Bancolombia:', value: formatNumber(totalBancolombia) },
-          { label: 'Nequi:', value: formatNumber(totalNequi) },
-          { label: 'Administración:', value: formatNumber(pagoAdministracion) },
-          { label: 'Ventas:', value: formatNumber(pagoVentas) },
-          { label: 'Meta:', value: formatNumber(meta) },
-          { label: 'Adicionales:', value: formatNumber(gastosAdicionales) },
-          { label: 'Total Restante:', value: formatNumber(totalRestanteGeneral) }
-      ];
-
-      doc.setFont('times');
-      doc.setFontSize(10);
-      doc.setTextColor('#333');
-          const titulo = 'Planillario de gestión';
-      doc.text(titulo, 15, 15);
-          const tituloWidth = doc.getTextWidth(titulo);
-          const fechaPosX = doc.internal.pageSize.width - 15 - doc.getTextWidth(fechaHoy);
-      doc.text(fechaHoy, fechaPosX, 15);
-
-      let posY = 30; // Posición Y inicial
-    
-
-      // Imprimir resumen en dos columnas
-      const halfLength = Math.ceil(resumenData.length / 2);
-      const firstHalf = resumenData.slice(0, halfLength);
-      const secondHalf = resumenData.slice(halfLength);
-
-      firstHalf.forEach((item, index) => {
-          doc.text(`${item.label} ${item.value}`, 15, posY);
-          posY += 6; // Incremento vertical
-      });
-
-      posY = 30; // Reiniciar posY para la segunda columna
-
-      secondHalf.forEach((item, index) => {
-          doc.text(`${item.label} ${item.value}`, 90, posY);
-          posY += 6; // Incremento vertical
-      });
-
-      posY += 10;
-      let posX = 15
-      
-      Object.keys(ordenesPorLavador).forEach(nombreLavador => {
-          const ordenes = ordenesPorLavador[nombreLavador];
-          const lavador = lavadores.find(l => l.nombre === nombreLavador);
-          const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
-          const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
-
-          const tableData = ordenes.map((orden: Orden) => {
-              return [orden.id.toString(), orden.vehiculo.marca, orden.vehiculo.placa, formatNumber(editableOrdenes[`${nombreLavador}-${orden.id}`])];
-          });
-
-          if (posX === 15) {
-            posX = 90; // Cambiar posición horizontal para la segunda tabla
-        } else {
-            posX = 15; // Reiniciar posición horizontal para la siguiente fila de tablas
-        }
-
-          const lavadorRow = [
-              { content: `${nombreLavador}`, styles: { cellWidth: 20 } },
-              { content: `${lavador.seccion}`, styles: { cellWidth: 20 } },
-              '',
-              '',
-          ];
-
-          const totalRow = [
-              'Totales',
-              '',
-              '',
-              formatNumber(totalCosto)
-          ];
-
-          const netoLavadorRow = [
-              'Neto Lavador',
-              '',
-              '',
-              formatNumber(totalGanancia)
-          ];
-
-          const totalRestanteRow = [
-              '',
-              '',
-              '',
-              formatNumber(totalRestante)
-          ];
-
-          const tableHeight = (tableData.length * 10) + 30;
-
-          if (posY + tableHeight > doc.internal.pageSize.height - 20) {
-              doc.addPage();
-              posY = 30;
-          }
-
-          autoTable(doc, {
-              body: [...tableData, totalRow, netoLavadorRow, totalRestanteRow],
-              head: [lavadorRow, ['#', 'Vehículo', 'Placa', 'Valor']], // Agregar lavadorRow como parte del head
-              startY: posY,
-              theme: 'grid',
-              headStyles: { fillColor: [226, 232, 240], font: 'helvetica', textColor: [0, 0, 0], fontSize: 8, fontStyle: 'bold' },
-              columnStyles: {
-                  0: { cellWidth: 5, },
-                  1: { cellWidth: 20 },
-                  2: { cellWidth: 20 },
-                  3: { cellWidth: 20 },
-              },
-              bodyStyles: { fontSize: 8 },
-          });
-
-          posY += tableHeight + 10; // Incremento vertical para la próxima tabla
-      });
-
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-      const day = today.getDate();
-
-      // Formatear la fecha como YYYY-MM-DD
-      const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-
-      doc.save(`planilla_${formattedDate}.pdf`);
+    generarPDF(totales, ordenesPorLavador, lavadores, editableOrdenes);
   };
 
   //inserta los totales para el acumulado
@@ -334,8 +221,14 @@ const GenerarPlanilla = () => {
   };
 
   const insertarYdescargar = () => {
-    insertAcumulados();
-    handleGenerarPDF()
+    
+    if (!insertAcumulados){
+      message.error('No se insertó el acumulado')
+      return;
+    } else {
+      insertAcumulados();
+      handleGenerarPDF()
+    }
   };
 
   return (

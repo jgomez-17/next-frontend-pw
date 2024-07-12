@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { message, Radio } from 'antd';
+import { message, Radio, Tooltip } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
@@ -175,15 +175,23 @@ const OrdenesPorPagar = () => {
                             className='flex w-max my-auto items-center'
                             onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
                             >
-                            <Radio.Button title='Efectivo' className='flex items-center px-3' value="Efectivo">
-                              <GiMoneyStack className=' text-[18px]' />
-                            </Radio.Button>
-                            <Radio.Button title='Bancolombia' className='flex items-center px-1' value="Bancolombia">
-                              <BancolombiaIcon />
-                            </Radio.Button>
-                            <Radio.Button title='Nequi' className='flex items-center px-1' value="Nequi">
-                              <NequiIcon />
-                            </Radio.Button>
+                              <Tooltip title="Efectivo">
+                                <Radio.Button className='flex items-center px-3' value="Efectivo">
+                                  <GiMoneyStack className=' text-[18px]' />
+                                </Radio.Button>
+                              </Tooltip>
+
+                              <Tooltip title="Bancolombia">
+                                <Radio.Button className='flex items-center px-1' value="Bancolombia">
+                                  <BancolombiaIcon />
+                                </Radio.Button>
+                              </Tooltip>
+
+                              <Tooltip title="Nequi">
+                                <Radio.Button className='flex items-center px-1' value="Nequi">
+                                  <NequiIcon />
+                                </Radio.Button>
+                              </Tooltip>
                             {/* <Radio.Button title='Transferencia' className='flex items-center' value="Transferencia">
                               <FaRegCreditCard />
                             </Radio.Button> */}

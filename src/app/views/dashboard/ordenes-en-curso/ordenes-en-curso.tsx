@@ -1,5 +1,3 @@
-// OrdenesEnCursoTable.tsx
-
 import React from "react";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
@@ -87,7 +85,6 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
                         actualizarEstadoOrden3(orden.id);
                       }}
                     >
-                    Finalizar
                   <FaStop className=" " />
                 </Button>
               ) : (

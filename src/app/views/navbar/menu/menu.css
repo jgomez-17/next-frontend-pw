@@ -1,0 +1,30 @@
+.dropdown-menu-container {
+    position: relative;
+    width: 100%; /* Ajusta el ancho según tu diseño */
+  }
+  
+  .menu-dropdown {
+    position: absolute;
+    top: 60px; /* Ajusta la posición superior según tu diseño */
+    right: 0;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para animación */
+    opacity: 0; /* Ocultar por defecto */
+    transform-origin: top right; /* Punto de origen de la transformación */
+    width: 100%; /* Ancho del menú desplegable */
+    pointer-events: none; /* Para evitar que el menú desplegable interfiera con los clics en el botón */
+  
+    &.open {
+      opacity: 1; /* Mostrar */
+      transform: scaleY(1); /* Mostrar */
+      pointer-events: auto; /* Permitir clics en el menú desplegable */
+    }
+  
+    &.closed {
+      opacity: 0; /* Ocultar */
+      transform: scaleY(0); /* Ocultar */
+    }
+  }
+  

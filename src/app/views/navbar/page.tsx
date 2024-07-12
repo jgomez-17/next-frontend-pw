@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { SettingsIcon, EstadisticasIcon, UsersIcon } from '@/app/components/ui/iconos';
 import { NavigationMenuDemo } from './logout/logout-seccion';
+import Menu from '@/app/views/navbar/menu/menu'
 
   
 const page = () => {
@@ -27,23 +28,24 @@ const page = () => {
             </Link>
           </article>
 
-          <article className='flex ml-auto h-12 gap-2 max-md:gap-0 w-max'>
+          <article className='flex ml-auto h-12 gap-2 max-md:gap-0 w-max max-md:hidden'>
             <Link href="/views/clientes"
                   className='flex px-4 rounded-md items-center text-sm gap-2 hover:bg-gray-100 max-md:hidden'
             > 
               <UsersIcon />              
             </Link>
-            <Link href="/views/estadisticas/"
+            <Link href="/views/estadisticas"
                   className='gap-2 px-3 flex font-medium items-center text-sm transition p-1 rounded-md hover:bg-gray-100'
             >
                 <EstadisticasIcon />
             </Link>
-            <Link href="/views/ajustes/" 
+            <Link href="/views/ajustes" 
                   className='ml-auto flex px-3 gap-2 items-center text-sm font-medium transition rounded-md hover:bg-gray-100'>
                 <SettingsIcon />
             </Link>
           </article>
           <NavigationMenuDemo />
+          <Menu />
         </ul>
     </>
   )

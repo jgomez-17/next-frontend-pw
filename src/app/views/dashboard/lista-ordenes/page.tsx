@@ -10,6 +10,7 @@ import Navbar from '@/app/views/navbar/page'
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import CardsStats from "../cards-status/cards-status";
 import OrdenesEnCurso from "../ordenes-en-curso/ordenes-en-curso";
+import OrdenesEnEspera from "../ordenes-en-espera/ordenes-en-espera"; // Import the new component
 import NewForm from "@/app/views/dashboard/new-formulario/new-form";
 import Link from "next/link";
 import ProtectedRoute from "@/app/components/protectedRoute";
@@ -54,7 +55,6 @@ const OrdenesDashboard = () => {
   const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-
   const fetchLavadores = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`; 
 
@@ -69,7 +69,6 @@ const OrdenesDashboard = () => {
   useEffect(() => {
     fetchLavadores();
   }, []);
-
 
   const fetchOrdenesEnEspera = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/enespera`; 
@@ -89,7 +88,6 @@ const OrdenesDashboard = () => {
     fetchOrdenesEnEspera();  // Fetch initial data
   }, []);
 
-
   const fetchOrdenesEnCurso = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
 
@@ -107,7 +105,6 @@ const OrdenesDashboard = () => {
     fetchOrdenesEnCurso();  // Fetch initial data
   }, []);
 
-
   const fetchOrdenesPorPagar = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
 
@@ -124,7 +121,6 @@ const OrdenesDashboard = () => {
   useEffect(() => {
     fetchOrdenesPorPagar();
   }, []);
-
 
   const fetchOrdenesTerminadasHoy = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/terminadohoy`
@@ -144,7 +140,6 @@ const OrdenesDashboard = () => {
   useEffect(() => {
     fetchOrdenesTerminadasHoy();  // Fetch initial data
   }, []);
-
 
   //Funcion para asignar lavador y poner en curso 
   const actualizarEstadoOrden = (orderId: number, selectedEmployees: string[]) => {
@@ -308,117 +303,15 @@ const OrdenesDashboard = () => {
             <TableCell className="hidden"> Estado</TableCell>
           </TableRow>
         </TableHeader>
-        {ordenesEnEspera && ordenesEnEspera.length > 0 ? (
-        <TableBody>
-            {ordenesEnEspera.map((orden: Orden) => (
-              <TableRow key={orden.id} className="text-[12px]">
-                <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
-                  <section>
-                    <p className="font-semibold flex flex-col capitalize">
-                      {orden.cliente.nombre}
-                    </p>
-                    <p className="text-gray-500 font-sans">{orden.cliente.celular}</p>
-                  </section>
-                </TableCell>
-                <TableCell className="p-1 border-b">
-                  <p className="w-full font-semibold">
-                    {orden.vehiculo.placa}
-                  </p>
-                  <section className="gap-1 md:flex text-gray-500 font-sans">
-                    <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
-                    <p>{orden.vehiculo.marca}</p>
-                    <p className="max-md:hidden">{orden.vehiculo.color}</p>
-                  </section>
-                  <span className="max-md:hidden md:hidden">
-                    {orden.vehiculo.llaves} <p>dejó llaves</p>
-                  </span>
-                </TableCell>
-                <TableCell className="px-1 py-3 border-b">
-                  <section className="flex max-md:flex-col">
-                    <p className="font-bold flex flex-col">
-                      {new Intl.NumberFormat("es-CO", {
-                        style: "currency",
-                        currency: "COP",
-                        minimumFractionDigits: 0,
-                      }).format(Number(orden.servicio.costo))}
-                    </p>
-                  </section>
-                  <p className="max-md:hidden text-gray-500 font-sans">{orden.servicio.nombre_servicios}</p>
-                </TableCell>
-                <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
-                  <section className="gap-4 w-max flex m-auto">
-                  <Select
-                      className="my-auto max-md:hidden font-sans text-xs"
-                      mode="multiple"
-                      placeholder="Asignar lavadores"
-                      value={selectedEmployees[orden.id] || []}
-                      onChange={(values) => handleEmpleadoChange(orden.id, values)}
-                      style={{ width: 160 }}
-                    >
-                      {lavadores
-                        .filter(lavador => lavador.activo === "1" && !(selectedEmployees[orden.id] || []).includes(lavador.nombre))
-                        .map(lavador => (
-                          <Option key={lavador.id} value={lavador.nombre}>
-                            <p className="capitalize">{lavador.nombre}</p>
-                          </Option>
-                        ))}
-                    </Select>
-                    {orden.estado === "en espera" ? (
-                        <Button
-                          className="flex max-md:hidden items-center gap-2 text-white text-xs bg-black hover:bg-blue-800"
-                          onClick={() => {
-                            actualizarEstadoOrden(orden.id, selectedEmployees[orden.id]);
-                          }}
-                        >
-                          Iniciar
-                          <FaPlay />
-                        </Button>
-                    ) : (
-                      <p>La orden está en otro estado</p>
-                    )}
+          <OrdenesEnEspera
+            ordenesEnEspera={ordenesEnEspera}
+            actualizarEstadoOrden={actualizarEstadoOrden}
+            cancelarOrden={cancelarOrden}
+            selectedEmployees={selectedEmployees}
+            handleEmpleadoChange={handleEmpleadoChange}
+            lavadores={lavadores}
+          />  
 
-                    <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <BsThreeDotsVertical className=" text-2xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem className=" max-md:hidden">
-                          <Button 
-                            onClick={() => cancelarOrden(orden.id)} 
-                            type="link"
-                            title="Cancelar orden"
-                            className="text-xs text-red-600 font-medium"
-                          >
-                            Cancelar orden
-                        </Button>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <DetallesOrden orden={orden} />
-                        </span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                  </section>
-                </TableCell>
-                <TableCell className="hidden w-24">
-                  <p className="flex text-xs p-1 rounded-md text-blue-600"> 
-                    {orden.estado} 
-                  </p>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-        ) : (
-          <TableBody>
-              <TableRow>
-                  <TableCell colSpan={6} className="text-center text-gray-500">
-                      
-                  </TableCell>
-              </TableRow>
-          </TableBody>
-        )}
         {/* ORDENES EN CURSO */}
         <OrdenesEnCurso
           ordenesEnCurso={ordenesEnCurso}
