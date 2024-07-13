@@ -29,13 +29,13 @@ const DropdownMenu = () => {
       <div className='md:hidden'>
 
       <Button
-        className='bg-transparent text-blue-900 border-none text-[25px]' 
+        className='bg-transparent text-blue-900 border-none text-[29px]' 
         onClick={handleToggleMenu} icon={menuOpen ? <RiCloseFill /> : <RiSortDesc />}>
       </Button>
 
       {/* Menú desplegable con animación */}
       <div className={`menu-dropdown ${menuOpen ? 'open' : 'closed'}`}>
-        <Menu>
+        <Menu className='py-2 gap-3 flex flex-col'>
         <Menu.Item key="1">
             <Link href='/views/clientes'
               className='flex ml-3 font-medium items-center gap-2 rounded'
@@ -61,15 +61,12 @@ const DropdownMenu = () => {
             </Link>
         </Menu.Item>
 
-        <Menu.Item key="3" disabled>
+        <Menu.Item key="3" disabled className=''>
           <div className='flex items-center justify-between'>
             <p className='capitalize h-7 flex items-center font-bold bg-slate-500/5 text-blue-900 w-max px-4 rounded-lg'> {rol} </p>
             <LogoutButton />
           </div>
         </Menu.Item>
-
-
-
         </Menu>
       </div>
       </div>

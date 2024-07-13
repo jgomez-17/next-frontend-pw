@@ -265,7 +265,7 @@ const OrdenesDashboard = () => {
       <Navbar />
 
       <nav 
-        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] mb-6 font-geist "
+        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] max-md:mt-[85px] mb-6 font-geist "
       >
 
 

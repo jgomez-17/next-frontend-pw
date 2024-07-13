@@ -13,7 +13,7 @@ const page = () => {
   return (
     <>
         <ul 
-          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 flex fixed top-0 w-full max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30'
+          className='text-[1.3rem] max-h-18 z-50 gap-6 max-md:gap-1 flex fixed top-0 w-full max-md:px-2 backdrop-blur-sm items-center justify-between shadow-sm bg-white-500/30 max-md:h-16'
         >
           <article className='flex md:ml-8'>
             <Link href="/" className=''>

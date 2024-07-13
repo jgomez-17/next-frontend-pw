@@ -1,10 +1,11 @@
 .dropdown-menu-container {
     position: relative;
-    width: 100%; /* Ajusta el ancho según tu diseño */
+    width: 100%;
   }
   
   .menu-dropdown {
     position: absolute;
+    height: max-content;
     top: 60px; /* Ajusta la posición superior según tu diseño */
     right: 0;
     background: #fff;
