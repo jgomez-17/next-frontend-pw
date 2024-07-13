@@ -194,6 +194,21 @@ const GenerarPlanilla = () => {
   //inserta los totales para el acumulado
   const insertAcumulados = () => {
 
+    if (!pagoAdministracion || !pagoVentas) {
+      message.error('Datos incompletos.');
+      return; // Detener la ejecución si los valores no están llenos
+    }
+
+    if (totalRestanteGeneral < 0) {
+      message.error('Verifica los valores');
+      return; // Detener la ejecución si el total restante es negativo
+    }
+
+    if (lavadores.some(lavador => !lavador.seccion)) {
+      message.error('Por favor, selecciona la sección del lavador.');
+      return; // Detener la ejecución si algún lavador no tiene seleccionada la sección
+    }
+
     const dataTotales = {
       venta_diaria: totalRecaudado,
       prontowash: totalRestanteGeneral,
@@ -214,20 +229,18 @@ const GenerarPlanilla = () => {
         console.log('Respuesta del backend:', data);
         console.log ('insertado', dataTotales )
         message.success('guardado correctamente')
+        handleGenerarPDF();
       })
       .catch(error => {
         console.error('Error al hacer la solicitud al backend:', error);
+        message.error('Error en la solicitud')
       });
   };
 
-  const insertarYdescargar = () => {
-    
-    if (!insertAcumulados){
-      message.error('No se insertó el acumulado')
-      return;
-    } else {
-      insertAcumulados();
-      handleGenerarPDF()
+
+  const handleBackButton = () => {
+    if (window.confirm('¿Estás seguro que deseas regresar?')) {
+      window.history.back();
     }
   };
 
@@ -239,22 +252,22 @@ const GenerarPlanilla = () => {
       <nav 
         className="w-11/12 max-md:w-full top-[65px] left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-20 py-2 fixed"
       >
-        <Link
-            className='py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
-            href="/">
+        <article className="flex gap-2">
+          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
             <BackIcon />
-        </Link>
-        <ResumenOrdenes />
-        <p className="flex gap-2 max-md:mr-auto text-sm rounded">{fechaHoy}</p>
+          </Button>
+          <ResumenOrdenes />
 
-        <Button 
-          className="md:ml-auto rounded-md h-8 text-xs gap-2 bg-black"
-          onClick={insertarYdescargar}
-          >
-          Guardar y descargar
-          <DownloadIcon />
-        </Button>
+          <Button 
+            className="rounded-md mr-auto h-8 text-xs gap-2 bg-black"
+            onClick={insertAcumulados}
+            >
+            Guardar y descargar
+            <DownloadIcon />
+          </Button>
+        </article>
         <h1 className='w-max flex font-semibold text-md max-md:hidden'>Planillario de Gestion</h1>
+        <p className="flex gap-2 text-sm rounded">{fechaHoy}</p>
       </nav>
 
       <article id="pdf-content">
@@ -300,7 +313,7 @@ const GenerarPlanilla = () => {
           />
         </p>
 
-        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Total Restante:</span> {formatNumber(totalRestanteGeneral)}</p>
+        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Prontowash:</span> {formatNumber(totalRestanteGeneral)}</p>
       </section>
 
       <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">

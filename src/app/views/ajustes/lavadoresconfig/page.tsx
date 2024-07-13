@@ -9,7 +9,7 @@ import ProtectedRoute from '@/app/components/protectedRoute';
 import { UserAdd, BackIcon, DeleteIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
-
+import { useRouter } from 'next/navigation';
 
 interface Lavador {
   id: number;
@@ -164,6 +164,11 @@ const Page: React.FC = () => {
     setTimeout(hideMessage, 1000);
   };
 
+  const router = useRouter()
+  const handleBackButton = () => {
+      router.back();
+  };
+
   return (    
     <>
       <ProtectedRoute>
@@ -171,11 +176,9 @@ const Page: React.FC = () => {
         <section className='mt-20 w-11/12 m-auto max-md:p-0 md:ml-10 '>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <nav className='flex w-full m-auto gap-4 justify-between items-center'>
-            <Link
-              className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
-              href="/">
+            <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
               <BackIcon />
-            </Link>
+            </Button>
             <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
               <ReloadIcon />
             </Button>

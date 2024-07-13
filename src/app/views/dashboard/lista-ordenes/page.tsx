@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import { message, Select, Button } from "antd";
+import { message, Select } from "antd";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -267,9 +268,7 @@ const OrdenesDashboard = () => {
       <nav 
         className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] max-md:mt-[85px] mb-6 font-geist "
       >
-
-
-          <Button onClick={reloadPage} className=" border-none">
+          <Button onClick={reloadPage} className="border-none" variant={"ghost"}>
             <ReloadIcon />
           </Button>
 
@@ -295,12 +294,11 @@ const OrdenesDashboard = () => {
       <Table className=" w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm">
-            <TableCell className="max-md:hidden max-md:justify-center w-24 px-4">#</TableCell>
-            <TableCell className="md:w-44 px-1 max-md:w-28">Cliente</TableCell>
-            <TableCell className="md:w-36 px-1 max-md:w-28">Vehículo</TableCell>
-            <TableCell className="md:w-72 px-1 max-md:w-24">Servicio</TableCell>
-            <TableCell className="max-md:w-14"></TableCell>
-            <TableCell className="hidden"> Estado</TableCell>
+            <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
+            <TableCell className="md:w-1/5 px-1 max-md:w-28">Cliente</TableCell>
+            <TableCell className="md:w-1/5 px-1 max-md:w-28">Vehículo</TableCell>
+            <TableCell className="md:w-3/5 px-1 max-md:w-24">Servicio</TableCell>
+            <TableCell className="md:w-1/5 max-md:w-14"></TableCell>
           </TableRow>
         </TableHeader>
           <OrdenesEnEspera

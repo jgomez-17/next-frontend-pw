@@ -5,6 +5,9 @@ import EstadisticasMensuales from './data/estadisticas-data';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { BackIcon } from '@/app/components/ui/iconos';
 
 const EstadisticasPage: React.FC = () => {
     const mesActual = new Date().getMonth() + 1; // Mes actual (enero es 0, por eso sumamos 1)
@@ -28,14 +31,21 @@ const EstadisticasPage: React.FC = () => {
         console.log('Año seleccionado:', anoSeleccionado);
     };
 
+    const router = useRouter()
+    const handleBackButton = () => {
+        router.back();
+    };
+
     return (
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <Navbar />
             <main className='mt-20'>
                 <nav className='flex w-11/12 max-md:w-full max-md:px-1 gap-4 m-auto items-center justify-between'>
-                    
-                    <form onSubmit={handleSubmit} className='flex max-md:text-sm'>
+                    <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
+                        <BackIcon />
+                    </Button>
+                    <form onSubmit={handleSubmit} className='flex max-md:text-sm max-md:mr-auto'>
                         <label>
                             Mes:
                             <select className='mx-2 rounded bg-slate-100' value={mesSeleccionado} onChange={handleChangeMes}>

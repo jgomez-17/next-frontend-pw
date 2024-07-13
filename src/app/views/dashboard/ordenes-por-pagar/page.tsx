@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { message, Radio, Tooltip } from 'antd';
+import { message, Radio } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,7 @@ import Link from 'next/link';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { BackIcon } from '@/app/components/ui/iconos';
+import { useRouter } from 'next/navigation';
 
 interface Orden {
   id: number;
@@ -102,6 +103,11 @@ const OrdenesPorPagar = () => {
   
     setTimeout(hideMessage, 1000);
   };
+  
+  const router = useRouter()
+  const handleBackButton = () => {
+      router.back(); // Utiliza el método back() para navegar hacia atrás
+  };
 
   return (
     <>
@@ -109,11 +115,9 @@ const OrdenesPorPagar = () => {
       <Navbar />
       <section className='mt-20'>
         <nav className='rounded flex justify-between w-11/12 m-auto gap-4'>
-          <Link
-            className=' py-1 px-3 rounded-full flex font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
-            href="/">
+          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
             <BackIcon />
-          </Link>
+          </Button>
           <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
             <ReloadIcon />
           </Button>
@@ -175,23 +179,15 @@ const OrdenesPorPagar = () => {
                             className='flex w-max my-auto items-center'
                             onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
                             >
-                              <Tooltip title="Efectivo">
-                                <Radio.Button className='flex items-center px-3' value="Efectivo">
-                                  <GiMoneyStack className=' text-[18px]' />
-                                </Radio.Button>
-                              </Tooltip>
-
-                              <Tooltip title="Bancolombia">
-                                <Radio.Button className='flex items-center px-1' value="Bancolombia">
-                                  <BancolombiaIcon />
-                                </Radio.Button>
-                              </Tooltip>
-
-                              <Tooltip title="Nequi">
-                                <Radio.Button className='flex items-center px-1' value="Nequi">
-                                  <NequiIcon />
-                                </Radio.Button>
-                              </Tooltip>
+                            <Radio.Button title='Efectivo' className='flex items-center px-3' value="Efectivo">
+                              <GiMoneyStack className=' text-[18px]' />
+                            </Radio.Button>
+                            <Radio.Button title='Bancolombia' className='flex items-center px-1' value="Bancolombia">
+                              <BancolombiaIcon />
+                            </Radio.Button>
+                            <Radio.Button title='Nequi' className='flex items-center px-1' value="Nequi">
+                              <NequiIcon />
+                            </Radio.Button>
                             {/* <Radio.Button title='Transferencia' className='flex items-center' value="Transferencia">
                               <FaRegCreditCard />
                             </Radio.Button> */}

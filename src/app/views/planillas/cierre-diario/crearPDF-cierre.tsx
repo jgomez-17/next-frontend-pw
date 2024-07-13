@@ -53,7 +53,7 @@ export const generarPDF = (
     { label: 'Ventas:', value: formatNumber(totales.pagoVentas) },
     { label: 'Meta:', value: formatNumber(totales.meta) },
     { label: 'Adicionales:', value: formatNumber(totales.gastosAdicionales) },
-    { label: 'Total Restante:', value: formatNumber(totales.totalRestanteGeneral) },
+    { label: 'Total Prontowash:', value: formatNumber(totales.totalRestanteGeneral) },
   ];
 
   doc.setFont('times');

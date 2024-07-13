@@ -1,6 +1,7 @@
 import React from "react";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Button, Select, Tooltip } from "antd";
+import { Select } from "antd";
+import { Button } from "@/components/ui/button";
 import { FaPlay } from "react-icons/fa6";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -54,7 +55,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
     <TableBody>
       {ordenesEnEspera.map((orden) => (
         <TableRow key={orden.id} className="text-[12px]">
-          <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
+          <TableCell className="max-md:hidden px-3 font-bold w-20 py-1 border-b">{orden.id}</TableCell>
           <TableCell className="p-1 border-b">
             <section>
               <p className="font-semibold flex flex-col capitalize">
@@ -76,7 +77,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
               {orden.vehiculo.llaves} <p>dejó llaves</p>
             </span>
           </TableCell>
-          <TableCell className="px-1 py-3 border-b">
+          <TableCell className="p-1 border-b">
             <section className="flex max-md:flex-col">
               <p className="font-bold flex flex-col">
                 {new Intl.NumberFormat("es-CO", {
@@ -88,8 +89,8 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
             </section>
             <p className="max-md:hidden text-gray-500 font-sans">{orden.servicio.nombre_servicios}</p>
           </TableCell>
-          <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
-            <section className="gap-4 w-max flex m-auto">
+          <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
+            <section className="gap-4 w-max flex float-end">
             <Select
               className=" max-md:hidden"
               mode="multiple"
@@ -107,14 +108,13 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
               ))}
             </Select>
               <Button
-                className="flex max-md:hidden items-center gap-2 text-white bg-black text-xs hover:bg-blue-800"
+                title="Iniciar"
+                className="flex h-8 items-center gap-2 bg-black text-xs hover:bg-green-700"
                 onClick={() => {
                   actualizarEstadoOrden(orden.id, selectedEmployees[orden.id] || []);
                 }}
               >
-                <Tooltip title="Iniciar">
                     <FaPlay />
-                </Tooltip>
               </Button>
 
               <DropdownMenu>
@@ -125,9 +125,9 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
                   <DropdownMenuItem className=" max-md:hidden">
                     <Button 
                       onClick={() => cancelarOrden(orden.id)} 
-                      type="link"
+                      variant={"ghost"}
                       title="Cancelar orden"
-                      className="text-xs text-red-600 font-medium"
+                      className="text-xs text-red-600 font-medium h-8"
                     >
                       Cancelar orden
                     </Button>
@@ -141,11 +141,6 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
               </DropdownMenu>
             </section>
         
-          </TableCell>
-          <TableCell className="hidden w-24">
-            <p className="flex text-xs p-1 rounded-md text-blue-600"> 
-              {orden.estado} 
-            </p>
           </TableCell>
         </TableRow>
       ))}

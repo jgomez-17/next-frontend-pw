@@ -10,6 +10,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { DownloadIcon, SearchIcon } from '@/app/components/ui/iconos';
 import { generarPDF } from './resumenPDF';
+import { FaHistory } from "react-icons/fa";
+
 
 type Orden = {
   id: number;
@@ -97,8 +99,8 @@ const OrdenesPorPlaca: React.FC = () => {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
             <DialogTrigger className='transition text-xs flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
-              Descargar Factura 
-              <DownloadIcon />
+              Ver historial
+              <FaHistory className='' />
             </DialogTrigger>
 
         <DialogContent>
@@ -146,35 +148,35 @@ const OrdenesPorPlaca: React.FC = () => {
               {error && <p className=" mb-4">{error}</p>}
               {ordenes && (
                 <div className='w-full'>
-                  <div className='flex items-center justify-between'>
-                    <h3 className="text-sm font-medium text-gray-600">Historial </h3>
-                    <p className='text-xs font-light text-gray-500'>(seleccione su nombre para descargar su recibo)</p>
-                  </div>
                   <Accordion type="single" collapsible className="w-full">
                     {ordenes.map((orden) => (
                       <AccordionItem key={orden.id} value={`item-${orden.id}`}>
                         <AccordionTrigger>
-                          <div className="flex items-center w-full py-4">
+                          <div className="flex items-center w-full py-2">
                             <div className="flex items-center justify-between w-full pr-4">
+                            <p className="text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
+
                               <Button 
                                 onClick={() => generarPDF(orden)}
-                                className="block font-semibold text-xs capitalize p-0 h-4 bg-white text-black hover:bg-white"
+                                className="flex gap-2 font-semibold text-xs capitalize p-0 h-4 bg-white text-black hover:bg-white"
                               >
-                                {orden.cliente.nombre}
+                                Descargar
+                                <DownloadIcon /> 
                               </Button>
-                              <p className="text-[11px] md:text-xs text-gray-500">{formatFecha(orden.fecha_orden)}</p>
                             </div>
                           </div>
                         </AccordionTrigger>
                         <AccordionContent>
-                          <div className="py-2">
+                          <div className="">
                             <div className="flex items-start justify-between w-full">
                               <div className="w-[40%]">
+                                <p className='capitalize text-xs font-medium'> {orden.cliente.nombre} </p>
                                 <p className="text-[11px] md:text-xs text-gray-500">{orden.vehiculo.marca}</p>
                                 <p className="text-[11px] md:text-xs text-gray-500">{orden.vehiculo.placa}</p>
                                 {/* Mostrar más detalles según sea necesario */}
                               </div>
                               <div className="w-[60%] flex flex-col gap-1">
+                                <p className='text-xs font-medium'> {formatNumber(orden.servicio.costo)} </p>
                                 <p className="text-[11px] md:text-xs text-gray-500 leading-tight">{orden.servicio.nombre}</p>
                                 {/* Mostrar más detalles adicionales aquí */}
                               </div>

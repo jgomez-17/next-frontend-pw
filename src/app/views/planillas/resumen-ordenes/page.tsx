@@ -55,7 +55,7 @@ const ResumenOrdenes = () => {
 
   return (
     <Sheet>
-    <SheetTrigger className='text-xs max-md:mr-auto border h-8 hover:bg-slate-200 px-5 py-2 rounded-md font-medium'>
+    <SheetTrigger className='text-xs bg-gray-100 hover:bg-gray-200 max-md:mr-auto h-8 px-5 py-2 rounded-md font-medium'>
         Ordenes
     </SheetTrigger>
     <SheetContent className='overflow-y-auto'>

@@ -44,7 +44,7 @@ export function NavigationMenuDemo() {
     <NavigationMenu className=" text-sm font-geist max-md:hidden">
       <NavigationMenuList className="">
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="px-6 gap-3 capitalize text-blue-600 hover:text-blue-600 rounded-md h-8 bg-transparent">
+          <NavigationMenuTrigger className="px-4 mr-3 gap-3 capitalize text-blue-600 hover:text-blue-600 rounded-md h-11 bg-transparent">
             {rol && <p className="text-sm font-semibold">{rol}</p>}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="">

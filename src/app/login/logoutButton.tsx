@@ -19,7 +19,7 @@ const LogoutButton = () => {
   return (
     <Button 
       onClick={handleLogout}
-      className='flex w-28 items-center bg-red-700 hover:bg-red-800 text-xs max-md:rounded-lg h-8'
+      className='flex relative w-28 items-center bg-red-700 hover:bg-red-800 text-xs max-md:rounded-lg h-8'
       >
         Cerrar sesion
     </Button>

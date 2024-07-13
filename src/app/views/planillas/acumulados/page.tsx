@@ -8,7 +8,7 @@ import Navbar from '@/app/views/navbar/page';
 import { BackIcon, DownloadIcon, ReloadIcon } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
+import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { message, Spin } from 'antd';
 import { generarPDF } from './crearPDF-acum';
@@ -95,14 +95,19 @@ const AcumuladosComponent = () => {
         generarPDF(data, mesYAnio, totalAcumulado, obtenerNombreDia, formatNumber);
     };
 
+    const router = useRouter()
+    const handleBackButton = () => {
+        router.back();
+    };
+
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
                 <Navbar />
                 <nav className='mt-20 max-md:w-full max-md:px-1 w-11/12 gap-4 m-auto flex items-center justify-between'>
-                    <Link href="/" className=' hover:bg-slate-100 px-3 py-1 rounded-full'>
+                    <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
                         <BackIcon />
-                    </Link>
+                    </Button>
                     <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
                     <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
                         <ReloadIcon />

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { SettingsIcon, EstadisticasIcon, UsersIcon } from '@/app/components/ui/iconos';
 import { NavigationMenuDemo } from './logout/logout-seccion';
 import Menu from '@/app/views/navbar/menu/menu'
+import LogoutMenu from '@/app/components/menu copy/menu'
 
   
 const page = () => {

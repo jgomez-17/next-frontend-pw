@@ -10,6 +10,8 @@ import Link from 'next/link';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { ReloadIcon } from '@/app/components/ui/iconos';
+import { useRouter } from 'next/navigation';
+import { BackIcon } from '@/app/components/ui/iconos';
 
 interface Orden {
   id: number;
@@ -54,16 +56,19 @@ interface Orden {
     setTimeout(hideMessage, 1000);
   };
 
+  const router = useRouter()
+  const handleBackButton = () => {
+      router.back();
+  };
+
   return (
     <>
       <ProtectedRoute>
         <Navbar />
         <nav className='roundedflex-col flex justify-between w-11/12 m-auto mt-20 gap-4'>
-          <Link
-            className='flex px-3 py-2 rounded-full font-medium transition-all hover:bg-slate-200 text-sm items-center gap-2'
-            href="/">
-            <MdOutlineArrowBackIos />
-          </Link>
+          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
+            <BackIcon />
+          </Button>
           <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
             <ReloadIcon />
           </Button>

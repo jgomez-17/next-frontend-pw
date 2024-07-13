@@ -10,7 +10,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para animación */
     opacity: 0; /* Ocultar por defecto */
     transform-origin: top right; /* Punto de origen de la transformación */
-    width: 200px; /* Ancho del menú desplegable */
+    width: 140px; /* Ancho del menú desplegable */
     pointer-events: none; /* Para evitar que el menú desplegable interfiera con los clics en el botón */
   
     &.open {

@@ -10,7 +10,7 @@ import { message, Button } from "antd";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { DownloadIcon } from '@/app/components/ui/iconos'
-import Historial from '@/app/views/clientes/buscarPorPlaca/page'
+import Historial from '@/app/views/clientes/historial/page'
 import Image from 'next/image'
 
 interface Orden {
@@ -129,29 +129,25 @@ const ClientesPage = () => {
           ></Image>        
           <nav className='mt-4 gap-4 flex w-11/12 m-auto items-center justify-between font-geist'>
             <Link href="/"
-                  className='hover:bg-slate-200 px-3 py-0.5 rounded-full'
+                  className='hover:bg-gray-500/15 px-3 py-1 rounded-full'
             >
                 <BackIcon />
             </Link>
             <Button type='text' onClick={reloadPage} className=' max-md:mr-auto'>
               <ReloadIcon />
             </Button>
-            {/* <Link href="/views/clientes/buscarPorPlaca" className='text-xs flex items-center gap-2 bg-black text-white px-3 py-1 rounded-sm font-medium'>
-              Generar factura
-              <DownloadIcon />
-            </Link> */}
             <Historial />
             <h1 className='ml-auto font-bold max-md:hidden'>Estado del servicio</h1>
         </nav>
         <Table className=" w-11/12 m-auto mt-4 font-geist">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm max-md:text-[11px]">
-            <TableCell className="px-1 w-[5%] max-md:hidden max-md:justify-center">#</TableCell>
-            <TableCell className="px-1 w-[8%] max-md:hidden">Cliente</TableCell>
-            <TableCell className="px-1 w-[10%]">Vehículo</TableCell>
-            <TableCell className="px-1 w-[19%] ">Servicio</TableCell>
-            <TableCell className="px-1 w-1/6">Lavador </TableCell>
-            <TableCell className="px-1 w-[7%]"> Estado</TableCell>
+            <TableCell className="px-1 md:w-1/12 max-md:hidden max-md:justify-center">#</TableCell>
+            <TableCell className="px-1 md:w-2/12 max-md:hidden">Cliente</TableCell>
+            <TableCell className="px-1 md:w-2/12 max-md:w-1/5">Vehículo</TableCell>
+            <TableCell className="px-1 md:w-2/6 max-md:w-2/6">Servicio</TableCell>
+            <TableCell className="px-1 md:w-2/6 max-md:w-1/4">Lavador </TableCell>
+            <TableCell className="px-1 md:w-2/12 max-md:w-1/4"> Estado</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -189,12 +185,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-500">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 border-b capitalize text-gray-500">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
+                <TableCell className="p-0.5 gap-2 font-medium items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -205,21 +201,6 @@ const ClientesPage = () => {
                       }`}>
                       {orden.estado}
                     </p>
-                    <p className='max-md:hidden'>
-                      <DetallesOrden orden={orden} />
-                    </p>
-                    <DropdownMenu>
-                    <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <DetallesOrden orden={orden} />
-                        </span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   </section>
                 </TableCell>
               </TableRow>
@@ -260,12 +241,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-500">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 border-b capitalize text-gray-500">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
+                <TableCell className="p-0.5 gap-2 font-medium items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -276,21 +257,6 @@ const ClientesPage = () => {
                       }`}>
                       {orden.estado}
                     </p>
-                    <p className='max-md:hidden'>
-                      <DetallesOrden orden={orden} />
-                    </p>
-                    <DropdownMenu>
-                    <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <DetallesOrden orden={orden} />
-                        </span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   </section>
                 </TableCell>
               </TableRow>
@@ -331,12 +297,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-500">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 border-b capitalize text-gray-500">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
+                <TableCell className="p-0.5 gap-2 font-medium items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -347,21 +313,6 @@ const ClientesPage = () => {
                       }`}>
                       {orden.estado}
                     </p>
-                    <p className='max-md:hidden'>
-                      <DetallesOrden orden={orden} />
-                    </p>
-                    <DropdownMenu>
-                    <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <DetallesOrden orden={orden} />
-                        </span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   </section>
                 </TableCell>
               </TableRow>
@@ -402,12 +353,12 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:leading-tight text-gray-600">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-gray-500">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 w-24 border-b capitalize max-md:text-center">
+                <TableCell className="p-0.5 border-b capitalize text-gray-500">
                       <p> {orden.empleado} </p>
                 </TableCell>
-                <TableCell className="p-0.5 gap-2 items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
+                <TableCell className="p-0.5 gap-2 font-medium items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
                   <section className="gap-4 w-max flex justify-between items-center ">
                     <p className={`flex w-max px-2 py-1 my-3 rounded-md ${
                       orden.estado === 'en espera' ? 'bg-blue-600/10 text-blue-600' :
@@ -418,21 +369,6 @@ const ClientesPage = () => {
                       }`}>
                       {orden.estado}
                     </p>
-                    <p className='max-md:hidden'>
-                      <DetallesOrden orden={orden} />
-                    </p>
-                    <DropdownMenu>
-                    <DropdownMenuTrigger className='md:hidden'>
-                      <BsThreeDotsVertical className=" text-2xl max-md:text-xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <DetallesOrden orden={orden} />
-                        </span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   </section>
                 </TableCell>
               </TableRow>

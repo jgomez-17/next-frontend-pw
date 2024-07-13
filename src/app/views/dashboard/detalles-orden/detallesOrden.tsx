@@ -38,6 +38,10 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
 
   const formattedDate = format(new Date(orden.fechaOrden), "PPPP 'a las' hh:mm a", { locale: es });
 
+  function formatNumber(number: number) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
+  }
+
   return (
     <>
       <Button
@@ -56,61 +60,73 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
 
 
         <main
-          className="mt-2 gap-2 flex"
+          className="mt-2 gap-6"
         >
-          
-        <section className="flex flex-col w-full gap-4">
-          <p className="inline-block font-geist text-xs font-medium">
-            Orden # {orden.id}
-          </p>
-            <div className="text-xs">
-              <span className="font-medium">Vehiculo:</span>
-              <span className="flex h-max gap-1 text-gray-500">
-                <p className=""> {orden.vehiculo.tipo} </p> 
-                <p className=""> {orden.vehiculo.marca} </p> 
-                <p className=""> {orden.vehiculo.color} </p> 
-              </span>
-            </div>
-          <div className="text-xs">
-            <span className="font-medium"> Servicio: </span>
-            <p className=" text-gray-500">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-bold my-3">
+              Orden # {orden.id}
+            </p>
+            <p className="text-xs mr-6 text-gray-500 ">
+                {formattedDate}
+            </p>
+          </div>
+          <div className="text-sm my-3">
+            <span className="font-bold">Vehiculo</span>
+            <span className="flex text-xs h-max gap-1 text-gray-500">
+              <p className=""> {orden.vehiculo.tipo} </p> 
+              <p className=""> {orden.vehiculo.marca} </p> 
+              <p className=""> {orden.vehiculo.color} </p> 
+            </span>
+          </div>
+          <div className="text-sm">
+            <span className="font-bold"> Servicio/s </span>
+            <p className=" text-gray-500 text-xs">
               {orden.servicio.nombre_servicios}
             </p>
           </div>
-            <p className="text-xs font-medium">
-              {orden.vehiculo.llaves} dejó llaves
-          </p>
-        </section>
 
-        <section className=" flex flex-col w-full gap-4">
-          <p className="text-xs float-end mr-6 text-gray-500 ">
-                {formattedDate}
-          </p>
-          <div className="text-xs flex flex-col gap-1">
-            <span className="font-medium">Cliente:</span>
+          <div className="flex gap-1 my-3 flex-col">
+            <span className="font-bold">Valor</span>
+            <span className="text-gray-500 text-xs  flex flex-col">
+              {new Intl.NumberFormat("es-CO", {
+                style: "currency",
+                currency: "COP",
+                minimumFractionDigits: 0,
+              }).format(Number(orden.servicio.costo))}
+            </span>
+          </div>
+
+          <div className="text-sm flex flex-col gap-1 my-3">
+            <span className="font-bold">Cliente</span>
             <span className="capitalize text-xs text-gray-500 ">
                 {orden.cliente.nombre} <br />
                 <p className="text-[11px]">{orden.cliente.celular}</p>
             </span>
           </div>
-          <span className="flex gap-2 text-xs font-medium">
-            Lavador:
-            <p className="capitalize text-gray-500 font-normal ">
+
+          <div className="flex flex-col gap-1 text-sm font-bold">
+            <span>Lavador Asignado</span>
+            <p className="capitalize text-gray-500 font-normal text-xs ">
               {orden.empleado}
             </p>
-          </span>
+          </div>
 
-          <span className={` w-max px-2 rounded-md font-medium text-xs ${
-            orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
-            orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
-            orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
-            orden.estado === 'terminado' ? 'bg-slate-600/5 text-black capitalize' :
-            '' 
-            }`}>
-            {orden.estado}
-          </span>
-        </section>
+          <p className="text-sm font-bold my-3">
+              {orden.vehiculo.llaves} dejó llaves
+          </p>
 
+          <div className="flex items-center gap-2 my-3">
+            <span className="font-bold">Estado</span>
+            <p className={` w-max px-4 py-2 text-end rounded-md font-medium text-xs ${
+              orden.estado === 'en espera' ? 'bg-blue-600/5 text-blue-600' :
+              orden.estado === 'en curso' ? 'bg-green-500/5 text-green-600' :
+              orden.estado === 'por pagar' ? 'bg-red-600/5 text-red-600' :
+              orden.estado === 'terminado' ? 'bg-slate-600/5 text-black capitalize' :
+              '' 
+              }`}>
+              {orden.estado}
+            </p>
+          </div>
 
 
           
