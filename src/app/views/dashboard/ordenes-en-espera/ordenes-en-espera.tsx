@@ -91,6 +91,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
           <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
             <section className="gap-4 w-max flex m-auto">
             <Select
+              className=" max-md:hidden"
               mode="multiple"
               style={{ width: 160 }}
               placeholder="Asignar empleados"

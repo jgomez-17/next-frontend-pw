@@ -304,13 +304,13 @@ const OrdenesDashboard = () => {
           </TableRow>
         </TableHeader>
           <OrdenesEnEspera
-            ordenesEnEspera={ordenesEnEspera}
-            actualizarEstadoOrden={actualizarEstadoOrden}
-            cancelarOrden={cancelarOrden}
-            selectedEmployees={selectedEmployees}
-            handleEmpleadoChange={handleEmpleadoChange}
-            lavadores={lavadores}
-          />  
+          ordenesEnEspera={ordenesEnEspera}
+          actualizarEstadoOrden={actualizarEstadoOrden}
+          cancelarOrden={cancelarOrden}
+          selectedEmployees={selectedEmployees}
+          handleEmpleadoChange={handleEmpleadoChange}
+          lavadores={lavadores}
+        />  
 
         {/* ORDENES EN CURSO */}
         <OrdenesEnCurso
