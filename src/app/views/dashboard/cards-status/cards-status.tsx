@@ -34,7 +34,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesEnEspera} </p>
              </Link>
          </li>
-         <li className=" shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+         <li className="shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4 max-md:hidden">
              <Link href="/views/dashboard/ordenes-por-pagar" className='w-full'>
                 <span className='mt-2 font-medium text-xs inline-block'>
                   Por pagar
@@ -53,7 +53,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
                   <p className='text-3xl mt-6 font-bold'> {numeroOrdenesHoy} </p>
                </Link>
            </li>
-           <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+           <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4 max-md:hidden">
                <Link href="#" className='w-full'>
                   <span className='inline-block mt-2 font-medium text-xs '>
                     Total vendido hoy

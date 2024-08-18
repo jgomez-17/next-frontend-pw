@@ -6,7 +6,7 @@ import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { UserAdd, BackIcon, DeleteIcon, ReloadIcon } from '@/app/components/ui/iconos';
+import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2 } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
 import { useRouter } from 'next/navigation';
@@ -183,7 +183,7 @@ const Page: React.FC = () => {
               <ReloadIcon />
             </Button>
             <DialogTrigger className='transition ml-auto flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
-              <UserAdd />
+              <UserAdd2 />
             </DialogTrigger>
             <h1 className='w-max flex font-bold text-md'>Lavadores</h1>
           </nav>

@@ -264,10 +264,8 @@ const OrdenesDashboard = () => {
     <>
     <ProtectedRoute>
       <Navbar />
-
-      <nav 
-        className=" gap-3 w-11/12 justify-between m-auto flex items-center mt-[80px] max-md:mt-[85px] mb-6 font-geist "
-      >
+      <main className="overflow-auto max-h-screen">
+      <nav className="gap-3 w-11/12 justify-between m-auto flex items-center mt-[65px] max-md:mt-[70px] mb-3">
           <Button onClick={reloadPage} className="border-none" variant={"ghost"}>
             <ReloadIcon />
           </Button>
@@ -275,7 +273,7 @@ const OrdenesDashboard = () => {
           <article className="flex items-center gap-4">
           <Link 
             href="/views/planillas/cierre-diario"
-            className="text-xs font-medium border hover:bg-slate-50 hover:border-transparent py-2 px-5 rounded-md"
+            className="text-xs font-medium border hover:bg-slate-50 hover:border-transparent py-2 px-5 rounded-md max-md:hidden"
           >
             Cierre
           </Link>
@@ -283,6 +281,7 @@ const OrdenesDashboard = () => {
           </article>
       
       </nav>
+
       <CardsStats
         numeroOrdenesEnEspera={numeroOrdenesEnEspera}
         numeroOrdenesHoy={numeroOrdenesHoy}
@@ -291,7 +290,7 @@ const OrdenesDashboard = () => {
       />
       
 
-      <Table className=" w-11/12 m-auto mt-4">
+      <Table className="w-11/12 m-auto mt-4">
         <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
           <TableRow className=" text-sm">
             <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
@@ -317,6 +316,7 @@ const OrdenesDashboard = () => {
           cancelarOrden={cancelarOrden}
         />
       </Table>
+      </main>
       </ProtectedRoute>
     </>
   );

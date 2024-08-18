@@ -5,13 +5,13 @@
   
   .menu-dropdown {
     position: absolute;
-    height: max-content;
-    top: 60px; /* Ajusta la posición superior según tu diseño */
+    height: 100vh;
+    top: 55px; /* Ajusta la posición superior según tu diseño */
     right: 0;
     background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para animación */
+    transition: opacity 0.2s ease, transform 0.2s ease; /* Transiciones para animación */
     opacity: 0; /* Ocultar por defecto */
     transform-origin: top right; /* Punto de origen de la transformación */
     width: 100%; /* Ancho del menú desplegable */
@@ -29,3 +29,24 @@
     }
   }
   
+  /* Estilo del botón cuando el menú está cerrado */
+/* .menu-button-closed {
+  background-color: black;
+  color: white;
+} */
+
+/* Estilo del botón cuando el menú está abierto */
+.menu-button-open {
+  background-color: rgb(222, 222, 222);
+  color: black;
+}
+
+
+  @media (min-width: 700px) {
+    .menu-dropdown {
+      background-color: blue;
+      height: max-content;
+      top: 48.4px;
+      width: 30%;
+    }
+  }

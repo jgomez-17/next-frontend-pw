@@ -11,7 +11,7 @@ const PrincipalPage = () => {
         <Image
             priority
             className='w-36 m-auto'
-            src="/prontowashlogo2.png"
+            src="/prontowashlogo.png"
             alt='logo'
             width={500}
             height={300}

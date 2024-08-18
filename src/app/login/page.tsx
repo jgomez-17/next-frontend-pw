@@ -68,27 +68,28 @@ const LoginPage = () => {
 
     return (
         <form onSubmit={handleLogin} className="flex items-center justify-center h-screen">
-            <section className="grid gap-4 py-10 bg-slate-50 max-md:bg-slate-50/60 px-10 rounded-lg">
-                <Image
+            <section className="grid gap-4 py-10 px-10 rounded-lg">
+                {/* <Image
                     className='m-auto'
                     src="/prontowash-img.png"
                     alt='logo'
                     width={140}
                     height={200}
-                />
-                <article className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="usuario" className="text-right">
+                /> */}
+                <p className='text-center font-semibold'> Acceso al sistema </p>
+                <article className="flex flex-col gap-1">
+                    <Label htmlFor="usuario" className="text-gray-500 text-sm">
                         Usuario
                     </Label>
                     <Input
                         id="usuario"
                         value={usuario}
                         onChange={(e) => setUsuario(e.target.value)}
-                        className="col-span-3"
+                        className="col-span-3 h-9"
                     />
                 </article>
-                <article className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="contraseña" className="text-right">
+                <article className="flex flex-col gap-1">
+                    <Label htmlFor="contraseña" className=" text-gray-500 text-sm">
                         Contraseña
                     </Label>
                     <Input
@@ -96,15 +97,15 @@ const LoginPage = () => {
                         id="contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="col-span-3"
+                        className="col-span-3 h-9"
                     />
                 </article>
                 {error && (
-                    <div className="text-red-500 text-center my-4">
+                    <div className="text-red-500 text-center my-4 text-sm">
                         {error}
                     </div>
                 )}
-                <Button type="submit" className='w-28 m-auto'>
+                <Button type="submit" className='w-[300px] float-right'>
                     Ingresar
                 </Button>
             </section>

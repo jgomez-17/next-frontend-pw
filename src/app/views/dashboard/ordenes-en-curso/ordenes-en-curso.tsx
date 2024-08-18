@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaStop } from "react-icons/fa";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden';
+import { StopIcon } from "@/app/components/ui/iconos";
 
 interface Orden {
   id: number;
@@ -85,12 +86,13 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
               {orden.estado === "en curso" ? (
                   <Button
                       title="Terminar"
-                      className="flex items-center bg-red-700 hover:bg-red-800 font-medium m-auto gap-2 text-xs border h-8"
+                      variant={"ghost"}
+                      className="flex items-center font-medium m-auto gap-2 text-xs h-7 text-red-600"
                       onClick={() => {
                         actualizarEstadoOrden3(orden.id);
                       }}
                     >
-                  <FaStop className=" " />
+                  <StopIcon />
                 </Button>
               ) : (
                 <p>La orden está en otro estado</p>

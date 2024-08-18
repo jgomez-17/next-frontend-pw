@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -10,10 +10,8 @@ import { IoChevronBack } from "react-icons/io5";
 import { GrFormNext } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa";
 import { PlusIcon } from '@/app/components/ui/iconos';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import { OrdenData, generarFacturaPDF } from './generarFactura';
-
+import ServiciosSelect from './serviciosSelect';
 
 interface Orden {
     id: number;
@@ -133,65 +131,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
       }
     };
 
-    
     const handleRefresh = () => {
       setVerifyPlaca('');
       setOrdenes([]);
       setError('');
     };
-
-    // Definir precios de servicios por tipo de vehículo
-    const preciosServiciosPorTipo: Record<string, Record<string, number>> = {
-        Automovil: {
-        "Brillado Manual": 60000,
-        "Brillado Rotorbital":80000,
-        "Completo Plus": 30000,
-        "Ceramico":500000,
-        "Descontaminacion conductos de aire":30000,
-        "Desmanchado de pintura":160000,
-        "Hidratacion de interior":60000,
-        "Limpieza cogineria de cuero":90000,
-        "Limpieza cogineria de paño":80000,
-        "Limpieza de motor":30000,
-        "Polichado":140000,
-        "Polichado Americano":180000,
-        "Plasticina":170000,
-        "Porcelanizado":500000,
-        "Restauracion de partes negras":60000,
-        // Otros servicios para automóviles...
-        },
-        Camioneta: {
-        "Brillado Manual": 70000,
-        "Brillado Rotorbital":110000,
-        "Completo Plus": 35000,
-        "Ceramico":600000,
-        "Descontaminacion conductos de aire":30000,
-        "Desmanchado de pintura":180000,
-        "Hidratacion de interior":70000,
-        "Polichado":150000,
-        "Polichado Americano":210000,
-        "Limpieza cogineria de cuero":110000,
-        "Limpieza cogineria de paño":90000,
-        "Limpieza de motor":30000,
-        "Plasticina":190000,
-        "Porcelanizado":600000,
-        "Restauracion de partes negras":70000,
-        // Otros servicios para camionetas...
-        },
-    };
-
-    const [preciosServicios, setPreciosServicios] = useState<Record<string, number>>(
-        preciosServiciosPorTipo[tipo] || {}
-    );
-
-    useEffect(() => {
-      const nuevosPrecios = preciosServiciosPorTipo[tipo] || {};
-      // Verificar si realmente hay un cambio en los precios antes de actualizar el estado
-      if (JSON.stringify(nuevosPrecios) !== JSON.stringify(preciosServicios)) {
-        setPreciosServicios(nuevosPrecios);
-      }
-    }, [tipo, preciosServiciosPorTipo, preciosServicios]);
-    
 
     // Manejar la adición de un servicio seleccionado de un solo nombre
     const handleAgregarServicio = () => {
@@ -320,10 +264,6 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
         }
     };
 
-    function formatCurrency(number: number) {
-      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, }).format(number);
-    }
-
     // Función para manejar la generación de la factura
     const handleGenerarFactura = () => {
       const dataOrden: OrdenData = {
@@ -346,7 +286,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
-        className='font-sans flex gap-1 ml-auto items-center bg-black text-white border border-gray-700 hover:bg-transparent hover:text-black py-1 text-xs px-5 rounded-md' >
+        className='font-sans flex gap-1 ml-auto items-center bg-black text-white hover:bg-opacity-80 py-1 text-xs px-5 rounded-md' >
         Nueva orden
         <PlusIcon />
     </SheetTrigger>
@@ -412,7 +352,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                 {seccion === 2 && (
                 <>
                   <fieldset className='flex flex-wrap gap-x-5 gap-y-3 max-md:w-full'>
-                      <legend className=' font-medium'> Datos del vehiculo</legend>
+                      <legend className=''> Datos del vehiculo</legend>
 
                       <label>
                         <span className='ml-1 text-zinc-500'>Placa
@@ -621,24 +561,14 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                       <label>
                         <span className='text-zinc-500'> Servicios </span>
                         <div className='flex items-center gap-4'>
-                        <Select
-                            value={servicioSeleccionado}
-                            onValueChange={(value) => setServicioSeleccionado(value)}
-                        >
-                            <SelectTrigger className="w-[350px] max-md:w-[280px] my-2">
-                                <SelectValue placeholder="" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {Object.entries(preciosServicios).map(([nombreServicio, costo]) => (
-                                    <SelectItem key={nombreServicio} value={`${nombreServicio} - $${costo}`}>
-                                    {nombreServicio} - ${costo.toLocaleString('es-CO')}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                        <ServiciosSelect 
+                            tipo={tipo} 
+                            servicioSeleccionado={servicioSeleccionado} 
+                            setServicioSeleccionado={setServicioSeleccionado} 
+                        />
                         <Button 
-                              className=' bg-white border-slate-200 rounded-lg h-10 border' 
-                              type="text" 
+                              className='h-10'
+                              type='text'
                               title='Agregar'
                               onClick={handleAgregarServicio}
                             >
@@ -726,6 +656,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         Volver
                       </Button>
                         <Button
+                            
                             onClick={handleSubmit} 
                             className='flex p-4 bg-black text-white w-32 items-center justify-center' 
                             >

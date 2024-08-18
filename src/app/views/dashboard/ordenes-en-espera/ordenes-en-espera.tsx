@@ -6,6 +6,7 @@ import { FaPlay } from "react-icons/fa6";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden';
+import { PlayOutlineIcon } from "@/app/components/ui/iconos";
 
 const { Option } = Select;
 
@@ -109,12 +110,13 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
             </Select>
               <Button
                 title="Iniciar"
-                className="flex h-8 items-center gap-2 bg-black text-xs hover:bg-green-700"
+                variant={"ghost"}
+                className="flex h-7 text-green-600 items-center text-xs"
                 onClick={() => {
                   actualizarEstadoOrden(orden.id, selectedEmployees[orden.id] || []);
                 }}
               >
-                    <FaPlay />
+                    <PlayOutlineIcon />
               </Button>
 
               <DropdownMenu>
