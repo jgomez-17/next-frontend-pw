@@ -12,6 +12,7 @@ import ProtectedRoute from "@/app/components/protectedRoute";
 import { DownloadIcon, DeleteIcon, BackIcon } from "@/app/components/ui/iconos";
 import Link from "next/link";
 import { generarPDF } from "./crearPDF-cierre";
+import Sidebar from '@/app/views/sidebar/sidebar'
 
 interface Orden {
   id: number;
@@ -247,167 +248,165 @@ const GenerarPlanilla = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-      <Navbar /> 
+        <section className="w-full m-auto rounded-md p-2 bg-white">
+        <nav 
+          className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 py-2"
+        >
+          <article className="flex gap-2">
+            <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+              <BackIcon />
+            </Button>
+            <ResumenOrdenes />
 
-      <nav 
-        className="w-11/12 max-md:w-full top-[65px] left-1/2 transform -translate-x-1/2 m-auto gap-4 max-md:gap-1 flex items-center justify-between md:px-2 max-md:px-1 bg-white-500/30 backdrop-blur-sm z-20 py-2 fixed"
-      >
-        <article className="flex gap-2">
-          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
-            <BackIcon />
-          </Button>
-          <ResumenOrdenes />
+            <Button 
+              className="mr-auto h-8 text-xs gap-2 bg-black"
+              onClick={insertAcumulados}
+              >
+              Guardar y descargar
+              <DownloadIcon />
+            </Button>
+          </article>
+          <p className="flex gap-2 text-sm font-semibold">{fechaHoy}</p>
+        </nav>
+        <article id="pdf-content">
 
-          <Button 
-            className="rounded-md mr-auto h-8 text-xs gap-2 bg-black"
-            onClick={insertAcumulados}
-            >
-            Guardar y descargar
-            <DownloadIcon />
-          </Button>
-        </article>
-        <h1 className='w-max flex font-semibold text-md max-md:hidden'>Planillario de Gestion</h1>
-        <p className="flex gap-2 text-sm rounded">{fechaHoy}</p>
-      </nav>
-
-      <article id="pdf-content">
-
-      <section 
-          className="w-11/12 max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-32 mb-8" 
-      >
-        <p className="flex w-16 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
-        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
-        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
-        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
-        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
-        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
-        <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
-        <p className="flex w-24 flex-col gap-1 rounded"><span className="font-medium">Administración:</span>
-          <Input
-              value={pagoAdministracion.toString()}
-              onChange={(e) => setPagoAdministracion(Number(e.target.value))}
-              className="h-6 w-24 text-xs"
+        <section 
+            className="w-full max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-4 mb-8" 
+        >
+          <p className="flex w-16 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
+          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
+          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
+          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
+          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
+          <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
+          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
+          <p className="flex w-24 flex-col gap-1 rounded"><span className="font-medium">Administración:</span>
+            <Input
+                value={pagoAdministracion.toString()}
+                onChange={(e) => setPagoAdministracion(Number(e.target.value))}
+                className="h-6 w-24 text-xs"
+              />
+          </p>
+          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Ventas:</span>
+            <Input
+                value={pagoVentas.toString()}
+                onChange={(e) => setPagoVentas(Number(e.target.value))}
+                className=" h-6 w-24 text-xs"
+            />      
+          </p>
+      
+          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Meta:</span>
+            <Input
+                value={meta.toString()}
+                onChange={(e) => setMeta(Number(e.target.value))}
+                className=" h-6 w-24 text-xs"
             />
-        </p>
-        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Ventas:</span>
-          <Input
-              value={pagoVentas.toString()}
-              onChange={(e) => setPagoVentas(Number(e.target.value))}
-              className=" h-6 w-24 text-xs"
-          />      
-        </p>
-    
-        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Meta:</span>
-          <Input
-              value={meta.toString()}
-              onChange={(e) => setMeta(Number(e.target.value))}
-              className=" h-6 w-24 text-xs"
-          />
-        </p>
+          </p>
 
-        <p className="flex w-24 flex-col gap-1"><span className="font-medium">Adicionales:</span>
-          <Input
-              value={gastosAdicionales.toString()}
-              onChange={(e) => setGastosAdicionales(Number(e.target.value))}
-              className=" h-6 w-24 text-xs"
-          />
-        </p>
+          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Adicionales:</span>
+            <Input
+                value={gastosAdicionales.toString()}
+                onChange={(e) => setGastosAdicionales(Number(e.target.value))}
+                className=" h-6 w-24 text-xs"
+            />
+          </p>
 
-        <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Prontowash:</span> {formatNumber(totalRestanteGeneral)}</p>
-      </section>
+          <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Prontowash:</span> {formatNumber(totalRestanteGeneral)}</p>
+        </section>
 
-      <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
-        {Object.keys(ordenesPorLavador).sort((a, b) => {
-          const lavadorA = lavadores.find(l => l.nombre === a);
-          const lavadorB = lavadores.find(l => l.nombre === b);
-          if (lavadorA.seccion === 'SPA' && lavadorB.seccion !== 'SPA') return -1;
-          if (lavadorA.seccion !== 'SPA' && lavadorB.seccion === 'SPA') return 1;
-          return 0;
-        }).map((nombreLavador) => {
-          const ordenes = ordenesPorLavador[nombreLavador];
-          const lavador = lavadores.find(l => l.nombre === nombreLavador);
-          const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
-          const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
-          return (
-            <div key={nombreLavador} className="text-sm">
-              <div className="flex items-center justify-between mb-1">
-                <h2 className="font-semibold pl-1 capitalize">{nombreLavador}</h2>
-                <Select
-                  defaultValue={lavador.seccion}
-                  onValueChange={(value) => handleSectionChange(nombreLavador, value)}
-                >
-                  <SelectTrigger className="w-[100px] text-xs h-6 rounded-none">
-                    <SelectValue placeholder="" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="SPA">SPA</SelectItem>
-                    <SelectItem value="Satelital">Satelital</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <Table className="border text-xs">
-                <TableHeader>
-                  <TableRow className=" font-medium">
-                    <TableCell className="px-2 w-10 py-1 items-center"> # </TableCell>
-                    <TableCell className="w-24 py-1">Vehículo</TableCell>
-                    <TableCell className="w-22 py-1">Placa</TableCell>
-                    <TableCell className="w-20 py-1">Valor</TableCell>
-                    <TableCell className="py-1"></TableCell>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="text-xs">
-                  {ordenes.map((orden: Orden) => (
-                    <TableRow key={orden.id}>
-                      <TableCell className="py-0 px-2 h-4 text-xs">
-                        {orden.id}
-                      </TableCell>
-                      <TableCell className="py-0 h-4">{orden.vehiculo.marca}</TableCell>
-                      <TableCell className="py-0">{orden.vehiculo.placa}</TableCell>
-                      <TableCell className="p-0 py-0 ">
-                        <InputNumber
-                          value={editableOrdenes[`${nombreLavador}-${orden.id}`]}
-                          onChange={(value) => handleCostChange(nombreLavador, orden.id, value)}
-                          formatter={(value) => formatNumber(Number(value))}
-                          parser={(value) => value ? Number(value.replace(/\$\s?|(\.*)/g, '').replace(',', '')) : 0}
+        <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
+          {Object.keys(ordenesPorLavador).sort((a, b) => {
+            const lavadorA = lavadores.find(l => l.nombre === a);
+            const lavadorB = lavadores.find(l => l.nombre === b);
+            if (lavadorA.seccion === 'SPA' && lavadorB.seccion !== 'SPA') return -1;
+            if (lavadorA.seccion !== 'SPA' && lavadorB.seccion === 'SPA') return 1;
+            return 0;
+          }).map((nombreLavador) => {
+            const ordenes = ordenesPorLavador[nombreLavador];
+            const lavador = lavadores.find(l => l.nombre === nombreLavador);
+            const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
+            const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
+            return (
+              <div key={nombreLavador} className="text-sm">
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="font-semibold pl-1 capitalize">{nombreLavador}</h2>
+                  <Select
+                    defaultValue={lavador.seccion}
+                    onValueChange={(value) => handleSectionChange(nombreLavador, value)}
+                  >
+                    <SelectTrigger className="w-[100px] text-xs h-6 rounded-none">
+                      <SelectValue placeholder="" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="SPA">SPA</SelectItem>
+                      <SelectItem value="Satelital">Satelital</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Table className="border text-xs">
+                  <TableHeader>
+                    <TableRow className=" font-medium">
+                      <TableCell className="px-2 w-10 py-1 items-center"> # </TableCell>
+                      <TableCell className="w-24 py-1">Vehículo</TableCell>
+                      <TableCell className="w-22 py-1">Placa</TableCell>
+                      <TableCell className="w-20 py-1">Valor</TableCell>
+                      <TableCell className="py-1"></TableCell>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="text-xs">
+                    {ordenes.map((orden: Orden) => (
+                      <TableRow key={orden.id}>
+                        <TableCell className="py-0 px-2 h-4 text-xs">
+                          {orden.id}
+                        </TableCell>
+                        <TableCell className="py-0 h-4">{orden.vehiculo.marca}</TableCell>
+                        <TableCell className="py-0">{orden.vehiculo.placa}</TableCell>
+                        <TableCell className="p-0 py-0 ">
+                          <InputNumber
+                            value={editableOrdenes[`${nombreLavador}-${orden.id}`]}
+                            onChange={(value) => handleCostChange(nombreLavador, orden.id, value)}
+                            formatter={(value) => formatNumber(Number(value))}
+                            parser={(value) => value ? Number(value.replace(/\$\s?|(\.*)/g, '').replace(',', '')) : 0}
 
-                          className="text-xs border-none bg-transparent"
-                        />
-                      </TableCell>
-                      <TableCell className="py-0 px-0">
-                        <button
-                          onClick={() => handleDelete(nombreLavador, orden.id)}
-                          className="p-0 m-0 w-full flex hover:bg-transparent"
-                        >
-                          <DeleteIcon />
-                        </button>
+                            className="text-xs border-none bg-transparent"
+                          />
+                        </TableCell>
+                        <TableCell className="py-0 px-0">
+                          <button
+                            onClick={() => handleDelete(nombreLavador, orden.id)}
+                            className="p-0 m-0 w-full flex hover:bg-transparent"
+                          >
+                            <DeleteIcon />
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    <TableRow>
+                      <TableCell colSpan={3} className="font-medium py-0 px-2">Totales</TableCell>
+                      <TableCell className="font-medium py-2">
+                        {formatNumber(totalCosto)}
                       </TableCell>
                     </TableRow>
-                  ))}
-                  <TableRow>
-                    <TableCell colSpan={3} className="font-medium py-0 px-2">Totales</TableCell>
-                    <TableCell className="font-medium py-2">
-                      {formatNumber(totalCosto)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={3} className="font-medium py-0 px-2">Neto Lavador</TableCell>
-                    <TableCell className="font-medium py-2">
-                      {formatNumber(totalGanancia)}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={3} className="font-medium py-0 px-2"></TableCell>
-                    <TableCell className="font-medium py-2">
-                      {formatNumber(totalRestante)}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          );
-        })}
-      </main>
-      </article>
+                    <TableRow>
+                      <TableCell colSpan={3} className="font-medium py-0 px-2">Neto Lavador</TableCell>
+                      <TableCell className="font-medium py-2">
+                        {formatNumber(totalGanancia)}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan={3} className="font-medium py-0 px-2"></TableCell>
+                      <TableCell className="font-medium py-2">
+                        {formatNumber(totalRestante)}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            );
+          })}
+        </main>
+        </article>
+        </section> 
       </ProtectedRoute>
     </>
   );

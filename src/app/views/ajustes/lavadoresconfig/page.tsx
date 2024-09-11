@@ -6,10 +6,12 @@ import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2 } from '@/app/components/ui/iconos';
+import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2, AddUsers2 } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
 import { useRouter } from 'next/navigation';
+import Sidebar from "../../sidebar/sidebar";
+
 
 interface Lavador {
   id: number;
@@ -172,81 +174,83 @@ const Page: React.FC = () => {
   return (    
     <>
       <ProtectedRoute>
-        <Navbar />
-        <section className='mt-20 w-11/12 m-auto max-md:p-0 md:ml-10 '>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <nav className='flex w-full m-auto gap-4 justify-between items-center'>
-            <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
-              <BackIcon />
-            </Button>
-            <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
-              <ReloadIcon />
-            </Button>
-            <DialogTrigger className='transition ml-auto flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
-              <UserAdd2 />
-            </DialogTrigger>
-            <h1 className='w-max flex font-bold text-md'>Lavadores</h1>
-          </nav>
-       
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Registrar lavador</DialogTitle>
-            <DialogDescription>
-              <Form className='flex gap-5 mt-4' onFinish={registrarLavador}>
-                <label className='flex flex-col gap-1'>
-                  <Input
-                    className='w-44 capitalize max-md:w-40'
-                    type="text"
-                    value={nombreLavador}
-                    onChange={(e) => setNombreLavador(e.target.value)}
-                    required
-                  />
-                </label>
-                <Button className='flex items-center text-xs h-8' itemType='submit' >
-                    Agregar
+        <section className='w-full h-full m-auto rounded-md p-2 bg-white'>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <nav className='flex w-full m-auto p-2 gap-3 justify-between items-center'>
+              <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+                <BackIcon />
+              </Button>
+              <Button onClick={reloadPage} className='h-8 mr-auto' variant={'ghost'}>
+                <ReloadIcon />
+              </Button>
+              <DialogTrigger asChild>
+                <Button className='text-xs gap-2 h-8 bg-black'> 
+                <span className='max-md:hidden'> Añadir empleado </span>
+                <AddUsers2 /> 
                 </Button>
-              </Form>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-        <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
-          <thead>
-            <tr className='text-sm'>
-              <th className='w-14 text-left p-1 border-b hidden'>ID</th>
-              <th className='w-44 text-left px-5 p-1 border-b'>Nombre</th>
-              <th className='w-36 text-left p-1 border-b'>Activo</th>
-              <th className='w-36 text-left p-1 border-b'></th>
-            </tr>
-          </thead>
-          <tbody className='text-xs'>
-            {lavadores.map(lavador => (
-              <tr className=' rounded-xl text-sm' key={lavador.id}>
-                <td className='py-0 border-b hidden'>{lavador.id}</td>
-                <td className='py-0 border-b px-5 capitalize'>{lavador.nombre}</td>
-                <td className='py-0 border-b'>{lavador.activo === "1" ? "Si" : "No"}</td>
-                <td className='py-0 border-b flex items-center gap-6'>
-                  <Switch
-                    className="w-10 h-4"
-                    checked={lavador.activo === "1"}
-                    onCheckedChange={(checked) =>
-                      checked
-                        ? cambiarEstadoLavador2(lavador.id)
-                        : cambiarEstadoLavador(lavador.id)
-                    }
-                    
-                  />
-                      <button 
-                        onClick={() => eliminarLavador(lavador.id)} 
-                        className='p-1'
-                      >
-                        <DeleteIcon />
-                      </button>
-                </td>
+              </DialogTrigger>
+              <h1 className='font-bold'>Empleados</h1>
+            </nav>
+        
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Registrar lavador</DialogTitle>
+              <DialogDescription>
+                <Form className='flex gap-5 mt-4' onFinish={registrarLavador}>
+                  <label className='flex flex-col gap-1'>
+                    <Input
+                      className='w-44 capitalize max-md:w-40'
+                      type="text"
+                      value={nombreLavador}
+                      onChange={(e) => setNombreLavador(e.target.value)}
+                      required
+                    />
+                  </label>
+                  <Button className='flex items-center text-xs h-8' itemType='submit' >
+                      Agregar
+                  </Button>
+                </Form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+          <table id='pdf-content' className='mt-10 p-3 rounded m-auto'>
+            <thead>
+              <tr className='text-sm'>
+                <th className='w-14 text-left p-1 border-b hidden'>ID</th>
+                <th className='w-44 text-left px-5 p-1 border-b'>Nombre</th>
+                <th className='w-36 text-left p-1 border-b'>Activo</th>
+                <th className='w-36 text-left p-1 border-b'></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </Dialog>
+            </thead>
+            <tbody className='text-xs'>
+              {lavadores.map(lavador => (
+                <tr className=' rounded-xl text-sm' key={lavador.id}>
+                  <td className='py-0 border-b hidden'>{lavador.id}</td>
+                  <td className='py-0 border-b px-5 capitalize'>{lavador.nombre}</td>
+                  <td className='py-0 border-b'>{lavador.activo === "1" ? "Si" : "No"}</td>
+                  <td className='py-0 border-b flex items-center gap-6'>
+                    <Switch
+                      className="w-10 h-4"
+                      checked={lavador.activo === "1"}
+                      onCheckedChange={(checked) =>
+                        checked
+                          ? cambiarEstadoLavador2(lavador.id)
+                          : cambiarEstadoLavador(lavador.id)
+                      }
+                      
+                    />
+                        <button 
+                          onClick={() => eliminarLavador(lavador.id)} 
+                          className='p-1'
+                        >
+                          <DeleteIcon />
+                        </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          </Dialog>
         </section>
       </ProtectedRoute>
     </>

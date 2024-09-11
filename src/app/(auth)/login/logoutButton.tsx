@@ -19,10 +19,10 @@ const LogoutButton = () => {
   return (
     <Button 
       onClick={handleLogout}
-      variant={'ghost'}
-      className='w-full flex justify-start font-normal p-0 hover:bg-transparent text-gray-500 rounded-none'
+      variant={'default'}
+      className='h-8 text-xs pb-2'
       >
-        Cerrar sesion
+        Cerrar sesión
     </Button>
   );
 };

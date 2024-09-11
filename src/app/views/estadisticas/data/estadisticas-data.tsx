@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Bar, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
+import { Spin1 } from '@/app/components/ui/iconos';
 
 ChartJS.register(
     CategoryScale,
@@ -55,7 +56,7 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
         fetchEstadisticas();
     }, [mes, ano]);
 
-    if (loading) return <div className=' translate-x-14'>Loading...</div>;
+    if (loading) return <div className=' translate-x-2/4'> <Spin1 /> </div>;
     if (error) return <div>Error: {error}</div>;
 
     function formatNumber(number: number) {
@@ -120,7 +121,7 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
     };
 
     return (
-        <main style={{ fontFamily: 'Roboto' }} className='w-11/12 flex flex-wrap gap-16 m-auto mt-10'>
+        <main className='w-full flex flex-wrap gap-16 m-auto mt-10'>
             <div className="chart-container" style={{ width: '300px', height: '200px' }}>
                 <Bar data={totalOrdenesData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Total de Ordenes' } } }} />
             </div>

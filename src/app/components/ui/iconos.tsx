@@ -148,7 +148,7 @@ export const SettingsIcon: React.FC = () => (
     );
 
     export const AddUsers2: React.FC = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 7.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0m1.5 3.5a3.5 3.5 0 1 0 0-7m-.357 16H3.857C2.831 20 2 19.233 2 18.286C2 15.919 4.079 14 6.643 14h3.714a4.9 4.9 0 0 1 2.786.857M19 14v6m3-3h-6" color="currentColor"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M12 7.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0m1.5 3.5a3.5 3.5 0 1 0 0-7m-.357 16H3.857C2.831 20 2 19.233 2 18.286C2 15.919 4.079 14 6.643 14h3.714a4.9 4.9 0 0 1 2.786.857M19 14v6m3-3h-6" color="currentColor"/></svg>
     );
 
     export const ChartNeon: React.FC = () => (
@@ -159,10 +159,77 @@ export const SettingsIcon: React.FC = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="32" viewBox="0 0 50 50"><g fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"><path stroke="#344054" d="M25 31.25a6.25 6.25 0 1 0 0-12.5a6.25 6.25 0 0 0 0 12.5"/><path stroke="#306CFE" d="M41.667 20.833h-1.23a2.08 2.08 0 0 1-1.958-1.395a2.08 2.08 0 0 1 .417-2.375l.854-.855a2.08 2.08 0 0 0 0-2.958l-2.958-2.98a2.084 2.084 0 0 0-2.959 0l-.854.855a2.08 2.08 0 0 1-2.375.417a2.08 2.08 0 0 1-1.437-1.98V8.334a2.083 2.083 0 0 0-2.084-2.083h-4.166a2.083 2.083 0 0 0-2.084 2.083v1.23a2.08 2.08 0 0 1-1.395 1.958v0a2.08 2.08 0 0 1-2.375-.417l-.855-.854a2.08 2.08 0 0 0-2.958 0l-2.98 2.958a2.084 2.084 0 0 0 0 2.959l.855.854a2.08 2.08 0 0 1 .417 2.375a2.08 2.08 0 0 1-1.959 1.396h-1.25a2.083 2.083 0 0 0-2.083 2.083v4.167a2.083 2.083 0 0 0 2.083 2.083h1.23a2.08 2.08 0 0 1 1.958 1.396v0a2.08 2.08 0 0 1-.417 2.375l-.854.854a2.083 2.083 0 0 0 0 2.958l2.938 2.938a2.084 2.084 0 0 0 2.958 0l.854-.854a2.08 2.08 0 0 1 2.375-.417a2.08 2.08 0 0 1 1.396 1.958v1.334a2.083 2.083 0 0 0 2.083 2.083h4.167a2.083 2.083 0 0 0 2.083-2.083v-1.23A2.08 2.08 0 0 1 30.5 38.48a2.08 2.08 0 0 1 2.375.417l.854.854a2.08 2.08 0 0 0 2.959 0l2.937-2.937a2.08 2.08 0 0 0 0-2.959L38.771 33a2.08 2.08 0 0 1-.417-2.375v0a2.08 2.08 0 0 1 1.959-1.396h1.354a2.083 2.083 0 0 0 2.083-2.083v-4.23a2.083 2.083 0 0 0-2.083-2.083"/></g></svg>
     );
 
+    
     export const Spin: React.FC = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="currentColor" d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>
     );
 
+
+    //SIDEBAR ICONS
+    export const Grap: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" color="currentColor"><path d="M7 18v-2m5 2v-3m5 3v-5M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12 2.5c4.478 0 6.718 0 8.109 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.718 0-8.109-1.391S2.5 16.479 2.5 12"/><path d="M5.992 11.486c2.155.072 7.042-.253 9.822-4.665m-1.822-.533l1.876-.302c.228-.029.564.152.647.367l.495 1.638"/></g></svg>
+    );
+
+    export const MultipleUsers: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7a4 4 0 1 1-8 0a4 4 0 0 1 8 0m2 4a4 4 0 0 0 0-8m-4 11H7a5 5 0 0 0-5 5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2a5 5 0 0 0-5-5m6 0a5 5 0 0 1 5 5a2 2 0 0 1-2 2h-1.5" color="currentColor"/></svg>
+    );
+
+    export const User: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6.578 15.482c-1.415.842-5.125 2.562-2.865 4.715C4.816 21.248 6.045 22 7.59 22h8.818c1.546 0 2.775-.752 3.878-1.803c2.26-2.153-1.45-3.873-2.865-4.715a10.66 10.66 0 0 0-10.844 0M16.5 6.5a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0" color="currentColor"/></svg>
+    );
+
+    export const Ajustes: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" color="currentColor"><path d="m21.318 7.141l-.494-.856c-.373-.648-.56-.972-.878-1.101c-.317-.13-.676-.027-1.395.176l-1.22.344c-.459.106-.94.046-1.358-.17l-.337-.194a2 2 0 0 1-.788-.967l-.334-.998c-.22-.66-.33-.99-.591-1.178c-.261-.19-.609-.19-1.303-.19h-1.115c-.694 0-1.041 0-1.303.19c-.261.188-.37.518-.59 1.178l-.334.998a2 2 0 0 1-.789.967l-.337.195c-.418.215-.9.275-1.358.17l-1.22-.345c-.719-.203-1.078-.305-1.395-.176c-.318.129-.505.453-.878 1.1l-.493.857c-.35.608-.525.911-.491 1.234c.034.324.268.584.736 1.105l1.031 1.153c.252.319.431.875.431 1.375s-.179 1.056-.43 1.375l-1.032 1.152c-.468.521-.702.782-.736 1.105s.14.627.49 1.234l.494.857c.373.647.56.971.878 1.1s.676.028 1.395-.176l1.22-.344a2 2 0 0 1 1.359.17l.336.194c.36.23.636.57.788.968l.334.997c.22.66.33.99.591 1.18c.262.188.609.188 1.303.188h1.115c.694 0 1.042 0 1.303-.189s.371-.519.59-1.179l.335-.997c.152-.399.428-.738.788-.968l.336-.194c.42-.215.9-.276 1.36-.17l1.22.344c.718.204 1.077.306 1.394.177c.318-.13.505-.454.878-1.101l.493-.857c.35-.607.525-.91.491-1.234s-.268-.584-.736-1.105l-1.031-1.152c-.252-.32-.431-.875-.431-1.375s.179-1.056.43-1.375l1.032-1.153c.468-.52.702-.781.736-1.105s-.14-.626-.49-1.234"/><path d="M15.52 12a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0"/></g></svg>
+    );
+
+    export const Search: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17.5 17.5L22 22m-2-11a9 9 0 1 0-18 0a9 9 0 0 0 18 0" color="currentColor"/></svg>
+    );
+
+    export const Reload: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m15.167 1l.598 1.118c.404.755.606 1.133.472 1.295c-.133.162-.573.031-1.454-.23A9.8 9.8 0 0 0 12 2.78c-5.247 0-9.5 4.128-9.5 9.22a8.97 8.97 0 0 0 1.27 4.61M8.834 23l-.598-1.118c-.404-.756-.606-1.134-.472-1.295c.133-.162.573-.032 1.454.23c.88.261 1.815.402 2.783.402c5.247 0 9.5-4.128 9.5-9.22a8.97 8.97 0 0 0-1.27-4.609" color="currentColor"/></svg>
+    );
+
+    export const P: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#2074EE" fillRule="evenodd" d="M16.375 10.125c0 2.562-1.812 4.375-4.375 4.375H7.625v-4.375C7.625 7.562 9.437 5.75 12 5.75s4.375 1.812 4.375 4.375m3.75 0A8.126 8.126 0 0 1 12 18.25H7.625V22h-3.75V10.125a8.125 8.125 0 1 1 16.25 0" clip-rule="evenodd"/></svg>
+    );
+
+    export const Home: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" color="currentColor"><path d="M12 17h.009M20 8.5v5c0 3.771 0 5.657-1.172 6.828S15.771 21.5 12 21.5s-5.657 0-6.828-1.172S4 17.271 4 13.5v-5"/><path d="m22 10.5l-4.343-4.165C14.99 3.778 13.657 2.5 12 2.5S9.01 3.778 6.343 6.335L2 10.5"/></g></svg>
+    );
+
+    export const ProfileIcon: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" color="currentColor"><path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"/><path d="M14.75 9.5a2.75 2.75 0 1 1-5.5 0a2.75 2.75 0 0 1 5.5 0M5.5 19l.56-.98a5 5 0 0 1 4.342-2.52h3.196a5 5 0 0 1 4.342 2.52l.56.98"/></g></svg>
+    );
+    
+    export const MenuOpen1: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8m-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8m0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8M142.4 642.1L298.7 519a8.84 8.84 0 0 0 0-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0 0 14.4 7"/></svg>
+    );
+    
+    export const MenuClose1: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8m-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8m0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8M115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8"/></svg>
+    );
+
+    export const History: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" color="currentColor"><path d="M11.007 21H9.605c-3.585 0-5.377 0-6.491-1.135S2 16.903 2 13.25s0-5.48 1.114-6.615S6.02 5.5 9.605 5.5h3.803c3.585 0 5.378 0 6.492 1.135c.857.873 1.054 2.156 1.1 4.365"/><path d="m18.85 18.85l-1.35-.9V15.7M13 17.5a4.5 4.5 0 1 0 9 0a4.5 4.5 0 0 0-9 0m3-12l-.1-.31c-.494-1.54-.742-2.31-1.331-2.75C13.979 2 13.197 2 11.632 2h-.264c-1.565 0-2.348 0-2.937.44c-.59.44-.837 1.21-1.332 2.75L7 5.5"/></g></svg>
+    );
+    
+    export const Credit: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round" strokeLinecap="round" strokeWidth="1.5" color="currentColor"><path stroke="currentColor" d="M15 7.5s.5 0 1 1c0 0 1.588-2.5 3-3"/><path stroke="currentColor" d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0"/><path fill="currentColor" d="m3.607 21.01l.465-.59zm-.554-.523l.56-.499zm17.894 0l-.56-.499zm-.555.523l-.464-.59zM3.607 6.99l-.464-.588zm-.554.522l.56.5zm19.697 5.732a.75.75 0 1 0-1.5.002zM9.066 6.753a.75.75 0 0 0-.009-1.5zM13.5 21.25h-3v1.5h3zm-3 0c-1.897 0-3.256 0-4.301-.119c-1.03-.116-1.655-.338-2.127-.71l-.93 1.177c.784.619 1.726.893 2.889 1.024c1.148.13 2.607.128 4.469.128zM1.25 14c0 1.75-.001 3.132.138 4.223c.141 1.11.439 2.016 1.105 2.764l1.12-.999c-.387-.433-.616-1.002-.737-1.955c-.125-.974-.126-2.244-.126-4.033zm2.822 6.42a3.6 3.6 0 0 1-.46-.432l-1.119.999q.297.332.65.611zM21.25 14c0 1.789-.001 3.06-.126 4.033c-.121.953-.35 1.522-.737 1.955l1.12.999c.666-.748.964-1.653 1.105-2.764c.14-1.09.138-2.474.138-4.223zm-7.75 8.75c1.862 0 3.321.002 4.47-.128c1.162-.131 2.104-.405 2.887-1.024l-.93-1.177c-.47.372-1.095.594-2.126.71c-1.044.118-2.404.12-4.301.12zm6.887-2.762q-.208.234-.46.433l.93 1.177q.353-.279.65-.611zM2.75 14c0-1.788.001-3.059.126-4.032c.121-.953.35-1.522.737-1.956l-1.12-.998c-.666.747-.964 1.653-1.105 2.764c-.14 1.09-.138 2.473-.138 4.222zm.393-7.597q-.353.278-.65.611l1.12.998q.208-.234.46-.432zM22.75 14v-.755l-1.5.002V14zM9.057 5.253c-1.407.008-2.553.04-3.491.188c-.953.15-1.747.428-2.423.962l.93 1.177c.407-.322.928-.53 1.726-.657c.813-.128 1.852-.162 3.267-.17z"/><path stroke="currentColor" d="M10 18h1.5m3 0H18M2.5 11H10"/></g></svg>
+    );
+    
+    export const Spin1: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".14"/><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".29" transform="rotate(30 12 12)"/><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".43" transform="rotate(60 12 12)"/><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".57" transform="rotate(90 12 12)"/><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".71" transform="rotate(120 12 12)"/><rect width="2" height="5" x="11" y="1" fill="currentColor" opacity=".86" transform="rotate(150 12 12)"/><rect width="2" height="5" x="11" y="1" fill="currentColor" transform="rotate(180 12 12)"/><animateTransform attributeName="transform" calcMode="discrete" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;30 12 12;60 12 12;90 12 12;120 12 12;150 12 12;180 12 12;210 12 12;240 12 12;270 12 12;300 12 12;330 12 12;360 12 12"/></g></svg>
+    );
+    
+    export const UserSettings: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" color="currentColor"><path d="M8.5 16.5a4.04 4.04 0 0 1 3.5-2.02c1.496 0 2.801.812 3.5 2.02M14 10a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path d="M22 13.967v-3.934c-2.857 0-4.714-3.103-3.268-5.566L15.268 2.5c-1.464 2.494-5.07 2.494-6.534 0L5.27 4.467C6.716 6.93 4.857 10.033 2 10.033v3.934c2.857 0 4.714 3.103 3.268 5.566L8.732 21.5c1.465-2.495 5.073-2.495 6.538 0l3.464-1.967c-1.447-2.463.41-5.566 3.266-5.566"/></g></svg>
+    );
+    
+    export const Caret: React.FC = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="m512 128l288 320H224zM224 576h576L512 896z"/></svg>
+    );
+    
 
 
     

@@ -64,20 +64,20 @@ interface Orden {
   return (
     <>
       <ProtectedRoute>
-        <Navbar />
-        <nav className='roundedflex-col flex justify-between w-11/12 m-auto mt-20 gap-4'>
-          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
+        <section className='bg-white w-full h-full p-2'>
+        <nav className='flex justify-between w-full m-auto gap-3 p-2'>
+          <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-8 mr-auto'>
             <ReloadIcon />
           </Button>
-          <h1 className=' font-bold pt-1 text-[0.9rem]'>
+          <h1 className='font-bold'>
             Ordenes de hoy
           </h1>
         </nav>
-        <Table className=" w-11/12 m-auto mt-5 ">
-            <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
+        <Table className="w-full m-auto mt-4 ">
+            <TableHeader className="text-[1rem] bg-slate-50 font-bold max-md:text-[0.89rem] ">
               <TableRow className=" text-sm">
                 <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
                 <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
@@ -136,6 +136,7 @@ interface Orden {
                 ))}
             </TableBody>
         </Table>
+        </section>
       </ProtectedRoute>
     </>
   )

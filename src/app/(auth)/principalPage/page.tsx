@@ -16,14 +16,14 @@ const PrincipalPage = () => {
             width={500}
             height={300}
           ></Image> 
-          <div className='flex flex-col w-1/3 max-md:w-5/12 m-auto gap-2 text-xs'>
+          <section className='flex flex-col w-1/3 max-md:w-5/12 m-auto gap-2 text-xs'>
               <Link href="/login" className='py-1 text-center bg-blue-950 text-white'>
                   Ingresar como empleado
               </Link>
-              <Link href="/views/clientes" className='py-1 font-medium text-center underline hover:text-blue-900'>
+              <Link href="/clientes" className='py-1 font-medium text-center underline hover:text-blue-900'>
                   Continuar como cliente
               </Link>
-          </div>
+          </section>
         </main>
     </>
   )

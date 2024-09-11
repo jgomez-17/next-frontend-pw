@@ -8,7 +8,7 @@ import { CheckCircleOutlined } from '@ant-design/icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { DownloadIcon, SearchIcon } from '@/app/components/ui/iconos';
+import { DownloadIcon, History, SearchIcon } from '@/app/components/ui/iconos';
 import { generarPDF } from './resumenPDF';
 import { FaHistory } from "react-icons/fa";
 
@@ -98,9 +98,10 @@ const OrdenesPorPlaca: React.FC = () => {
     <>
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
-            <DialogTrigger className='transition text-xs flex items-center gap-2 bg-black text-white hover:bg-slate-900 px-3 h-8 py-1 rounded-md'>
-              Ver historial
-              <FaHistory className='' />
+            <DialogTrigger className='text-xs h-8' asChild>
+                <Button className='bg-black'>
+                  Consultar vehiculo
+                </Button>
             </DialogTrigger>
 
         <DialogContent>

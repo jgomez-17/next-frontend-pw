@@ -1,16 +1,15 @@
 'use client'
 
-import OrdenesDashboard from '@/app/views/dashboard/lista-ordenes/page'
 import ProtectedRoute from "./components/protectedRoute";
+import PrincipalPage from "./(auth)/principalPage/page";
 
 
-export default function Home() {
+export default function Home () {
+
   return (
    <>
    <ProtectedRoute>
-      <main>
-          <OrdenesDashboard />
-      </main>
+      <PrincipalPage />
    </ProtectedRoute>
    </>
   );

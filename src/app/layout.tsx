@@ -5,6 +5,8 @@ import "./globals.css";
 // import '../../public/fonts/fonts.css'
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
+import ProtectedRoute from "./components/protectedRoute";
+import MainLayout from "./views/layout";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,14 +25,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body 
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
-        )}> 
-          {children}
+        )}>
+          <ProtectedRoute> 
+            {children}
+          </ProtectedRoute>
       </body>
     </html>
   );

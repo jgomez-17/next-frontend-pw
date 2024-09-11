@@ -56,20 +56,20 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
     <TableBody>
       {ordenesEnEspera.map((orden) => (
         <TableRow key={orden.id} className="text-[12px]">
-          <TableCell className="max-md:hidden px-3 font-bold w-20 py-1 border-b">{orden.id}</TableCell>
+          <TableCell className="max-md:hidden px-3 font-medium w-20 py-1 border-b">{orden.id}</TableCell>
           <TableCell className="p-1 border-b">
             <section>
-              <p className="font-semibold flex flex-col capitalize">
+              <p className="font-medium flex flex-col capitalize">
                 {orden.cliente.nombre}
               </p>
-              <p className="text-gray-500 font-sans">{orden.cliente.celular}</p>
+              <p className="text-slate-500">{orden.cliente.celular}</p>
             </section>
           </TableCell>
           <TableCell className="p-1 border-b">
             <p className="w-full font-semibold">
               {orden.vehiculo.placa}
             </p>
-            <section className="gap-1 md:flex text-gray-500 font-sans">
+            <section className="gap-1 md:flex text-slate-500">
               <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
               <p>{orden.vehiculo.marca}</p>
               <p className="max-md:hidden">{orden.vehiculo.color}</p>
@@ -80,7 +80,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
           </TableCell>
           <TableCell className="p-1 border-b">
             <section className="flex max-md:flex-col">
-              <p className="font-bold flex flex-col">
+              <p className="font-medium flex flex-col">
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
@@ -88,7 +88,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
                 }).format(Number(orden.servicio.costo))}
               </p>
             </section>
-            <p className="max-md:hidden text-gray-500 font-sans">{orden.servicio.nombre_servicios}</p>
+            <p className="max-md:hidden text-slate-500 font-sans">{orden.servicio.nombre_servicios}</p>
           </TableCell>
           <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
             <section className="gap-4 w-max flex float-end">

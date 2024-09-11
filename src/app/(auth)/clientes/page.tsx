@@ -10,7 +10,7 @@ import { message, Button } from "antd";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { DownloadIcon } from '@/app/components/ui/iconos'
-import Historial from '@/app/views/clientes/historial/page'
+import Historial from '@/app/(auth)/historial/page'
 import Image from 'next/image'
 
 interface Orden {

@@ -5,13 +5,14 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import Navbar from '@/app/views/navbar/page';
-import { BackIcon, DownloadIcon, ReloadIcon } from '@/app/components/ui/iconos';
+import { BackIcon, DownloadIcon, ReloadIcon, Spin1 } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { message, Spin } from 'antd';
 import { generarPDF } from './crearPDF-acum';
+import Sidebar from '@/app/views/sidebar/sidebar'
 
 interface Acumulado {
     id: number;
@@ -103,88 +104,89 @@ const AcumuladosComponent = () => {
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-                <Navbar />
-                <nav className='mt-20 max-md:w-full max-md:px-1 w-11/12 gap-4 m-auto flex items-center justify-between'>
-                    <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
-                        <BackIcon />
-                    </Button>
-                    <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
-                    <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
-                        <ReloadIcon />
-                    </Button>
-                    <Button onClick={GenerarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
-                        Descargar PDF
-                        <DownloadIcon />
-                    </Button>
-                    <h1 className='font-bold text-sm max-md:hidden'>Acumulado de ventas</h1>
-                </nav>
-                {dataLoaded && (
-                    <Table className='w-11/12 max-md:w-[98%] m-auto mt-4'>
-                        <TableHeader className='font-semibold text-sm max-md:text-[10px]'>
-                            <TableRow>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>D/S</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Día</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Venta Diaria</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Venta Diaria</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Prontowash</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Prontowash</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Servicios</TableCell>
-                                <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Servicios</TableCell>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody className='text-xs max-md:text-[9px]'>
-                            {daysArray.map((day) => {
-                                const record = data.find((item) => {
-                                    const itemDay = new Date(item.fecha).getDate(); // Obtener el día del mes del registro
-                                    return itemDay === day; // Comparar con el día del mes actual iterado
-                                });
-
-                                const nombreDiaSemana = record && record.fecha ? obtenerNombreDia(record.fecha) : '';
-
-                                return (
-                                    <TableRow key={day}>
-                                        <TableCell className='py-1 border max-md:px-1 px-3 capitalize'>{nombreDiaSemana}</TableCell>
-                                        <TableCell className='py-1 border max-md:px-1 px-3'>{day}</TableCell>
-                                        {record ? (
-                                            <>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.venta_diaria)}</TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_venta_diaria)}</TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.prontowash)}</TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_prontowash)}</TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{record.servicios}</TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'>{record.acum_servicios}</TableCell>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                                <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
-                                            </>
-                                        )}
+                    <section className='w-full m-auto rounded-md p-2 bg-white'>
+                    <nav className='w-full p-2 gap-4 m-auto flex items-center justify-between'>
+                        <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+                            <BackIcon />
+                        </Button>
+                        <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
+                            <ReloadIcon />
+                        </Button>
+                        <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
+                        <Button onClick={GenerarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
+                            Descargar PDF
+                            <DownloadIcon />
+                        </Button>
+                        <h1 className='font-bold max-md:hidden'>Acumulado de ventas</h1>
+                    </nav>
+                        {dataLoaded && (
+                            <Table className='w-full m-auto mt-4'>
+                                <TableHeader className='font-semibold text-sm max-md:text-[10px]'>
+                                    <TableRow>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>D/S</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Día</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Venta Diaria</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Venta Diaria</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Prontowash</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Prontowash</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Servicios</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Servicios</TableCell>
                                     </TableRow>
-                                );
-                            })}
-                            {totalAcumulado && (
-                                <TableRow>
-                                    <TableCell className='py-1 px-3 font-semibold'>Totales</TableCell>
-                                    <TableCell className='py-1 px-3'></TableCell>
-                                    <TableCell className='py-1 px-3'></TableCell>
-                                    <TableCell className='py-1 px-3'>{formatNumber(totalAcumulado.acum_venta_diaria)}</TableCell>
-                                    <TableCell className='py-1 px-3'></TableCell>
-                                    <TableCell className='py-1 px-3'>{formatNumber(totalAcumulado.acum_prontowash)}</TableCell>
-                                    <TableCell className='py-1 px-3'></TableCell>
-                                    <TableCell className='py-1 px-3'>{totalAcumulado.acum_servicios}</TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                )}
-                {!dataLoaded && (
-                    <p className='text-center mt-4'>Cargando...</p>
-                )}
+                                </TableHeader>
+                                <TableBody className='text-xs max-md:text-[9px]'>
+                                    {daysArray.map((day) => {
+                                        const record = data.find((item) => {
+                                            const itemDay = new Date(item.fecha).getDate(); // Obtener el día del mes del registro
+                                            return itemDay === day; // Comparar con el día del mes actual iterado
+                                        });
+
+                                        const nombreDiaSemana = record && record.fecha ? obtenerNombreDia(record.fecha) : '';
+
+                                        return (
+                                            <TableRow key={day}>
+                                                <TableCell className='py-1 border max-md:px-1 px-3 capitalize'>{nombreDiaSemana}</TableCell>
+                                                <TableCell className='py-1 border max-md:px-1 px-3'>{day}</TableCell>
+                                                {record ? (
+                                                    <>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.venta_diaria)}</TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_venta_diaria)}</TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.prontowash)}</TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{formatNumber(record.acum_prontowash)}</TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{record.servicios}</TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'>{record.acum_servicios}</TableCell>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                        <TableCell className='py-1 px-3 max-md:px-1 border'></TableCell>
+                                                    </>
+                                                )}
+                                            </TableRow>
+                                        );
+                                    })}
+                                    {totalAcumulado && (
+                                        <TableRow>
+                                            <TableCell className='py-1 px-3 font-semibold'>Totales</TableCell>
+                                            <TableCell className='py-1 px-3'></TableCell>
+                                            <TableCell className='py-1 px-3'></TableCell>
+                                            <TableCell className='py-1 px-3'>{formatNumber(totalAcumulado.acum_venta_diaria)}</TableCell>
+                                            <TableCell className='py-1 px-3'></TableCell>
+                                            <TableCell className='py-1 px-3'>{formatNumber(totalAcumulado.acum_prontowash)}</TableCell>
+                                            <TableCell className='py-1 px-3'></TableCell>
+                                            <TableCell className='py-1 px-3'>{totalAcumulado.acum_servicios}</TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        )}
+                        {!dataLoaded && (
+                            <p className='text-center mt-4'> <Spin1 /> </p>
+                        )}
+                     </section>
             </ProtectedRoute>
         </>
     );

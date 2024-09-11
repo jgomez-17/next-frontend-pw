@@ -55,10 +55,13 @@ const ResumenOrdenes = () => {
 
   return (
     <Sheet>
-    <SheetTrigger className='text-xs bg-gray-100 hover:bg-gray-200 max-md:mr-auto h-8 px-5 py-2 rounded-md font-medium'>
-        Ordenes
+    <SheetTrigger asChild>
+        <Button className='h-8 text-xs' variant={'secondary'}>
+          Ordenes
+        </Button>
     </SheetTrigger>
-    <SheetContent className='overflow-y-auto'>
+    <SheetContent style={{  maxWidth: '50vw'}} 
+      className='max-md:w-svw overflow-y'>
         <SheetHeader>
         <SheetTitle className='flex items-center gap-2'>
           <Button variant={'ghost'} onClick={reloadPage}>

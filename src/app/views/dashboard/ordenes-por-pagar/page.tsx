@@ -112,21 +112,20 @@ const OrdenesPorPagar = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-      <Navbar />
-      <section className='mt-20'>
-        <nav className='rounded flex justify-between w-11/12 m-auto gap-4'>
-          <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
+      <section className='w-full p-2 h-full bg-white'>
+        <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
+          <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} className='h-8 bg-transparent text-black mr-auto hover:bg-transparent hover:text-blue-600'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-8 mr-auto'>
             <ReloadIcon />
           </Button>
-          <span className='font-bold p-1 text-[0.9rem]'> 
+          <h1 className='font-bold'> 
             Ordenes por pagar
-          </span>
+          </h1>
         </nav>
-        <Table className='w-11/12 m-auto mt-6'>
-          <TableHeader className="font-bold text-sm">
+        <Table className='w-full m-auto mt-4'>
+          <TableHeader className="font-bold bg-slate-50 text-sm">
             <TableRow>
               <TableCell className="max-md:hidden w-24 px-1 text-center">#</TableCell>
               <TableCell className="w-36 px-1">Cliente</TableCell>

@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
-import LogoutButton from '@/app/login/logoutButton'
+import LogoutButton from '@/app/(auth)/login/logoutButton'
 import Cookies from 'js-cookie'
 
 const ListItem = React.forwardRef<

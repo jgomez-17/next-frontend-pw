@@ -7,6 +7,7 @@ import { LuDollarSign } from "react-icons/lu";
 import { IoTimeOutline } from "react-icons/io5";
 import { IoCarSportSharp } from "react-icons/io5";
 import Link from 'next/link';
+import { Credit } from '@/app/components/ui/iconos';
 
 
 interface CardsStatsProps {
@@ -24,8 +25,8 @@ const CardsStats: React.FC<CardsStatsProps> = ({
 }) => {
   return (
     <>
-     <ul className=" flex w-11/12 m-auto flex-wrap justify-between items-center gap-1" >
-          <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
+     <ul className="flex m-auto justify-between items-center gap-1" >
+          {/* <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
              <Link href="#" className='w-full'>
                 <span className='mt-2 font-medium text-xs inline-block'>
                   En espera
@@ -33,32 +34,33 @@ const CardsStats: React.FC<CardsStatsProps> = ({
                   <IoTimeOutline className='text-gray-500 text-xl inline-block float-end mt-2' />
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesEnEspera} </p>
              </Link>
-         </li>
-         <li className="shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4 max-md:hidden">
-             <Link href="/views/dashboard/ordenes-por-pagar" className='w-full'>
-                <span className='mt-2 font-medium text-xs inline-block'>
+         </li> */}
+         <li className="w-full max-md:hidden">
+             <Link href="/views/dashboard/ordenes-por-pagar" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
+                <span className='mt-2 font-medium text-[13px] inline-block'>
                   Por pagar
                 </span>
-                  <MdOutlinePayment className='text-gray-500 text-xl inline-block float-end mt-2' />
+                  {/* <Credit /> */}
+                  <MdOutlinePayment className='text-gray-500/5 text-8xl inline-block float-end' />
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesPorPagar} </p>
              </Link>
 
            </li>
-           <li className=" shadow hover:shadow-sm rounded-lg inline-block transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
-               <Link href="/views/dashboard/ordenes-terminadas" className='w-full'>
-                  <span className='mt-2 font-medium text-xs inline-block'>
+           <li className="w-full">
+               <Link href="/views/dashboard/ordenes-terminadas" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
+                  <span className='mt-2 font-medium text-[13px] inline-block'>
                     Terminadas
                   </span>
-                   <MdDoneAll className='text-gray-500 text-xl inline-block mt-2 float-end' />
+                   <MdDoneAll className='text-gray-500/5 text-8xl inline-block float-end' />
                   <p className='text-3xl mt-6 font-bold'> {numeroOrdenesHoy} </p>
                </Link>
            </li>
-           <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4 max-md:hidden">
-               <Link href="#" className='w-full'>
-                  <span className='inline-block mt-2 font-medium text-xs '>
+           <li className="w-full">
+               <Link href="#" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
+                  <span className='inline-block mt-2 font-medium text-[13px]'>
                     Total vendido hoy
                   </span>
-                    <LuDollarSign className='inline-block float-end mt-2 text-gray-500 text-xl'  />
+                    <LuDollarSign className='text-gray-500/5 text-8xl inline-block float-end'  />
                   <p className='text-3xl mt-6 font-bold'> {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",

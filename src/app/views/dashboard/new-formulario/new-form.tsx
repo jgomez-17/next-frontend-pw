@@ -286,13 +286,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger
-        className='font-sans flex gap-1 ml-auto items-center bg-black text-white hover:bg-opacity-80 py-1 text-xs px-5 rounded-md' >
+        className='flex gap-1 h-8 ml-auto items-center bg-black text-white hover:bg-opacity-80 py-1.5 text-xs font-medium px-5 rounded-md' >
         Nueva orden
         <PlusIcon />
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto font-geist' >
+      className='max-md:w-svw overflow-y-auto' >
         <SheetHeader>
         <SheetTitle>Crear nueva orden</SheetTitle>
         <SheetDescription className='m-auto'>

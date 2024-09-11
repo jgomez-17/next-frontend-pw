@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { BackIcon } from '@/app/components/ui/iconos';
+import Sidebar  from '@/app/views/sidebar/sidebar';
 
 const EstadisticasPage: React.FC = () => {
     const mesActual = new Date().getMonth() + 1; // Mes actual (enero es 0, por eso sumamos 1)
@@ -39,13 +40,12 @@ const EstadisticasPage: React.FC = () => {
     return (
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-            <Navbar />
-            <main className='mt-20'>
-                <nav className='flex w-11/12 max-md:w-full max-md:px-1 gap-4 m-auto items-center justify-between'>
-                    <Button onClick={handleBackButton} className="h-8 rounded-full bg-transparent hover:bg-gray-100 text-black">
+            <section className='w-[100%] m-auto rounded-md bg-white p-2'>
+                <nav className='flex w-full p-2 gap-3 m-auto items-center justify-between'>
+                    <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
                         <BackIcon />
                     </Button>
-                    <form onSubmit={handleSubmit} className='flex max-md:text-sm max-md:mr-auto'>
+                    <form onSubmit={handleSubmit} className='flex max-md:text-sm mr-auto'>
                         <label>
                             Mes:
                             <select className='mx-2 rounded bg-slate-100' value={mesSeleccionado} onChange={handleChangeMes}>
@@ -70,15 +70,13 @@ const EstadisticasPage: React.FC = () => {
                         </label>
                         {/* <button type="submit">Buscar</button> */}
                     </form>
-                    <Link href="/views/planillas/acumulados"
-                          className='rounded-md md:mr-auto bg-black hover:bg-slate-900 h-8 text-white px-3 text-xs flex items-center'  
-                    >
-                        Ver Acumulado
-                    </Link>
+                    <Button onClick={() => router.push('/views/planillas/acumulados')} className=" bg-black h-8 text-xs">
+                        Ver acumulado
+                    </Button>
                     <h1 className='font-bold max-md:hidden'>Estadísticas</h1>
                 </nav>
                 <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
-            </main>
+            </section>
         </ProtectedRoute>
         </>
     );

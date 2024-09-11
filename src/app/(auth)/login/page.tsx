@@ -52,7 +52,7 @@ const LoginPage = () => {
                 Cookies.set('rol', rol, { expires});
                 Cookies.set('username', usuario, { expires});
 
-                router.replace('/');
+                router.replace('/views');
                 // window.location.href = '/views/dashboard/lista-ordenes';
             } else {
                 setError(data.message || 'Error al iniciar sesión');

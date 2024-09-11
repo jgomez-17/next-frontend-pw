@@ -11,7 +11,7 @@ const AccesoDenegadoPage = () => {
   const router = useRouter();
 
   const volverInicio = () => {
-    router.push('/');
+    router.push('/views');
   };
 
   return (

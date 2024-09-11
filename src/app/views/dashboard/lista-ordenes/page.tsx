@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { message, Select } from "antd";
 import { Button } from "@/components/ui/button";
+import Image from 'next/image';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -15,7 +16,10 @@ import OrdenesEnEspera from "../ordenes-en-espera/ordenes-en-espera"; // Import 
 import NewForm from "@/app/views/dashboard/new-formulario/new-form";
 import Link from "next/link";
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { ReloadIcon } from "@/app/components/ui/iconos";
+import { Ajustes, Caret, Grap, MenuBold, MenuIcon, MultipleUsers, P, Reload, ReloadIcon } from "@/app/components/ui/iconos";
+import Historial from '@/app/(auth)/historial/page'
+import { useRouter } from "next/navigation";
+
 
 const { Option } = Select;
 
@@ -55,6 +59,13 @@ const OrdenesDashboard = () => {
   const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter()
+
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   const fetchLavadores = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`; 
@@ -262,62 +273,62 @@ const OrdenesDashboard = () => {
 
   return (
     <>
-    <ProtectedRoute>
-      <Navbar />
-      <main className="overflow-auto max-h-screen">
-      <nav className="gap-3 w-11/12 justify-between m-auto flex items-center mt-[65px] max-md:mt-[70px] mb-3">
-          <Button onClick={reloadPage} className="border-none" variant={"ghost"}>
-            <ReloadIcon />
-          </Button>
+        <section className="bg-white rounded w-full p-2">
+            <article className="m-auto rounded-md">
+            <nav className="gap-3 w-full justify-between m-auto flex items-center mb-3">
+              <Historial />
+              <Button onClick={() => router.push('/views/planillas/cierre-diario')} className=" bg-black h-8 text-xs max-md:hidden">
+                  Hacer cierre
+              </Button>
+              <Button onClick={reloadPage} className="mr-auto h-8" variant={"ghost"}>
+                <ReloadIcon />
+              </Button>
+              <article className="flex items-center gap-4">
+                <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
+              </article>
+          </nav>
 
-          <article className="flex items-center gap-4">
-          <Link 
-            href="/views/planillas/cierre-diario"
-            className="text-xs font-medium border hover:bg-slate-50 hover:border-transparent py-2 px-5 rounded-md max-md:hidden"
-          >
-            Cierre
-          </Link>
-          <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
-          </article>
+          <CardsStats
+            numeroOrdenesEnEspera={numeroOrdenesEnEspera}
+            numeroOrdenesHoy={numeroOrdenesHoy}
+            numeroOrdenesPorPagar={numeroOrdenesPorPagar}
+            totalRecaudado={totalRecaudado}
+          />
+          
+
+          <Table className="m-auto mt-4 bg-white">
+            <TableHeader className="uppercase font-medium max-md:text-[0.89rem] ">
+              <TableRow className=" text-xs tracking-wide bg-slate-50 text-slate-500">
+                <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
+                <TableCell className="md:w-1/5 px-1 max-md:w-28">Cliente</TableCell>
+                <TableCell className="md:w-1/5 px-1 max-md:w-28">Vehículo</TableCell>
+                <TableCell className="md:w-3/5 px-1 max-md:w-24">Servicio</TableCell>
+                <TableCell className="md:w-1/5 max-md:w-14"></TableCell>
+              </TableRow>
+            </TableHeader>
+
+            <OrdenesEnEspera
+              ordenesEnEspera={ordenesEnEspera}
+              actualizarEstadoOrden={actualizarEstadoOrden}
+              cancelarOrden={cancelarOrden}
+              selectedEmployees={selectedEmployees}
+              handleEmpleadoChange={handleEmpleadoChange}
+              lavadores={lavadores}
+            />  
+
+            <OrdenesEnCurso
+              ordenesEnCurso={ordenesEnCurso}
+              actualizarEstadoOrden3={actualizarEstadoOrden3}
+              cancelarOrden={cancelarOrden}
+            />
+          </Table>
+            </article>
+        </section>
+
+      {/* <Navbar /> */}
+      {/* <main className="overflow-auto max-h-screen">
       
-      </nav>
-
-      <CardsStats
-        numeroOrdenesEnEspera={numeroOrdenesEnEspera}
-        numeroOrdenesHoy={numeroOrdenesHoy}
-        numeroOrdenesPorPagar={numeroOrdenesPorPagar}
-        totalRecaudado={totalRecaudado}
-      />
-      
-
-      <Table className="w-11/12 m-auto mt-4">
-        <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
-          <TableRow className=" text-sm">
-            <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
-            <TableCell className="md:w-1/5 px-1 max-md:w-28">Cliente</TableCell>
-            <TableCell className="md:w-1/5 px-1 max-md:w-28">Vehículo</TableCell>
-            <TableCell className="md:w-3/5 px-1 max-md:w-24">Servicio</TableCell>
-            <TableCell className="md:w-1/5 max-md:w-14"></TableCell>
-          </TableRow>
-        </TableHeader>
-          <OrdenesEnEspera
-          ordenesEnEspera={ordenesEnEspera}
-          actualizarEstadoOrden={actualizarEstadoOrden}
-          cancelarOrden={cancelarOrden}
-          selectedEmployees={selectedEmployees}
-          handleEmpleadoChange={handleEmpleadoChange}
-          lavadores={lavadores}
-        />  
-
-        {/* ORDENES EN CURSO */}
-        <OrdenesEnCurso
-          ordenesEnCurso={ordenesEnCurso}
-          actualizarEstadoOrden3={actualizarEstadoOrden3}
-          cancelarOrden={cancelarOrden}
-        />
-      </Table>
-      </main>
-      </ProtectedRoute>
+      </main> */}
     </>
   );
 };
