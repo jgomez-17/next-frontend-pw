@@ -76,9 +76,9 @@ const ResumenOrdenes = () => {
           <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
             <TableRow className="text-sm">
               <TableCell className="w-1/6">#</TableCell>
-              <TableCell className="w-1/6">Placa</TableCell>
+              <TableCell className="w-1/4">Placa</TableCell>
               <TableCell className="w-1/4">Servicio</TableCell>
-              <TableCell className="w-1/6">Lavador</TableCell>
+              <TableCell className="w-1/4">Lavador</TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>

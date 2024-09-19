@@ -113,7 +113,7 @@ const AcumuladosComponent = () => {
                             <ReloadIcon />
                         </Button>
                         <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
-                        <Button onClick={GenerarPDF} className='md:ml-auto bg-black gap-2 flex h-8 items-center text-xs hover:outline-slate-200'>
+                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-8 text-xs'>
                             Descargar PDF
                             <DownloadIcon />
                         </Button>

@@ -128,7 +128,7 @@ const ClientesPage = () => {
             width={500}
             height={300}
           ></Image>         */}
-        <nav className='gap-4 flex w-full m-auto items-center justify-between'>
+        <nav className='gap-4 flex w-full max-md:px-2 m-auto items-center justify-between'>
             <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
               <ReloadIcon />
             </Button>
