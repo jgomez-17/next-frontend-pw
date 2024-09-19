@@ -60,8 +60,8 @@ const ResumenOrdenes = () => {
           Ordenes
         </Button>
     </SheetTrigger>
-    <SheetContent style={{  maxWidth: '50vw'}} 
-      className='overflow-y tracking-tighter'>
+    <SheetContent style={{  maxWidth: '100vw'}} 
+      className='max-md:w-svw overflow-y-auto' >
         <SheetHeader>
         <SheetTitle className='flex items-center gap-2'>
           <Button variant={'ghost'} onClick={reloadPage}>
@@ -75,17 +75,17 @@ const ResumenOrdenes = () => {
         <Table className=" w-full m-auto mt-5 ">
           <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
             <TableRow className="text-sm">
-              <TableCell className="w-1/6 bg-red-400">#</TableCell>
-              <TableCell className="w-1/6 bg-red-500">Placa</TableCell>
-              <TableCell className="w-1/4 bg-red-700">Servicio</TableCell>
-              <TableCell className="w-1/6 bg-red-600">Lavador</TableCell>
+              <TableCell className="w-1/6">#</TableCell>
+              <TableCell className="w-1/6">Placa</TableCell>
+              <TableCell className="w-1/4">Servicio</TableCell>
+              <TableCell className="w-1/6">Lavador</TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
             {ordenesTerminadas &&
               ordenesTerminadas.map((orden: Orden) => (
                 <TableRow key={orden.id} className="text-[12px]">
-                  <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
+                  <TableCell className="px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
                   <TableCell className="p-1 max-md:text-center border-b">
                       <section className='flex flex-col'>
                         <span className="w-full font-semibold">

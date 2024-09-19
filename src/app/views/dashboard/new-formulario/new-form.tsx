@@ -5,7 +5,8 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
-import { Button, Form, message } from 'antd';
+import { Form, message } from 'antd';
+import { Button } from '@/components/ui/button';
 import { IoChevronBack } from "react-icons/io5";
 import { GrFormNext } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa";
@@ -292,26 +293,21 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto' >
+      className='max-md:w-svw overflow-y-auto tracking-tighter' >
         <SheetHeader>
         <SheetTitle>Crear nueva orden</SheetTitle>
         <SheetDescription className='m-auto'>
           <p className=' text-transparent'>Hola</p>
         </SheetDescription>
         </SheetHeader>
-            <Form 
-              id='orden' 
-              onSubmitCapture={handleSubmit} 
-              className='flex flex-col gap-10 font-geist text-xs' 
-            >
-                
-                {seccion === 1 && (
+
+        {seccion === 1 && (
                     <>
-                    <section className='bg-slate-400/5 max-md:w-full w-1/2 m-auto p-6 rounded-md'>
-                        <span className='ml-1 text-zinc-500 font-medium'> Ingresar placa </span>
-                        <article className='flex items-center'>
+                    <Form onSubmitCapture={consultarOrden} className='max-md:w-full w-1/2 m-auto p-6 rounded-md'>
+                        <span className='m-2 font-semibold text-md'> Ingresar placa </span>
+                        <article className='flex items-center gap-2 mt-2'>
                         <Input 
-                            className='uppercase w-36 h-8' 
+                            className='uppercase w-36 h-9' 
                             type="text" 
                             value={verifyplaca} 
                             onChange={(e) => {
@@ -336,22 +332,26 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             maxLength={7} // Permitir 3 letras, 1 guión y 3 números
                             required 
                         />
-                        <Button 
-                            className='mx-4 my-2 bg-black text-white' 
-                            onClick={consultarOrden} >
+                        <Button className='h-9'>
                             Verificar
                         </Button>
-                        <Button onClick={handleRefresh}>
+                        <Button onClick={handleRefresh} type='button' className='h-9' variant={'secondary'}>
                             Limpiar
                         </Button>
                         </article>
-                    </section>
+                    </Form>
                     </>
                 )}
 
+            <Form 
+              id='orden' 
+              onSubmitCapture={handleSubmit} 
+              className='flex flex-col gap-10 font-geist text-xs' 
+            >
+                
                 {seccion === 2 && (
                 <>
-                  <fieldset className='flex flex-wrap gap-x-5 gap-y-3 max-md:w-full'>
+                  <fieldset className='flex flex-wrap text-sm gap-x-5 gap-y-3 max-md:w-full'>
                       <legend className=''> Datos del vehiculo</legend>
 
                       <label>
@@ -360,7 +360,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         </span>
                         
                         <Input 
-                          className='input uppercase w-[150px] my-2' 
+                          className='input uppercase h-9 w-[150px] my-2' 
                           type="text" 
                           value={placa} 
                           onChange={(e) => {
@@ -397,7 +397,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={marca}
                             onValueChange={(value) => setMarca(value)}
                         >
-                            <SelectTrigger className="w-[180px] my-2">
+                            <SelectTrigger className="w-[180px] h-9 my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -442,7 +442,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={tipo}
                             onValueChange={(value) => setTipo(value)}
                         >
-                            <SelectTrigger className="w-[150px] my-2">
+                            <SelectTrigger className="w-[150px] h-9 my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -458,7 +458,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={color}
                             onValueChange={(value) => setColor(value)}
                         >
-                            <SelectTrigger className="w-[180px] my-2">
+                            <SelectTrigger className="w-[180px] h-9 my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -483,7 +483,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             value={llaves}
                             onValueChange={(value) => setLlaves(value)}
                         >
-                            <SelectTrigger className="w-[130px] my-2">
+                            <SelectTrigger className="w-[130px] h-9 my-2">
                                 <SelectValue placeholder="" />
                             </SelectTrigger>
                             <SelectContent>
@@ -499,20 +499,21 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                       </label>
                   </fieldset>
 
-                  <fieldset className='flex flex-wrap gap-x-5 gap-y-3 max-md:w-full'>
+                  <fieldset className='flex text-sm flex-wrap gap-x-5 gap-y-3 max-md:w-full'>
                     <legend>Datos del cliente</legend>
                     <label>
                       <span className='ml-1 text-zinc-500'>Nombre</span>
-                      <Input className='capitalize max-md:w-40 my-2' 
+                      <Input className='capitalize max-md:w-40 h-9 my-2' 
                         type="text" value={nombre} 
                         onChange={(e) => setNombre(e.target.value)} 
                         required
                       />
                     </label>
+
                     <label>
                       <span className='ml-1 text-zinc-500'>Celular</span>
                       <Input 
-                        className='max-md:w-40 my-2'
+                        className='max-md:w-40 h-9 my-2'
                         type="text" 
                         value={celular} 
                         onChange={(e) => {
@@ -526,7 +527,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     <label>
                         <span className='ml-1 text-zinc-500'>Correo</span>
                         <Input 
-                          className='my-2'
+                          className='my-2 h-9'
                           type="email" 
                           value={correoCliente} 
                           onChange={(e) => setCorreoCliente(e.target.value)} 
@@ -536,16 +537,19 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                   </fieldset>
 
                   <section className='flex max-w-min m-auto gap-3'>
-                    <Button 
-                      className='bg-black p-4 flex items-center gap-2 text-white hover:bg-zinc-800'
+                    <Button className='gap-2'
                       onClick={retrocederSeccion}
-                      >
+                      variant={'secondary'}
+                      type='button'
+                    >
                       <IoChevronBack />
                       Volver
                     </Button>
                     <Button
-                      className='flex p-4 items-center font-medium' 
-                      onClick={avanzarSeccion}>
+                      className='gap-2' 
+                      onClick={avanzarSeccion}
+                      type='button'
+                    >
                       Siguiente
                       <GrFormNext className=' text-lg' />
                     </Button>
@@ -555,7 +559,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
                 {seccion === 3 &&(
                 <>
-                  <fieldset className='flex max-md:flex-col gap-2'>
+                  <fieldset className='flex text-sm max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
                       <section className='w-max gap-7 mt-0 rounded-md flex flex-col'>
                       <label>
@@ -567,9 +571,9 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             setServicioSeleccionado={setServicioSeleccionado} 
                         />
                         <Button 
-                              className='h-10'
-                              type='text'
+                              className='rounded-full h-9 px-3'
                               title='Agregar'
+                              type='button'
                               onClick={handleAgregarServicio}
                             >
                               <FaPlus />
@@ -582,7 +586,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             Aplicar descuento
                           </span>
                           <Input 
-                            className='w-36 my-2'
+                            className='w-36 h-9 my-2'
                             placeholder='$'
                             type="number" 
                             value={descuento || ''} 
@@ -597,7 +601,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
                       <label>
                           <Input 
-                            className='nombre_servicios hidden' 
+                            className='hidden' 
                             type="text" 
                             name='nombre_servicios' 
                             value={nombresServicios} 
@@ -648,18 +652,15 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     </section>
                   </fieldset>
                   <section className='flex max-w-min m-auto gap-3'>
-                      <Button 
-                        className='flex p-4 gap-2 items-center hover:bg-zinc-800'
+                      <Button className='gap-2'
                         onClick={retrocederSeccion}
-                        >
+                        variant={'secondary'}
+                        type='button'
+                      >
                         <IoChevronBack />
                         Volver
                       </Button>
-                        <Button
-                            
-                            onClick={handleSubmit} 
-                            className='flex p-4 bg-black text-white w-32 items-center justify-center' 
-                            >
+                        <Button>
                             Generar orden
                         </Button>
                   </section>
