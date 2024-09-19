@@ -33,7 +33,7 @@ export function ProfileMenu() {
             <ProfileIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 rounded-none z-50">
+      <DropdownMenuContent className="w-56 rounded-none z-50 tracking-tighter">
         <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="">

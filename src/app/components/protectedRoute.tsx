@@ -30,7 +30,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
 
   useEffect(() => {
     if (!token) {
-      router.replace('/principalPage'); // Redireccionar al login si no hay token
+      router.replace('/'); // Redireccionar al login si no hay token
       return;
     }
 

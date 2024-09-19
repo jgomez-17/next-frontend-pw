@@ -40,8 +40,8 @@ const EstadisticasPage: React.FC = () => {
     return (
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-            <section className='w-[100%] m-auto rounded-md bg-white p-2'>
-                <nav className='flex w-full p-2 gap-3 m-auto items-center justify-between'>
+            <section className='w-full m-auto rounded-md bg-white p-2'>
+                <nav className='flex tracking-tighter w-full p-2 gap-3 m-auto items-center justify-between'>
                     <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
                         <BackIcon />
                     </Button>
@@ -70,7 +70,7 @@ const EstadisticasPage: React.FC = () => {
                         </label>
                         {/* <button type="submit">Buscar</button> */}
                     </form>
-                    <Button onClick={() => router.push('/views/planillas/acumulados')} className=" bg-black h-8 text-xs">
+                    <Button onClick={() => router.push('/views/planillas/acumulados')} className="h-8 text-xs">
                         Ver acumulado
                     </Button>
                     <h1 className='font-bold max-md:hidden'>Estadísticas</h1>

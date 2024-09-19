@@ -104,7 +104,7 @@ const AcumuladosComponent = () => {
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-                    <section className='w-full m-auto rounded-md p-2 bg-white'>
+                    <section className='w-full m-auto rounded-md p-2 bg-white tracking-tighter'>
                     <nav className='w-full p-2 gap-4 m-auto flex items-center justify-between'>
                         <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
                             <BackIcon />
@@ -186,7 +186,7 @@ const AcumuladosComponent = () => {
                         {!dataLoaded && (
                             <p className='text-center mt-4'> <Spin1 /> </p>
                         )}
-                     </section>
+                    </section>
             </ProtectedRoute>
         </>
     );

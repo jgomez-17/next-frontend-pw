@@ -273,11 +273,11 @@ const OrdenesDashboard = () => {
 
   return (
     <>
-        <section className="bg-white rounded w-full p-2">
+        <section className="bg-white rounded w-full p-2 tracking-tighter">
             <article className="m-auto rounded-md">
             <nav className="gap-3 w-full justify-between m-auto flex items-center mb-3">
               <Historial />
-              <Button onClick={() => router.push('/views/planillas/cierre-diario')} className=" bg-black h-8 text-xs max-md:hidden">
+              <Button onClick={() => router.push('/views/planillas/cierre-diario')} className="h-8 text-xs max-md:hidden">
                   Hacer cierre
               </Button>
               <Button onClick={reloadPage} className="mr-auto h-8" variant={"ghost"}>
@@ -297,8 +297,8 @@ const OrdenesDashboard = () => {
           
 
           <Table className="m-auto mt-4 bg-white">
-            <TableHeader className="uppercase font-medium max-md:text-[0.89rem] ">
-              <TableRow className=" text-xs tracking-wide bg-slate-50 text-slate-500">
+            <TableHeader className="font-semibold max-md:text-[0.89rem] ">
+              <TableRow className=" text-sm bg-slate-50">
                 <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
                 <TableCell className="md:w-1/5 px-1 max-md:w-28">Cliente</TableCell>
                 <TableCell className="md:w-1/5 px-1 max-md:w-28">Vehículo</TableCell>

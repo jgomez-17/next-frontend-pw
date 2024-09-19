@@ -61,7 +61,7 @@ const ResumenOrdenes = () => {
         </Button>
     </SheetTrigger>
     <SheetContent style={{  maxWidth: '50vw'}} 
-      className='max-md:w-svw overflow-y'>
+      className='overflow-y tracking-tighter'>
         <SheetHeader>
         <SheetTitle className='flex items-center gap-2'>
           <Button variant={'ghost'} onClick={reloadPage}>
@@ -75,10 +75,10 @@ const ResumenOrdenes = () => {
         <Table className=" w-full m-auto mt-5 ">
           <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
             <TableRow className="text-sm">
-              <TableCell className="max-md:hidden max-md:justify-center  w-24 px-4">#</TableCell>
-              <TableCell className="w-44 px-1 max-md:w-24 max-md:text-center">Placa</TableCell>
-              <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
-              <TableCell className="md:hidden"> Estado</TableCell>
+              <TableCell className="w-1/6 bg-red-400">#</TableCell>
+              <TableCell className="w-1/6 bg-red-500">Placa</TableCell>
+              <TableCell className="w-1/4 bg-red-700">Servicio</TableCell>
+              <TableCell className="w-1/6 bg-red-600">Lavador</TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>

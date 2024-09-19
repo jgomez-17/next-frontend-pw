@@ -25,7 +25,7 @@ const CardsStats: React.FC<CardsStatsProps> = ({
 }) => {
   return (
     <>
-     <ul className="flex m-auto justify-between items-center gap-1" >
+     <ul className="flex tracking-tighter m-auto justify-between items-center gap-1" >
           {/* <li className=" shadow hover:shadow-sm inline-block rounded-lg transition-all max-md:w-[48.5%] w-[24.5%] md:h-[130px] h-[110px] p-2 md:p-4">
              <Link href="#" className='w-full'>
                 <span className='mt-2 font-medium text-xs inline-block'>
@@ -37,30 +37,30 @@ const CardsStats: React.FC<CardsStatsProps> = ({
          </li> */}
          <li className="w-full max-md:hidden">
              <Link href="/views/dashboard/ordenes-por-pagar" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
-                <span className='mt-2 font-medium text-[13px] inline-block'>
+                <span className='mt-2 font-medium text-[14px] inline-block'>
                   Por pagar
                 </span>
                   {/* <Credit /> */}
-                  <MdOutlinePayment className='text-gray-500/5 text-8xl inline-block float-end' />
+                  <MdOutlinePayment className='text-gray-500/5 md:text-8xl text-4xl inline-block float-end' />
                 <p className='text-3xl mt-6 font-bold'> {numeroOrdenesPorPagar} </p>
              </Link>
 
            </li>
            <li className="w-full">
                <Link href="/views/dashboard/ordenes-terminadas" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
-                  <span className='mt-2 font-medium text-[13px] inline-block'>
+                  <span className='mt-2 font-medium text-[14px] inline-block'>
                     Terminadas
                   </span>
-                   <MdDoneAll className='text-gray-500/5 text-8xl inline-block float-end' />
+                   <MdDoneAll className='text-gray-500/5 md:text-8xl text-4xl inline-block float-end' />
                   <p className='text-3xl mt-6 font-bold'> {numeroOrdenesHoy} </p>
                </Link>
            </li>
            <li className="w-full">
                <Link href="#" className='w-full shadow hover:shadow-sm rounded-lg inline-block transition-all p-2 py-4'>
-                  <span className='inline-block mt-2 font-medium text-[13px]'>
+                  <span className='inline-block mt-2 font-medium text-[14px]'>
                     Total vendido hoy
                   </span>
-                    <LuDollarSign className='text-gray-500/5 text-8xl inline-block float-end'  />
+                    <LuDollarSign className='text-gray-500/5 md:text-8xl text-4xl inline-block float-end'  />
                   <p className='text-3xl mt-6 font-bold'> {new Intl.NumberFormat("es-CO", {
                         style: "currency",
                         currency: "COP",

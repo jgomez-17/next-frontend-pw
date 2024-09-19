@@ -5,18 +5,22 @@ import { message, Radio } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
-import { BsCashCoin } from "react-icons/bs";
 import { DaviplataIcon, NequiIcon, BancolombiaIcon, ReloadIcon } from '@/app/components/ui/iconos'
-import { MdOutlineArrowBackIos } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaRegCreditCard } from "react-icons/fa";
 import DetallesOrden from '../detalles-orden/detallesOrden';
-import Link from 'next/link';
-import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { BackIcon } from '@/app/components/ui/iconos';
 import { useRouter } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface Orden {
   id: number;
@@ -112,7 +116,7 @@ const OrdenesPorPagar = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-      <section className='w-full p-2 h-full bg-white'>
+      <section className='w-full p-2 h-full bg-white tracking-tighter'>
         <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
           <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
@@ -172,27 +176,22 @@ const OrdenesPorPagar = () => {
                 </TableCell>
                 <TableCell className="py-1 text-xs border-b max-md:hidden">
                       <section className='flex max-md:flex-col justify-start w-max gap-2 items-center max-md:hidden'>
-                          <Radio.Group 
-                            value={metodosPago[orden.id] || ''}
-                            buttonStyle="solid"
-                            className='flex w-max my-auto items-center'
-                            onChange={(e) => handleMetodoPagoChange(orden.id, e.target.value)}
-                            >
-                            <Radio.Button title='Efectivo' className='flex items-center px-3' value="Efectivo">
-                              <GiMoneyStack className=' text-[18px]' />
-                            </Radio.Button>
-                            <Radio.Button title='Bancolombia' className='flex items-center px-1' value="Bancolombia">
-                              <BancolombiaIcon />
-                            </Radio.Button>
-                            <Radio.Button title='Nequi' className='flex items-center px-1' value="Nequi">
-                              <NequiIcon />
-                            </Radio.Button>
-                            {/* <Radio.Button title='Transferencia' className='flex items-center' value="Transferencia">
-                              <FaRegCreditCard />
-                            </Radio.Button> */}
-                          </Radio.Group>
+                      <Select value={metodosPago[orden.id] || ''} onValueChange={(value) => handleMetodoPagoChange(orden.id, value)}>
+                        <SelectTrigger className="w-[150px] h-8 text-xs">
+                          <SelectValue placeholder="Metodo de pago" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel> Selecciona </SelectLabel>
+                            <SelectItem value="Efectivo">Efectivo</SelectItem>
+                            <SelectItem value="Bancolombia">Bancolombia</SelectItem>
+                            <SelectItem value="Nequi">Nequi</SelectItem>
+                            <SelectItem value="Daviplata">Daviplata</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                             <Button
-                              className='flex items-center h-7 text-xs bg-black text-white'
+                              className='h-8 text-xs'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
                               Pagar

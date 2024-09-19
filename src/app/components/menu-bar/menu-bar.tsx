@@ -28,7 +28,7 @@ import Image from "next/image";
                 PW
               </span>
               <span className="font-extrabold text-xl max-md:hidden">|</span>
-              <span className="font-bold text-[22px] tracking-wider max-md:hidden">
+              <span className="font-extrabold text-[22px] tracking-wider max-md:hidden">
                Admin 
               </span>
             </Link>

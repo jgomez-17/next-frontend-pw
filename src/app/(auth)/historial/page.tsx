@@ -98,8 +98,8 @@ const OrdenesPorPlaca: React.FC = () => {
     <>
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
-            <DialogTrigger className='text-xs h-8' asChild>
-                <Button className='bg-black'>
+            <DialogTrigger className='text-xs h-8 tracking-tighter' asChild>
+                <Button>
                   Consultar vehiculo
                 </Button>
             </DialogTrigger>
@@ -111,7 +111,7 @@ const OrdenesPorPlaca: React.FC = () => {
 
             </DialogDescription>
           </DialogHeader>
-          <div className="w-full mx-auto rounded-md">
+          <div className="w-full mx-auto rounded-md tracking-tighter">
               <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col">
                 <p className='text-sm font-medium'> Ingrese la placa del vehiculo</p>
                 <label className="flex items-center gap-3 w-max">

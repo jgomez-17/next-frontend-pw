@@ -6,7 +6,7 @@ import { Form, Input, message } from 'antd';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2, AddUsers2 } from '@/app/components/ui/iconos';
+import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2, AddUsers2, DeleteIcon2 } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Switch } from "@/components/ui/switch"
 import { useRouter } from 'next/navigation';
@@ -174,7 +174,7 @@ const Page: React.FC = () => {
   return (    
     <>
       <ProtectedRoute>
-        <section className='w-full h-full m-auto rounded-md p-2 bg-white'>
+        <section className='w-full tracking-tighter h-full m-auto rounded-md p-2 bg-white'>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <nav className='flex w-full m-auto p-2 gap-3 justify-between items-center'>
               <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
@@ -184,7 +184,7 @@ const Page: React.FC = () => {
                 <ReloadIcon />
               </Button>
               <DialogTrigger asChild>
-                <Button className='text-xs gap-2 h-8 bg-black'> 
+                <Button className='text-xs gap-2 h-8'> 
                 <span className='max-md:hidden'> Añadir empleado </span>
                 <AddUsers2 /> 
                 </Button>
@@ -243,7 +243,7 @@ const Page: React.FC = () => {
                           onClick={() => eliminarLavador(lavador.id)} 
                           className='p-1'
                         >
-                          <DeleteIcon />
+                          <DeleteIcon2 />
                         </button>
                   </td>
                 </tr>

@@ -9,7 +9,7 @@ import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@
 import ResumenOrdenes from "../resumen-ordenes/page";
 import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { DownloadIcon, DeleteIcon, BackIcon } from "@/app/components/ui/iconos";
+import { DownloadIcon, DeleteIcon, BackIcon, DeleteIcon2, FlechaDerecha, FlechaIzquierda } from "@/app/components/ui/iconos";
 import Link from "next/link";
 import { generarPDF } from "./crearPDF-cierre";
 import Sidebar from '@/app/views/sidebar/sidebar'
@@ -40,6 +40,7 @@ const GenerarPlanilla = () => {
   const [totalEfectivo, setTotalEfectivo] = useState<number>(0);
   const [totalNequi, setTotalNequi] = useState<number>(0);
   const [totalBancolombia, setTotalBancolombia] = useState<number>(0);
+  const [totalDaviplata, setTotalDaviplata] = useState<number>(0);
   const [pagoAdministracion, setPagoAdministracion] = useState<number>(0);
   const [pagoVentas, setPagoVentas] = useState<number>(0);
   const [meta, setMeta] = useState<number>(0);
@@ -93,6 +94,7 @@ const GenerarPlanilla = () => {
         setTotalEfectivo(data.totalEfectivo || 0);
         setTotalNequi(data.totalNequi || 0);
         setTotalBancolombia(data.totalBancolombia || 0);
+        setTotalDaviplata(data.totalDaviplata || 0);
       })
       .catch(error => console.error('Error fetching data:', error));
   };
@@ -248,18 +250,18 @@ const GenerarPlanilla = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-        <section className="w-full m-auto rounded-md p-2 bg-white">
+        <section className="w-full m-auto rounded-md p-2 bg-white tracking-tighter">
         <nav 
           className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 py-2"
         >
           <article className="flex gap-2">
             <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
-              <BackIcon />
+              <FlechaIzquierda />
             </Button>
             <ResumenOrdenes />
 
             <Button 
-              className="mr-auto h-8 text-xs gap-2 bg-black"
+              className="h-8 text-xs gap-2"
               onClick={insertAcumulados}
               >
               Guardar y descargar
@@ -270,24 +272,73 @@ const GenerarPlanilla = () => {
         </nav>
         <article id="pdf-content">
 
+        <p className="md:hidden"> Activa el modo escritorio </p>
         <section 
-            className="w-full max-md:w-full max-md:px-2 gap-x-1 gap-y-1.5  flex p-1 items-baseline rounded justify-between flex-wrap text-xs max-md:text-xs m-auto mt-4 mb-8" 
+            className="w-full border-b grid grid-cols-6 max-md:grid-cols-2 rounded text-sm max-md:text-xs m-auto mt-4 pb-4 max-md:hidden" 
         >
-          <p className="flex w-16 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Servicios:</span>{numeroOrdenesHoy}</p>
-          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Vendido:</span> {formatNumber(totalRecaudado)}</p>
-          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Spa:</span> {formatNumber(totalSpa)}</p>
-          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Satelital:</span> {formatNumber(totalSatelital)}</p>
-          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Efectivo:</span> {formatNumber(totalEfectivo)}</p>
-          <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Bancolombia:</span> {formatNumber(totalBancolombia)}</p>
-          <p className="flex w-20 flex-col gap-2 px-1 rounded bg-slate-50"><span className=" font-medium">Nequi:</span> {formatNumber(totalNequi)}</p>
-          <p className="flex w-24 flex-col gap-1 rounded"><span className="font-medium">Administración:</span>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className=" font-medium">Vendido</span><FlechaDerecha />
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalRecaudado)}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Spa</span><FlechaDerecha />
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalSpa)}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className=" font-medium">Efectivo</span><FlechaDerecha /> 
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalEfectivo)}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Bancolombia</span><FlechaDerecha /> 
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalBancolombia)}
+            </span>
+          </p>
+          <p className="flex gap-2 col-span-1 items-center justify-end"><span className="font-medium">Administración:</span>
             <Input
                 value={pagoAdministracion.toString()}
                 onChange={(e) => setPagoAdministracion(Number(e.target.value))}
                 className="h-6 w-24 text-xs"
               />
           </p>
-          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Ventas:</span>
+          <p className="flex gap-2 col-span-1 items-center justify-end"><span className="font-medium">Meta:</span>
+            <Input
+                value={meta.toString()}
+                onChange={(e) => setMeta(Number(e.target.value))}
+                className=" h-6 w-24 text-xs"
+            />
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Servicios</span><FlechaDerecha /> 
+            <span className="w-24 rounded px-2">
+              {numeroOrdenesHoy}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Satelital</span><FlechaDerecha /> 
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalSatelital)}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Nequi</span><FlechaDerecha />  
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalNequi)}
+            </span>
+          </p>
+          <p className="flex items-center justify-end gap-1 col-span-1">
+            <span className="font-medium">Daviplata</span><FlechaDerecha />  
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalDaviplata)}
+            </span>
+          </p>
+          <p className="flex gap-2 col-span-1 items-center justify-end"><span className="font-medium">Ventas:</span>
             <Input
                 value={pagoVentas.toString()}
                 onChange={(e) => setPagoVentas(Number(e.target.value))}
@@ -295,23 +346,21 @@ const GenerarPlanilla = () => {
             />      
           </p>
       
-          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Meta:</span>
-            <Input
-                value={meta.toString()}
-                onChange={(e) => setMeta(Number(e.target.value))}
-                className=" h-6 w-24 text-xs"
-            />
-          </p>
 
-          <p className="flex w-24 flex-col gap-1"><span className="font-medium">Adicionales:</span>
+          <p className="flex gap-2 col-span-1 items-center justify-end"><span className="font-medium">Adicionales:</span>
             <Input
                 value={gastosAdicionales.toString()}
                 onChange={(e) => setGastosAdicionales(Number(e.target.value))}
                 className=" h-6 w-24 text-xs"
             />
           </p>
+          <p className="flex items-center justify-end gap-1 col-span-1 text-blue-700">
+            <span className="font-medium">Prontowash</span><FlechaDerecha /> 
+            <span className="w-24 rounded px-2">
+              {formatNumber(totalRestanteGeneral)}
+            </span>
+          </p>
 
-          <p className="flex w-24 flex-col gap-2 px-1 rounded bg-slate-50"><span className="font-medium">Prontowash:</span> {formatNumber(totalRestanteGeneral)}</p>
         </section>
 
         <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
@@ -327,14 +376,14 @@ const GenerarPlanilla = () => {
             const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
             const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
             return (
-              <div key={nombreLavador} className="text-sm">
+              <div key={nombreLavador} className="text-sm tracking-tighter">
                 <div className="flex items-center justify-between mb-1">
                   <h2 className="font-semibold pl-1 capitalize">{nombreLavador}</h2>
                   <Select
                     defaultValue={lavador.seccion}
                     onValueChange={(value) => handleSectionChange(nombreLavador, value)}
                   >
-                    <SelectTrigger className="w-[100px] text-xs h-6 rounded-none">
+                    <SelectTrigger className="w-[100px] text-xs h-6 rounded">
                       <SelectValue placeholder="" />
                     </SelectTrigger>
                     <SelectContent>
@@ -376,7 +425,7 @@ const GenerarPlanilla = () => {
                             onClick={() => handleDelete(nombreLavador, orden.id)}
                             className="p-0 m-0 w-full flex hover:bg-transparent"
                           >
-                            <DeleteIcon />
+                            <DeleteIcon2 />
                           </button>
                         </TableCell>
                       </TableRow>

@@ -64,7 +64,7 @@ interface Orden {
   return (
     <>
       <ProtectedRoute>
-        <section className='bg-white w-full h-full p-2'>
+        <section className='bg-white w-full h-full p-2 tracking-tighter'>
         <nav className='flex justify-between w-full m-auto gap-3 p-2'>
           <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
@@ -83,14 +83,14 @@ interface Orden {
                 <TableCell className="w-36 px-1 max-md:w-24 max-md:text-center">Cliente</TableCell>
                 <TableCell className="w-44 px-1 max-md:w-24 max-md:text-center">Vehículo</TableCell>
                 <TableCell className="md:w-72 px-1 max-md:text-center">Servicio</TableCell>
-                <TableCell className="md:hidden"> Estado</TableCell>
+                <TableCell className=""> Estado</TableCell>
               </TableRow>
             </TableHeader>
             <TableBody>
               {ordenesTerminadas &&
                 ordenesTerminadas.map((orden: Orden) => (
                   <TableRow key={orden.id} className="text-[12px]">
-                    <TableCell className="max-md:hidden px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
+                    <TableCell className="max-md:hidden px-4 font-bold border-b">{orden.id}</TableCell>
                     <TableCell className="p-1 max-md:text-center border-b">
                       <section>
                         <span className="font-semibold flex flex-col capitalize">
@@ -112,7 +112,7 @@ interface Orden {
                         {orden.vehiculo.llaves} <span>dejó llaves</span>
                       </span>
                     </TableCell>
-                    <TableCell className="px-1 py-3 max-md:text-center border-b">
+                    <TableCell className="px-1 py-1 max-md:text-center border-b">
                       <section className="flex items-center justify-between max-md:flex-col">
                         <span className="font-bold flex flex-col">
                           {new Intl.NumberFormat("es-CO", {
@@ -121,7 +121,7 @@ interface Orden {
                             minimumFractionDigits: 0,
                           }).format(Number(orden.servicio.costo))}
                         </span>
-                        <span className="translate-y-3">
+                        <span className="md:translate-y-3">
                           <DetallesOrden orden={orden} />
                         </span>
                       </section>

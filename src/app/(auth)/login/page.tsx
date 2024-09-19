@@ -56,7 +56,7 @@ const LoginPage = () => {
                 // window.location.href = '/views/dashboard/lista-ordenes';
             } else {
                 setError(data.message || 'Error al iniciar sesión');
-                message.error('Datos de acceso incorrectos');
+                message.error('verifica tu conexion');
             }
         } catch (err) {
             setError('Error al conectar con el servidor');
@@ -67,7 +67,7 @@ const LoginPage = () => {
     };
 
     return (
-        <form onSubmit={handleLogin} className="flex items-center justify-center h-screen">
+        <form onSubmit={handleLogin} className="flex tracking-tighter items-center justify-center h-screen">
             <section className="grid gap-4 py-10 px-10 rounded-lg">
                 {/* <Image
                     className='m-auto'
@@ -76,7 +76,7 @@ const LoginPage = () => {
                     width={140}
                     height={200}
                 /> */}
-                <p className='text-center font-semibold'> Acceso al sistema </p>
+                <p className='text-center text-xl font-bold'> Acceso al sistema </p>
                 <article className="flex flex-col gap-1">
                     <Label htmlFor="usuario" className="text-gray-500 text-sm">
                         Usuario

@@ -60,7 +60,7 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
 
 
         <main
-          className="mt-2 gap-6"
+          className="mt-2 gap-6 tracking-tighter font-mono"
         >
           <div className="flex items-center justify-between">
             <p className="text-sm font-bold my-3">
@@ -85,7 +85,7 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
             </p>
           </div>
 
-          <div className="flex gap-1 my-3 flex-col">
+          <div className="flex my-3 flex-col">
             <span className="font-bold">Valor</span>
             <span className="text-gray-500 text-xs  flex flex-col">
               {new Intl.NumberFormat("es-CO", {

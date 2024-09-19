@@ -6,7 +6,8 @@ import Link from 'next/link'
 import { BackIcon, ReloadIcon } from '@/app/components/ui/iconos'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
-import { message, Button } from "antd";
+import { message } from "antd";
+import { Button } from '@/components/ui/button'
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { DownloadIcon } from '@/app/components/ui/iconos'
@@ -119,43 +120,38 @@ const ClientesPage = () => {
 
   return (
       <>
-          <Image
+          {/* <Image
             priority
             className='w-44 m-auto'
             src="/prontowash-img.png"
             alt='logo'
             width={500}
             height={300}
-          ></Image>        
-          <nav className='mt-4 gap-4 flex w-11/12 m-auto items-center justify-between font-geist'>
-            <Link href="/"
-                  className='hover:bg-gray-500/15 px-3 py-1 rounded-full'
-            >
-                <BackIcon />
-            </Link>
-            <Button type='text' onClick={reloadPage} className=' max-md:mr-auto'>
+          ></Image>         */}
+        <nav className='gap-4 flex w-full m-auto items-center justify-between'>
+            <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
               <ReloadIcon />
             </Button>
+            <h1 className='font-bold text-xl tracking-tighter max-md:hidden'>Estado de servicios</h1>
             <Historial />
-            <h1 className='ml-auto font-bold max-md:hidden'>Estado del servicio</h1>
         </nav>
-        <Table className=" w-11/12 m-auto mt-4 font-geist">
-        <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
-          <TableRow className=" text-sm max-md:text-[11px]">
-            <TableCell className="px-1 md:w-1/12 max-md:hidden max-md:justify-center">#</TableCell>
-            <TableCell className="px-1 md:w-2/12 max-md:hidden">Cliente</TableCell>
-            <TableCell className="px-1 md:w-2/12 max-md:w-1/5">Vehículo</TableCell>
-            <TableCell className="px-1 md:w-2/6 max-md:w-2/6">Servicio</TableCell>
-            <TableCell className="px-1 md:w-2/6 max-md:w-1/4">Lavador </TableCell>
-            <TableCell className="px-1 md:w-2/12 max-md:w-1/4"> Estado</TableCell>
+        <Table className="w-full max-md:w-[95%] m-auto mt-4 tracking-tighter">
+        <TableHeader className="text-[1rem] font-medium max-md:text-[0.89rem] bg-slate-50">
+          <TableRow className=" text-sm text-slate-500">
+            <TableCell className="px-1 md:w-1/4 hidden max-md:justify-center">#</TableCell>
+            <TableCell className="px-2 md:w-1/4 hidden">Cliente</TableCell>
+            <TableCell className="px-2 w-1/6">Vehículo</TableCell>
+            <TableCell className="px-2 w-1/4">Servicio</TableCell>
+            <TableCell className="px-2 w-1/4">Lavador </TableCell>
+            <TableCell className="px-2 w-1/6"> Estado</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
           {ordenesEnEspera &&
             ordenesEnEspera.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
-                <TableCell className="p-0.5 border-b max-md:hidden">
+                <TableCell className="hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -185,9 +181,9 @@ const ClientesPage = () => {
                       }).format(Number(orden.servicio.costo))}
                     </p>
                   </section>
-                  <p className="max-md:leading-tight text-gray-500">{orden.servicio.nombre_servicios}</p>
+                  <p className="max-md:leading-tight text-slate-500">{orden.servicio.nombre_servicios}</p>
                 </TableCell>
-                <TableCell className="p-0.5 border-b capitalize text-gray-500">
+                <TableCell className="p-0.5 border-b capitalize text-slate-500">
                       <p> {orden.empleado} </p>
                 </TableCell>
                 <TableCell className="p-0.5 gap-2 font-medium items-center max-md:flex-col max-md:items-start text-xs max-md:text-[10px] border-b">
@@ -210,8 +206,8 @@ const ClientesPage = () => {
           {ordenesEnCurso &&
             ordenesEnCurso.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
-                <TableCell className="p-0.5 border-b max-md:hidden">
+                <TableCell className="hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -266,8 +262,8 @@ const ClientesPage = () => {
           {ordenesPorPagar &&
             ordenesPorPagar.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
-                <TableCell className="p-0.5 border-b max-md:hidden">
+                <TableCell className="hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
@@ -322,8 +318,8 @@ const ClientesPage = () => {
           {ordenesTerminadas &&
             ordenesTerminadas.map((orden: Orden) => (
               <TableRow key={orden.id} className="text-[12px] max-md:text-[10px]">
-                <TableCell className="max-md:hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
-                <TableCell className="p-0.5 border-b max-md:hidden">
+                <TableCell className="hidden font-bold p-0.5 border-b">{orden.id}</TableCell>
+                <TableCell className="p-0.5 border-b hidden">
                   <section>
                     <p className=" flex flex-col capitalize">
                       {orden.cliente.nombre}
