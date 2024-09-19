@@ -286,10 +286,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
   return (
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-    <SheetTrigger
-        className='flex gap-1 h-8 ml-auto items-center bg-black text-white hover:bg-opacity-80 py-1.5 text-xs font-medium px-5 rounded-md' >
-        Nueva orden
-        <PlusIcon />
+    <SheetTrigger asChild>
+      <Button className='h-8 text-xs gap-2'> Nueva orden <PlusIcon /> </Button>
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
