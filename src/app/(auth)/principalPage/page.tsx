@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import SeccionClientes from '../clientes/page'
 import { FlechaDerecha, User, UsersIcon, UsersIcon2 } from '@/app/components/ui/iconos'
+import Login from '../login/page'
 
 const PrincipalPage = () => {
   const router = useRouter();
@@ -24,10 +25,7 @@ const PrincipalPage = () => {
                     height={300}
                     >
                 </Image>
-                <Link href="/login" className='h-9 flex items-center bg-[#0F172A] text-gray-200 rounded justify-center gap-2 w-2/3 m-auto'>
-                      Ingresar
-                      <UsersIcon2 />
-                </Link>
+                <Login />
                 <SeccionClientes />
             </section>
         </main>

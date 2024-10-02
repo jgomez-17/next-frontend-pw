@@ -7,7 +7,15 @@ import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
-import { Spin } from '@/app/components/ui/iconos';
+import { Spin, UsersIcon2 } from '@/app/components/ui/iconos';
+import { Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+
 
 const LoginPage = () => {
     const [usuario, setUsuario] = useState('');
@@ -65,48 +73,59 @@ const LoginPage = () => {
     };
 
     return (
-        <form onSubmit={handleLogin} className="flex tracking-tighter items-center justify-center h-screen">
-            <section className="grid gap-4 py-10 px-10 rounded-lg">
-                <p className='text-center text-xl font-bold'> Acceso al sistema </p>
-                <article className="flex flex-col gap-1">
-                    <Label htmlFor="usuario" className="text-gray-500 text-sm">
-                        Usuario
-                    </Label>
-                    <Input
-                        id="usuario"
-                        value={usuario}
-                        onChange={(e) => setUsuario(e.target.value)}
-                        className="col-span-3 h-9"
-                    />
-                </article>
-                <article className="flex flex-col gap-1">
-                    <Label htmlFor="contraseña" className=" text-gray-500 text-sm">
-                        Contraseña
-                    </Label>
-                    <Input
-                        type='password'
-                        id="contraseña"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="col-span-3 h-9"
-                    />
-                </article>
-                {error && (
-                    <div className="text-red-500 text-center my-4 text-sm">
-                        {error}
-                    </div>
-                )}
-                <Button type="submit" className='w-[300px] float-right' disabled={loading}>
-                    {loading ? (
-                        <span className="flex items-center justify-center gap-3">
-                            <Spin />
-                        </span>
-                    ) : (
-                        'Ingresar'
-                    )}
-                </Button>
-            </section>
-        </form>
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button className='h-9 w-2/3 m-auto tracking-tight flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
+            </SheetTrigger>
+            <SheetContent className='h-screen' side={'bottom'}>
+                <SheetHeader>
+                </SheetHeader>
+                <form onSubmit={handleLogin} className="flex tracking-tighter items-center justify-center h-screen">
+                    <section className="grid gap-4 py-10 px-10 rounded-lg">
+                        <p className='text-center text-xl font-bold'> Acceso al sistema </p>
+                        <article className="flex flex-col gap-1">
+                            <Label htmlFor="usuario" className="text-gray-500 text-sm">
+                                Usuario
+                            </Label>
+                            <Input
+                                id="usuario"
+                                value={usuario}
+                                onChange={(e) => setUsuario(e.target.value)}
+                                className="col-span-3 h-9"
+                            />
+                        </article>
+                        <article className="flex flex-col gap-1">
+                            <Label htmlFor="contraseña" className=" text-gray-500 text-sm">
+                                Contraseña
+                            </Label>
+                            <Input
+                                type='password'
+                                id="contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="col-span-3 h-9"
+                            />
+                        </article>
+                        {error && (
+                            <div className="text-red-500 text-center my-4 text-sm">
+                                {error}
+                            </div>
+                        )}
+                        <Button type="submit" className='w-[300px] float-right' disabled={loading}>
+                            {loading ? (
+                                <span className="flex items-center justify-center gap-3">
+                                    <Spin />
+                                </span>
+                            ) : (
+                                'Ingresar'
+                            )}
+                        </Button>
+                    </section>
+                </form>
+            </SheetContent>
+        </Sheet>
+
+        
     );
 };
 
