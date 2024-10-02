@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import Navbar from '@/app/views/navbar/page'
 import LavadoresConfig from '@/app/views/ajustes/lavadoresconfig/page'
 import ProtectedRoute from '@/app/components/protectedRoute'
 
