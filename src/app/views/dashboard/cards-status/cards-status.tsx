@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { MdOutlinePayment, MdDoneAll } from "react-icons/md";
 import { LuDollarSign } from "react-icons/lu";
 import Link from 'next/link';
-import { Button } from "@/components/ui/button"
-import { Mostrar, Ocultar } from '@/app/components/ui/iconos';
+
 
 interface CardsStatsProps {
   visible: boolean;

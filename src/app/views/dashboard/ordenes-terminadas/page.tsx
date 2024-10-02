@@ -7,7 +7,6 @@ import { message } from 'antd';
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import Link from 'next/link';
-import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { ReloadIcon } from '@/app/components/ui/iconos';
 import { useRouter } from 'next/navigation';
