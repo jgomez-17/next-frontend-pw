@@ -14,7 +14,7 @@ const PrincipalPage = () => {
   return (
     <>
         <main className='w-full relative h-screen m-auto max-md:gap-4 flex flex-col justify-center'>
-            <section className='flex flex-col md:flex-row gap-4 m-auto'>
+            <section className='flex flex-col gap-4 m-auto'>
                 <Image
                     priority
                     className='m-auto'
@@ -24,10 +24,10 @@ const PrincipalPage = () => {
                     height={300}
                     >
                 </Image>
-                <Button onClick={() => router.push('/login')} className='h-9 gap-2 w-2/3 m-auto'>
+                <Link href="/login" className='h-9 flex items-center bg-[#0F172A] text-gray-200 rounded justify-center gap-2 w-2/3 m-auto'>
                       Ingresar
                       <UsersIcon2 />
-                </Button>
+                </Link>
                 <SeccionClientes />
             </section>
         </main>
