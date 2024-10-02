@@ -10,8 +10,8 @@ export default function Home () {
   return (
    <>
    <ProtectedRoute>
-      {/* <PrincipalPage /> */}
-      <LoginPage />
+       <PrincipalPage />
+      {/* <LoginPage /> */}
    </ProtectedRoute>
    </>
   );

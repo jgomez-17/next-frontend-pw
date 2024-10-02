@@ -7,12 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; 
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
-import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { DownloadIcon, DeleteIcon, BackIcon, DeleteIcon2, FlechaDerecha, FlechaIzquierda } from "@/app/components/ui/iconos";
-import Link from "next/link";
+import { DownloadIcon, DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save } from "@/app/components/ui/iconos";
 import { generarPDF } from "./crearPDF-cierre";
-import Sidebar from '@/app/views/sidebar/sidebar'
 
 interface Orden {
   id: number;
@@ -47,6 +44,7 @@ const GenerarPlanilla = () => {
   const [gastosAdicionales, setGastosAdicionales] = useState<number>(0);
   const [totalSatelital, setTotalSatelital] = useState<number>(0); // Nuevo estado para total de "Satelital"
   const [totalSpa, setTotalSpa] = useState<number>(0); // Nuevo estado para total de "Satelital"
+  const [loading, setLoading] = useState(false);
 
   const calcularTotalesSeccion =  useCallback(() => {
     let totalSpa = 0;
@@ -220,6 +218,8 @@ const GenerarPlanilla = () => {
 
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados/insertaracumulados`
     
+    setLoading(true);
+
     fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -233,13 +233,14 @@ const GenerarPlanilla = () => {
         console.log ('insertado', dataTotales )
         message.success('guardado correctamente')
         handleGenerarPDF();
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error al hacer la solicitud al backend:', error);
         message.error('Error en la solicitud')
+        setLoading(false);
       });
   };
-
 
   const handleBackButton = () => {
     if (window.confirm('¿Estás seguro que deseas regresar?')) {
@@ -255,17 +256,25 @@ const GenerarPlanilla = () => {
           className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 py-2"
         >
           <article className="flex gap-2">
-            <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+            <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
               <FlechaIzquierda />
             </Button>
             <ResumenOrdenes />
 
             <Button 
-              className="h-8 text-xs gap-2"
+              className="h-9 gap-2"
               onClick={insertAcumulados}
               >
-              Guardar y descargar
-              <DownloadIcon />
+              {loading ? (
+                        <span className="flex items-center justify-center gap-3">
+                            <Spin />
+                        </span>
+                    ) : (
+                        <span className="flex items-center gap-2">
+                          Guardar
+                          <Save />
+                        </span>
+                    )}
             </Button>
           </article>
           <p className="flex gap-2 text-sm font-semibold">{fechaHoy}</p>

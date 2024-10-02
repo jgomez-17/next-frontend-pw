@@ -3,7 +3,6 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaStop } from "react-icons/fa";
 import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden';
 import { StopIcon } from "@/app/components/ui/iconos";
 
@@ -86,8 +85,7 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
               {orden.estado === "en curso" ? (
                   <Button
                       title="Terminar"
-                      variant={"ghost"}
-                      className="flex items-center font-medium m-auto gap-2 text-xs h-7 text-red-600"
+                      className="h-7 text-red-600 bg-transparent hover:bg-transparent"
                       onClick={() => {
                         actualizarEstadoOrden3(orden.id);
                       }}

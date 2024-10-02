@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { IoChevronBack } from "react-icons/io5";
 import { GrFormNext } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa";
-import { PlusIcon } from '@/app/components/ui/iconos';
+import { PlusIcon, Spin } from '@/app/components/ui/iconos';
 import { OrdenData, generarFacturaPDF } from './generarFactura';
 import ServiciosSelect from './serviciosSelect';
 
@@ -58,6 +58,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     const [nombresServicios, setNombresServicios] = useState<string>(''); 
     const [descuento, setDescuento] = useState<number>(0); 
     const [seccion, setSeccion] = useState<number>(1);
+    const [loading, setLoading] = useState(false);
+
 
     //Funciones para avanzar y retroceder seccion
     const avanzarSeccion = () => {
@@ -74,6 +76,8 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
     // Función para consultar orden mediante placa
     const consultarOrden = async () => {
+      setLoading(true);
+
       if (!verifyplaca) {
           setError('Por favor, ingresa una placa.');
           message.error('Por favor, ingresa una placa.');
@@ -102,6 +106,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
               setCelular(ordenEncontrada.cliente.celular);
               setCorreoCliente(ordenEncontrada.cliente.correo);
               message.success('Orden encontrada');
+              setLoading(false);
           } else {
               message.info('No hay ordenes previas relacionadas a este vehiculo');
               setOrdenes([]);
@@ -115,6 +120,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           }
 
           avanzarSeccion();
+          setLoading(false);
           setError('');
       } catch (error: any) {
           setError(error.message);
@@ -129,6 +135,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           setCorreoCliente('');
           
           avanzarSeccion();
+          setLoading(false);
       }
     };
 
@@ -174,6 +181,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     //Envio del formulario al backend
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setLoading(true);
     
         if (!placa || !marca || !tipo || !color || !nombre || !celular) {
           message.warning("Por favor completa los campos obligatorios.");
@@ -257,7 +265,9 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
             fetchOrdenesEnEspera();
             setIsSheetOpen(false);
             retrocederSeccion();
-            handleGenerarFactura();            
+            retrocederSeccion();
+            handleGenerarFactura();
+            setLoading(false);
   
         } catch (error) {
           console.error('Error en la solicitud:', error);
@@ -287,7 +297,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger asChild>
-      <Button className='h-8 text-xs gap-2'> Nueva orden <PlusIcon /> </Button>
+      <Button className='h-9 text-[13px] gap-2 order-4'> Nueva orden <PlusIcon /> </Button>
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
@@ -331,7 +341,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             required 
                         />
                         <Button className='h-9'>
-                            Verificar
+                        {loading ? (
+                        <span className="flex items-center justify-center gap-3">
+                            <Spin />
+                        </span>
+                    ) : (
+                        'Verificar'
+                    )}
                         </Button>
                         <Button onClick={handleRefresh} type='button' className='h-9' variant={'secondary'}>
                             Limpiar
@@ -339,7 +355,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         </article>
                     </Form>
                     </>
-                )}
+        )}
 
             <Form 
               id='orden' 
@@ -659,7 +675,13 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         Volver
                       </Button>
                         <Button>
-                            Generar orden
+                        {loading ? (
+                            <span className="flex items-center justify-center gap-3">
+                                <Spin />
+                            </span>
+                        ) : (
+                            'Generar orden'
+                        )}
                         </Button>
                   </section>
                 </>

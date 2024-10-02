@@ -122,16 +122,16 @@ const EstadisticasData: React.FC<Props> = ({ mes, ano }) => {
 
     return (
         <main className='w-full flex flex-wrap gap-16 m-auto mt-10'>
-            <div className="chart-container" style={{ width: '300px', height: '200px' }}>
+            <div className="chart-container max-md:m-auto" style={{ width: '300px', height: '200px' }}>
                 <Bar data={totalOrdenesData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Total de Ordenes' } } }} />
             </div>
-            <div className="chart-container" style={{ width: '300px', height: '200px' }}>
+            <div className="chart-container max-md:m-auto" style={{ width: '300px', height: '200px' }}>
                 <Bar data={totalVendidoData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Total Vendido' } } }} />
             </div>
-            <div className="chart-container" style={{ width: '300px', height: '200px' }}>
+            <div className="chart-container max-md:m-auto" style={{ width: '300px', height: '200px' }}>
                 <Bar data={clienteTopData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Cliente Top' } } }} />
             </div>
-            <div className="chart-container" style={{ width: '400px', height: '300px' }}>
+            <div className="chart-container max-md:m-auto" style={{ width: '400px', height: '300px' }}>
                 <Line data={diasVentasData} options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Ventas por Día Máximo y Mínimo' } } }} />
             </div>
         </main>

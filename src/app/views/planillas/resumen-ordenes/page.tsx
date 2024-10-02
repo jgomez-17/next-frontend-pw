@@ -56,7 +56,7 @@ const ResumenOrdenes = () => {
   return (
     <Sheet>
     <SheetTrigger asChild>
-        <Button className='h-8 text-xs' variant={'secondary'}>
+        <Button className='h-9' variant={'secondary'}>
           Ordenes
         </Button>
     </SheetTrigger>

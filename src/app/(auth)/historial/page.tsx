@@ -8,7 +8,7 @@ import { CheckCircleOutlined } from '@ant-design/icons';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { DownloadIcon, History, SearchIcon } from '@/app/components/ui/iconos';
+import { DownloadIcon, History, SearchIcon, Spin } from '@/app/components/ui/iconos';
 import { generarPDF } from './resumenPDF';
 import { FaHistory } from "react-icons/fa";
 
@@ -46,8 +46,11 @@ const OrdenesPorPlaca: React.FC = () => {
   const [placa, setPlaca] = useState<string>('');
   const [ordenes, setOrdenes] = useState<Orden[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const obtenerOrdenesPorPlaca = async (placa: string) => {
+    setLoading(true);
+
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/clientes/placas/${placa}`;
 
@@ -56,19 +59,23 @@ const OrdenesPorPlaca: React.FC = () => {
         if (response.status === 404) {
           setOrdenes(null); // Limpiar órdenes si no se encontraron resultados
           setError('No se encontraron órdenes para la placa ingresada');
+          setLoading(false);
         } else {
           throw new Error('Error al obtener las órdenes. Por favor, inténtalo de nuevo.');
+          setLoading(false);
         }
       } else {
         const data = await response.json();
         // Ordenar las órdenes por fecha de manera descendente (más recientes primero)
         data.sort((a: Orden, b: Orden) => new Date(b.fecha_orden).getTime() - new Date(a.fecha_orden).getTime());
         setOrdenes(data);
+        setLoading(false);
         setError(null);
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Error desconocido');
       console.error('Error:', error);
+      setLoading(false);
     }
   };
 
@@ -87,7 +94,6 @@ const OrdenesPorPlaca: React.FC = () => {
     }
   };
 
-
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const formatNumber = (number: number) => {
@@ -98,8 +104,8 @@ const OrdenesPorPlaca: React.FC = () => {
     <>
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
-            <DialogTrigger className='text-xs h-8 tracking-tighter' asChild>
-                <Button>
+            <DialogTrigger className='tracking-tigh text-[13px]' asChild>
+                <Button className="h-9 order-3 max-md:order-1">
                   Consultar vehiculo
                 </Button>
             </DialogTrigger>
@@ -110,8 +116,8 @@ const OrdenesPorPlaca: React.FC = () => {
             <DialogDescription>
 
             </DialogDescription>
-          </DialogHeader>
-          <div className="w-full mx-auto rounded-md tracking-tighter">
+            </DialogHeader>
+            <div className="w-full mx-auto rounded-md tracking-tigh">
               <form onSubmit={handleSubmit} className="mb-4 max-md:w-max flex flex-col">
                 <p className='text-sm font-medium'> Ingrese la placa del vehiculo</p>
                 <label className="flex items-center gap-3 w-max">
@@ -142,7 +148,13 @@ const OrdenesPorPlaca: React.FC = () => {
                     required 
                   />
                 <Button type='submit' variant={'default'}  className=' bg-black text-white h-8 text-xs'>
-                  <SearchIcon />
+                  {loading ? (
+                        <span className="flex items-center justify-center gap-3">
+                            <Spin />
+                        </span>
+                    ) : (
+                        <SearchIcon />
+                    )}
                 </Button>
                 </label>
               </form>

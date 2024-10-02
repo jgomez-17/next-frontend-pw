@@ -2,13 +2,11 @@
 
 import React, { useState } from 'react';
 import EstadisticasMensuales from './data/estadisticas-data';
-import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { BackIcon } from '@/app/components/ui/iconos';
-import Sidebar  from '@/app/views/sidebar/sidebar';
 
 const EstadisticasPage: React.FC = () => {
     const mesActual = new Date().getMonth() + 1; // Mes actual (enero es 0, por eso sumamos 1)
@@ -70,10 +68,10 @@ const EstadisticasPage: React.FC = () => {
                         </label>
                         {/* <button type="submit">Buscar</button> */}
                     </form>
-                    <Button onClick={() => router.push('/views/planillas/acumulados')} className="h-8 text-xs">
+                    {/* <Button onClick={() => router.push('/views/planillas/acumulados')} className="h-8 text-xs">
                         Ver acumulado
-                    </Button>
-                    <h1 className='font-bold max-md:hidden'>Estadísticas</h1>
+                    </Button> */}
+                    <h1 className='font-bold text-2xl'>Estadísticas</h1>
                 </nav>
                 <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
             </section>

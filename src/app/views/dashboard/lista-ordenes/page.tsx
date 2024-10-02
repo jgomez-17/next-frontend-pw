@@ -3,23 +3,16 @@
 import React, { useEffect, useState } from "react";
 import { message, Select } from "antd";
 import { Button } from "@/components/ui/button";
-import Image from 'next/image';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaPlay } from "react-icons/fa6";
-import Navbar from '@/app/views/navbar/page'
-import DetallesOrden from '@/app/views/dashboard/detalles-orden/detallesOrden'
+import { Table, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import CardsStats from "../cards-status/cards-status";
 import OrdenesEnCurso from "../ordenes-en-curso/ordenes-en-curso";
 import OrdenesEnEspera from "../ordenes-en-espera/ordenes-en-espera"; // Import the new component
 import NewForm from "@/app/views/dashboard/new-formulario/new-form";
-import Link from "next/link";
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { Ajustes, Caret, Grap, MenuBold, MenuIcon, MultipleUsers, P, Reload, ReloadIcon } from "@/app/components/ui/iconos";
+import { ArrowBi, ReloadIcon } from "@/app/components/ui/iconos";
 import Historial from '@/app/(auth)/historial/page'
 import { useRouter } from "next/navigation";
-
+import HideButton from "../cards-status/hideButton";
 
 const { Option } = Select;
 
@@ -271,38 +264,45 @@ const OrdenesDashboard = () => {
       setTimeout(hideMessage, 1000);
   };
 
+  const [visible, setVisible] = useState(true); // Estado para mostrar/ocultar las tarjetas
+
+  const toggleVisibility = () => {
+    setVisible(!visible);
+  };
+
+
+
   return (
     <>
-        <section className="bg-white rounded w-full p-2 tracking-tighter">
-            <article className="m-auto rounded-md">
-            <nav className="gap-3 w-full justify-between m-auto flex items-center mb-3">
-              <Historial />
-              <Button onClick={() => router.push('/views/planillas/cierre-diario')} className="h-8 text-xs max-md:hidden">
-                  Hacer cierre
-              </Button>
-              <Button onClick={reloadPage} className="mr-auto h-8" variant={"ghost"}>
-                <ReloadIcon />
-              </Button>
-              <article className="flex items-center gap-4">
+        <section className="bg-white rounded w-full p-4">
+            <nav className="gap-3 w-full max-md:flex-col flex justify-between items-center mb-5">
+              <h5 className="w-full font-bold text-xl tracking-tight max-md:text-center">Dashboard</h5>
+              <article className="w-full flex justify-end max-md:justify-between gap-3">
+                <Button onClick={reloadPage} className="h-9 text-[13px] order-1 max-md:order-2" variant={"ghost"}>
+                  <ReloadIcon />
+                </Button>
+                <HideButton visible={visible} toggleVisibility={toggleVisibility} />
+                <Historial />
                 <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
               </article>
           </nav>
 
           <CardsStats
+            visible={visible}
             numeroOrdenesEnEspera={numeroOrdenesEnEspera}
             numeroOrdenesHoy={numeroOrdenesHoy}
             numeroOrdenesPorPagar={numeroOrdenesPorPagar}
             totalRecaudado={totalRecaudado}
           />
           
-
-          <Table className="m-auto mt-4 bg-white">
-            <TableHeader className="font-semibold max-md:text-[0.89rem] ">
-              <TableRow className=" text-sm bg-slate-50">
+          <h5 className="font-bold text-lg tracking-tight my-4 flex justify-between px-2">Ordenes <ArrowBi /></h5>
+          <Table className="m-auto bg-slate-500/5">
+            <TableHeader className="font-semibold max-md:text-[0.89rem]">
+              <TableRow className=" text-sm">
                 <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
-                <TableCell className="md:w-1/5 px-1 max-md:w-28">Cliente</TableCell>
-                <TableCell className="md:w-1/5 px-1 max-md:w-28">Vehículo</TableCell>
-                <TableCell className="md:w-3/5 px-1 max-md:w-24">Servicio</TableCell>
+                <TableCell className="md:w-1/5 px-2 max-md:w-28">Cliente</TableCell>
+                <TableCell className="md:w-1/5 px-2 max-md:w-28">Vehículo</TableCell>
+                <TableCell className="md:w-3/5 px-2 max-md:w-24">Servicio</TableCell>
                 <TableCell className="md:w-1/5 max-md:w-14"></TableCell>
               </TableRow>
             </TableHeader>
@@ -322,13 +322,7 @@ const OrdenesDashboard = () => {
               cancelarOrden={cancelarOrden}
             />
           </Table>
-            </article>
         </section>
-
-      {/* <Navbar /> */}
-      {/* <main className="overflow-auto max-h-screen">
-      
-      </main> */}
     </>
   );
 };

@@ -110,8 +110,8 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
             </Select>
               <Button
                 title="Iniciar"
-                variant={"ghost"}
-                className="flex h-7 text-green-600 items-center text-xs"
+                variant={"default"}
+                className="flex h-7 bg-transparent hover:bg-transparent text-green-600 items-center text-xs"
                 onClick={() => {
                   actualizarEstadoOrden(orden.id, selectedEmployees[orden.id] || []);
                 }}

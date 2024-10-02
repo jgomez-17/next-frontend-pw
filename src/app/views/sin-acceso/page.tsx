@@ -21,9 +21,9 @@ const AccesoDenegadoPage = () => {
         <p className="text-gray-700 mb-4">
           Lo sentimos, no tienes permiso para acceder a esta página.
         </p>
-        <Button onClick={volverInicio} className="bg-transparent text-gray-700 hover:bg-transparent">
+        <Button onClick={volverInicio} className=" gap-2" variant={'destructive'}>
           <BackIcon />
-          ir al Inicio
+          Volver al Inicio
         </Button>
       </div>
     </div>

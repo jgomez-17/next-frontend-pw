@@ -5,9 +5,9 @@ import { message } from 'antd';
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
+import { Spin } from '@/app/components/ui/iconos';
 
 const LoginPage = () => {
     const [usuario, setUsuario] = useState('');
@@ -53,29 +53,20 @@ const LoginPage = () => {
                 Cookies.set('username', usuario, { expires});
 
                 router.replace('/views');
-                // window.location.href = '/views/dashboard/lista-ordenes';
             } else {
                 setError(data.message || 'Error al iniciar sesión');
-                message.error('verifica tu conexion');
             }
         } catch (err) {
             setError('Error al conectar con el servidor');
             message.error('Error al conectar con el servidor');
         } finally {
-            setLoading(false); // Finaliza el estado de carga
+            setLoading(false); 
         }
     };
 
     return (
         <form onSubmit={handleLogin} className="flex tracking-tighter items-center justify-center h-screen">
             <section className="grid gap-4 py-10 px-10 rounded-lg">
-                {/* <Image
-                    className='m-auto'
-                    src="/prontowash-img.png"
-                    alt='logo'
-                    width={140}
-                    height={200}
-                /> */}
                 <p className='text-center text-xl font-bold'> Acceso al sistema </p>
                 <article className="flex flex-col gap-1">
                     <Label htmlFor="usuario" className="text-gray-500 text-sm">
@@ -105,8 +96,14 @@ const LoginPage = () => {
                         {error}
                     </div>
                 )}
-                <Button type="submit" className='w-[300px] float-right'>
-                    Ingresar
+                <Button type="submit" className='w-[300px] float-right' disabled={loading}>
+                    {loading ? (
+                        <span className="flex items-center justify-center gap-3">
+                            <Spin />
+                        </span>
+                    ) : (
+                        'Ingresar'
+                    )}
                 </Button>
             </section>
         </form>

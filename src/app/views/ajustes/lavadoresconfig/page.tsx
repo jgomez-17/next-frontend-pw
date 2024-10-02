@@ -2,15 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Form, Input, message } from 'antd';
+import { Form, message } from 'antd';
+import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
-import Navbar from '@/app/views/navbar/page'
 import ProtectedRoute from '@/app/components/protectedRoute';
-import { UserAdd, BackIcon, DeleteIcon, ReloadIcon, UserAdd2, AddUsers2, DeleteIcon2 } from '@/app/components/ui/iconos';
-import Link from 'next/link';
+import { BackIcon, ReloadIcon, AddUsers2, DeleteIcon2, Spin } from '@/app/components/ui/iconos';
 import { Switch } from "@/components/ui/switch"
 import { useRouter } from 'next/navigation';
-import Sidebar from "../../sidebar/sidebar";
 
 
 interface Lavador {
@@ -23,6 +21,7 @@ const Page: React.FC = () => {
   const [lavadores, setLavadores] = useState<Lavador[]>([]);
   const [numeroLavadores, setNumeroLavadores] = useState<number>(0);
   const [nombreLavador, setNombreLavador] = useState('')
+  const [loading, setLoading] = useState(false);
 
   const fetchLavadores = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/lavadores`
@@ -71,6 +70,8 @@ const Page: React.FC = () => {
   };
 
   const registrarLavador = async () => {
+    setLoading(true);
+
     const nuevoLavador = {
       nombre: nombreLavador,
       activo: '1'
@@ -91,12 +92,15 @@ const Page: React.FC = () => {
         setNombreLavador('');
         setIsDialogOpen(false);
         message.success('Lavador registrado correctamente');
+        setLoading(false);
       } else {
         message.error('Error al registrar el lavador');
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
       message.error('Error al registrar el lavador');
+      setLoading(false);
     }
   };
 
@@ -184,12 +188,12 @@ const Page: React.FC = () => {
                 <ReloadIcon />
               </Button>
               <DialogTrigger asChild>
-                <Button className='text-xs gap-2 h-8'> 
-                <span className='max-md:hidden'> Añadir empleado </span>
+                <Button className='gap-2 h-9'> 
+                  <span className='max-md:hidden'> Añadir </span>
                 <AddUsers2 /> 
                 </Button>
               </DialogTrigger>
-              <h1 className='font-bold'>Empleados</h1>
+              <h1 className='font-bold text-2xl'>Empleados</h1>
             </nav>
         
           <DialogContent>
@@ -199,7 +203,7 @@ const Page: React.FC = () => {
                 <Form className='flex gap-5 mt-4' onFinish={registrarLavador}>
                   <label className='flex flex-col gap-1'>
                     <Input
-                      className='w-44 capitalize max-md:w-40'
+                      className='w-44 capitalize h-8 max-md:w-40'
                       type="text"
                       value={nombreLavador}
                       onChange={(e) => setNombreLavador(e.target.value)}
@@ -207,7 +211,13 @@ const Page: React.FC = () => {
                     />
                   </label>
                   <Button className='flex items-center text-xs h-8' itemType='submit' >
-                      Agregar
+                  {loading ? (
+                        <span className="flex items-center justify-center gap-3">
+                            <Spin />
+                        </span>
+                    ) : (
+                        'Agregar'
+                    )}
                   </Button>
                 </Form>
               </DialogDescription>

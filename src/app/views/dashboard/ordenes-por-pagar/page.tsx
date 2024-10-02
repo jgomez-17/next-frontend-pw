@@ -5,22 +5,15 @@ import { message, Radio } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
-import { DaviplataIcon, NequiIcon, BancolombiaIcon, ReloadIcon } from '@/app/components/ui/iconos'
+import { DaviplataIcon, NequiIcon, BancolombiaIcon, ReloadIcon, Spin } from '@/app/components/ui/iconos'
 import { GiMoneyStack } from "react-icons/gi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import DetallesOrden from '../detalles-orden/detallesOrden';
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { BackIcon } from '@/app/components/ui/iconos';
 import { useRouter } from 'next/navigation';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import {Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue} from "@/components/ui/select"
+
 
 interface Orden {
   id: number;
@@ -42,6 +35,7 @@ interface Orden {
 const OrdenesPorPagar = () => {
   const [ordenesPorPagar, setOrdenesPorPagar] = useState<Orden[]>([]);
   const [metodosPago, setMetodosPago] = useState<{ [key: number]: string }>({});
+  const [loading, setLoading] = useState(false);
   
   const fetchOrdenesPorPagar = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/porpagar`
@@ -63,9 +57,12 @@ const OrdenesPorPagar = () => {
   };
   
   const actualizarEstadoOrden = (orderId: number) => {
+    setLoading(true);
+    
     const metodoPago = metodosPago[orderId];
     if (!metodoPago) {
       message.error('Por favor selecciona un método de pago');
+      setLoading(false);
       return;
     }
 
@@ -86,6 +83,7 @@ const OrdenesPorPagar = () => {
       if (response.ok) {
         message.success('Servicio pagado con exito');
         fetchOrdenesPorPagar();
+        setLoading(false);
         } else {
           throw new Error('Error al actualizar el estado de la orden');
         }
@@ -93,8 +91,9 @@ const OrdenesPorPagar = () => {
       .catch(error => {
         console.error('Error al actualizar el estado de la orden:', error);
         message.error('Error al actualizar el estado de la orden');
+        setLoading(false);
       });
-    };
+  };
     
   const formatNumber = (number: number) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(number);
@@ -110,7 +109,7 @@ const OrdenesPorPagar = () => {
   
   const router = useRouter()
   const handleBackButton = () => {
-      router.back(); // Utiliza el método back() para navegar hacia atrás
+      router.back();
   };
 
   return (
@@ -194,7 +193,13 @@ const OrdenesPorPagar = () => {
                               className='h-8 text-xs'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
-                              Pagar
+                              {loading ? (
+                                  <span className="flex items-center justify-center gap-3">
+                                      <Spin />
+                                  </span>
+                              ) : (
+                                  'Pagar'
+                              )}
                             </Button>
                       </section>
                       

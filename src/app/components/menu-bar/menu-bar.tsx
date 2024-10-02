@@ -1,75 +1,80 @@
 'use client'
 
+import { useState } from "react"
 import { Menubar} from "@/components/ui/menubar"
 import Link from "next/link"
-import { ProfileMenu } from '@/app/views/navbar/profile-menu';
-import { Ajustes, ChartIcon4, Grap, Home, MultipleUsers, SettingsIcon5, UserSettings, UsersIcon4 } from "../ui/iconos";
-import { MenuApps } from "@/app/views/navbar/menu/menu-apps";
-import { usePathname } from "next/navigation" // Importa el hook correcto
+import { ProfileMenu } from '@/app/components/menu-bar/profile-menu';
+import { Grap, Home, UserSettings,  } from "../ui/iconos";
+import { usePathname } from "next/navigation"
 import Image from "next/image";
+import { MenuApps } from "@/app/views/navbar/menu/menu-apps";
   
   export function MenubarDemo() {
+    const [menuOpen, setMenuOpen] = useState(false)
     const currentPath = usePathname() // Usa el hook correcto para obtener la ruta
 
     return (
-      <Menubar className="bg-white/50 backdrop-filter backdrop-blur-sm border-none rounded-none z-50 w-full h-12 flex justify-between fixed px-0">
-        {/* <MenuLateral /> */}
-        <nav className="flex w-full justify-between items-center max-h-12 gap-4 p-0">
+      <Menubar className="bg-[#0F172A] text-gray-300 font-semibold backdrop-filter backdrop-blur-sm border-none rounded-none z-50 w-full h-14 flex justify-between fixed px-0">
+        <nav className="flex w-full justify-between items-center max-h-12 gap-4 p-0 px-4">
           <MenuApps />
-          <Link href={'/views'} className="flex md:ml-4 items-center gap-1 hover:text-slate-500">
-            <Image
-              src="/prontowash-img.png"
-              width={140}
-              height={500}
-              alt="Picture of the author"
-              className="md:hidden"
-              />
-              <span className="font-extrabold text-[22px] tracking-tighter text-sky-900 hover:text-slate-500 max-md:hidden">
-                PW
-              </span>
-              <span className="font-extrabold text-xl max-md:hidden">|</span>
-              <span className="font-extrabold text-[22px] tracking-wider max-md:hidden">
-               Admin 
-              </span>
-            </Link>
-          <ul className="items-center text-sm flex max-md:hidden">
+          <h1 className="text-2xl font-bold tracking-tighter">Logo</h1>
+          <ul className="items-center gap-2 text-sm flex max-md:hidden">
             <li>
               <Link
                   href="/views"
-                  className={`w-full rounded flex px-5 h-11 items-center gap-2 hover:bg-slate-600/5 ${
-                    currentPath === "/views" ? "bg-slate-100 text-blue-800" : ""
+                  className={`w-full rounded-xl flex px-5 h-10 items-center gap-2 hover:text-white ${
+                    currentPath === "/views" ? "bg-white/10 text-white" : ""
                   }`}
                 >
-                <Home />
-                <span className="hidden"> Inicio </span>
+                {/* <Home /> */}
+                <span className=""> Inicio </span>
               </Link>
             </li>
             <li>
               <Link
                   href="/views/estadisticas"
-                  className={`w-full rounded flex px-5 h-11 items-center gap-2 hover:bg-slate-600/5 ${
-                    currentPath === "/views/estadisticas" ? "bg-slate-100 text-blue-800" : ""
+                  className={`w-full rounded-xl flex px-5 h-10 items-center gap-2 hover:text-white ${
+                    currentPath === "/views/estadisticas" ? "bg-white/10 text-white" : ""
                   }`}
                 >
-                <Grap />
-                <span className="hidden">
+                {/* <Grap /> */}
+                <span className="">
                   Estadisticas
                 </span>
               </Link>
             </li>
             <li>
               <Link
-                  href="/views/ajustes"
-                  className={`w-full rounded flex px-5 h-11 items-center gap-2 hover:bg-slate-600/5 ${
-                    currentPath === "/views/ajustes" ? "bg-slate-100 text-blue-800" : ""
+                  href="/views/planillas/acumulados"
+                  className={`w-full rounded-xl flex px-5 h-10 items-center gap-2 hover:text-white ${
+                    currentPath === "/views/planillas/acumulados" ? "bg-white/10 text-white" : ""
                   }`}
                 >
-                <UserSettings />
-                <span className="hidden">Ajustes</span>
+                <span className="">Acumulado</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                  href="/views/planillas/cierre-diario"
+                  className={`w-full rounded-xl flex px-5 h-10 items-center gap-2 hover:text-white ${
+                    currentPath === "/views/planillas/cierre-diario" ? "bg-white/10 text-white" : ""
+                  }`}
+                >
+                <span className="">Cierre</span>
               </Link>
             </li>
           </ul>
+          <section className="flex items-center gap-4">
+          <Link
+                  href="/views/ajustes"
+                  className={`w-full max-md:hidden flex px-2 py-0.5 bg-white/5 rounded-full items-center gap-2 hover:text-white  ${
+                    currentPath === "/views/ajustes" ? "bg-white/10 text-white" : ""
+                  }`}
+                >
+                <UserSettings />
+          </Link>
           <ProfileMenu />
+          </section>
         </nav>
 
       </Menubar>

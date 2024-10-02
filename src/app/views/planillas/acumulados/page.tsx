@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import Navbar from '@/app/views/navbar/page';
 import { BackIcon, DownloadIcon, ReloadIcon, Spin1 } from '@/app/components/ui/iconos';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -12,7 +11,6 @@ import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { message, Spin } from 'antd';
 import { generarPDF } from './crearPDF-acum';
-import Sidebar from '@/app/views/sidebar/sidebar'
 
 interface Acumulado {
     id: number;
@@ -113,7 +111,7 @@ const AcumuladosComponent = () => {
                             <ReloadIcon />
                         </Button>
                         <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
-                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-8 text-xs'>
+                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-9'>
                             Descargar PDF
                             <DownloadIcon />
                         </Button>
