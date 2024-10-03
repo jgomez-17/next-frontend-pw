@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
+import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";  // Importación correcta de la localización
 
@@ -46,8 +47,8 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     <>
       <Button
         onClick={showModal}
-        className="text-xs text-black font-medium"
-        type="link"
+        className="text-xs h-9 font-medium"
+        variant={"ghost"}
       >
         Ver más detalles
       </Button>

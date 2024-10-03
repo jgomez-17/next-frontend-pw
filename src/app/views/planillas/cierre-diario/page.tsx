@@ -205,10 +205,11 @@ const GenerarPlanilla = () => {
       return; // Detener la ejecución si el total restante es negativo
     }
 
-    if (lavadores.some(lavador => !lavador.seccion)) {
-      message.error('Por favor, selecciona la sección del lavador.');
-      return; // Detener la ejecución si algún lavador no tiene seleccionada la sección
-    }
+    // Detener la ejecución si algún lavador no tiene seleccionada la sección
+    // if (lavadores.some(lavador => !lavador.seccion)) {
+    //   message.error('Por favor, selecciona la sección del lavador.');
+    //   return; 
+    // }
 
     const dataTotales = {
       venta_diaria: totalRecaudado,
@@ -217,7 +218,6 @@ const GenerarPlanilla = () => {
     }
 
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados/insertaracumulados`
-    
     setLoading(true);
 
     fetch(apiUrl, {
@@ -251,7 +251,7 @@ const GenerarPlanilla = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-        <section className="w-full m-auto rounded-md p-2 bg-white tracking-tighter">
+        <section className="w-full m-auto rounded-md p-2 bg-white tracking-tigh">
         <nav 
           className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 py-2"
         >

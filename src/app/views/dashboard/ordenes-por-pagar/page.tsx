@@ -57,12 +57,10 @@ const OrdenesPorPagar = () => {
   };
   
   const actualizarEstadoOrden = (orderId: number) => {
-    setLoading(true);
     
     const metodoPago = metodosPago[orderId];
     if (!metodoPago) {
       message.error('Por favor selecciona un método de pago');
-      setLoading(false);
       return;
     }
 
@@ -83,7 +81,6 @@ const OrdenesPorPagar = () => {
       if (response.ok) {
         message.success('Servicio pagado con exito');
         fetchOrdenesPorPagar();
-        setLoading(false);
         } else {
           throw new Error('Error al actualizar el estado de la orden');
         }
@@ -91,7 +88,6 @@ const OrdenesPorPagar = () => {
       .catch(error => {
         console.error('Error al actualizar el estado de la orden:', error);
         message.error('Error al actualizar el estado de la orden');
-        setLoading(false);
       });
   };
     
@@ -115,7 +111,7 @@ const OrdenesPorPagar = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-      <section className='w-full p-2 h-full bg-white tracking-tighter'>
+      <section className='w-full p-2 h-full bg-white tracking-tigh'>
         <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
           <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
@@ -123,9 +119,9 @@ const OrdenesPorPagar = () => {
           <Button onClick={reloadPage} variant={'ghost'} className='h-8 mr-auto'>
             <ReloadIcon />
           </Button>
-          <h1 className='font-bold'> 
+          <h5 className='font-bold text-xl'> 
             Ordenes por pagar
-          </h1>
+          </h5>
         </nav>
         <Table className='w-full m-auto mt-4'>
           <TableHeader className="font-bold bg-slate-50 text-sm">

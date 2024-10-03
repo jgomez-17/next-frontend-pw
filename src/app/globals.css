@@ -2,16 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
- :root {
+:root {
   --font-sans: 'Inter', sans-serif;
 }
 
-/* .font-sans {
+.font-sans {
   font-family: var(--font-sans);
-} */
-
-
-
+}
 
 
   @layer base {

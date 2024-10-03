@@ -87,6 +87,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
       if (verifyplaca.length !== 7) {
           message.warning('Por favor ingresa una placa válida');
+          setLoading(false);
           return;
       }
 
@@ -108,7 +109,9 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
               message.success('Orden encontrada');
               setLoading(false);
           } else {
+              setLoading(false);
               message.info('No hay ordenes previas relacionadas a este vehiculo');
+              setLoading(false);
               setOrdenes([]);
               setPlaca(verifyplaca);
               setMarca('');
@@ -120,7 +123,6 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
           }
 
           avanzarSeccion();
-          setLoading(false);
           setError('');
       } catch (error: any) {
           setError(error.message);
@@ -185,26 +187,31 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     
         if (!placa || !marca || !tipo || !color || !nombre || !celular) {
           message.warning("Por favor completa los campos obligatorios.");
+          setLoading(false);
           return;
         }
     
         if (placa.length !== 7) {
           message.warning("Por favor ingresa una placa válida");
+          setLoading(false);
           return;
         }
     
         if (servicios.length === 0) {
           message.warning("Por favor selecciona al menos un servicio.");
+          setLoading(false);
           return;
         }
     
         if (llaves.length === 0) {
           message.warning("Por favor selecciona si deja llaves o no");
+          setLoading(false);
           return;
         }
     
         if (celular.length !== 10) {
           message.warning("Por favor ingresa un número de teléfono válido");
+          setLoading(false);
           return;
         }
       
@@ -242,6 +249,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
              
              if (!responseOrdenes.ok) {
                console.error('Error en la petición:', responseOrdenes.statusText);
+               setLoading(false);
               }
 
         
@@ -301,11 +309,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto tracking-tighter' >
+      className='max-md:w-svw overflow-y-auto tracking-tigh' >
         <SheetHeader>
         <SheetTitle>Crear nueva orden</SheetTitle>
         <SheetDescription className='m-auto'>
-          <p className=' text-transparent'>Hola</p>
+          <p className='text-transparent'>Hola</p>
         </SheetDescription>
         </SheetHeader>
 

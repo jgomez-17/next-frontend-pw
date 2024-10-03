@@ -37,21 +37,22 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
   {ordenesEnCurso && ordenesEnCurso.length > 0 && (
   <TableBody>
     {ordenesEnCurso.map((orden: Orden) => (
-      <TableRow key={orden.id} className="text-[12px]">
-        <TableCell className="max-md:hidden px-4 font-bold w-20 py-1">{orden.id}</TableCell>
-        <TableCell className="p-1">
-          <section>
-            <p className="font-medium flex flex-col capitalize">
+      <TableRow key={orden.id} className="md:text-[13px] text-xs font-bold">
+        <TableCell className="max-md:hidden text-sm px-3 font-bold w-20 py-1 border-b border-black/20">{orden.id}</TableCell>
+        <TableCell className="p-2 border-b border-black/20">
+          <section className="flex flex-col gap-1 capitalize
+          ">
+            <p>
               {orden.cliente.nombre}
             </p>
-            <p className="text-slate-500">{orden.cliente.celular}</p>
+            <p className="text-gray-500 font-medium text-xs">{orden.cliente.celular}</p>
           </section>
         </TableCell>
-        <TableCell className="p-1">
-          <p className="w-full font-medium">
+        <TableCell className="p-2 border-b border-black/20">
+          <p className="py-0.5">
             {orden.vehiculo.placa}
           </p>
-          <section className="text-slate-500 gap-1 md:flex">
+          <section className="text-gray-500 font-medium gap-1 md:flex">
             <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
             <p> {orden.vehiculo.marca} </p>
             <p className="max-md:hidden"> {orden.vehiculo.color} </p>
@@ -60,55 +61,55 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
             {orden.vehiculo.llaves} <p>dejó llaves</p>
           </span>
         </TableCell>
-        <TableCell className="p-1">
-        <section className="flex justify-between max-md:flex-col">
-            <p className="font-medium flex flex-col">
+        <TableCell className="p-2 border-b border-black/20">
+        <section className="flex justify-between flex-col gap-1">
+            <p>
               {new Intl.NumberFormat("es-CO", {
                 style: "currency",
                 currency: "COP",
                 minimumFractionDigits: 0,
               }).format(Number(orden.servicio.costo))}
             </p>
+          <p className="max-md:hidden text-gray-500 font-medium">{orden.servicio.nombre_servicios}</p>
           </section>
-          <p className="max-md:hidden text-slate-500">{orden.servicio.nombre_servicios}</p>
         </TableCell>
-        <TableCell className="text-xs p-1">
-          <section className="flex float-end w-max gap-4">
+        <TableCell className="p-2 border-b border-black/20">
+          <section className="flex float-end w-max gap-4 max-md:hidden">
                 <Button 
                     onClick={() => cancelarOrden(orden.id)} 
                     title="Cancelar orden"
-                    variant={"link"}
-                    className="text-xs text-red-600 h-8 font-medium max-md:hidden"
+                    variant={"destructive"}
+                    className="h-8 text-xs font-medium max-md:hidden"
                   >
                     Cancelar orden
                 </Button>
               {orden.estado === "en curso" ? (
                   <Button
                       title="Terminar"
-                      className="h-7 text-red-600 bg-transparent hover:bg-transparent"
+                      className="h-8 text-xs font-semibold flex items-center gap-2 text-red-600 bg-red-500/5 hover:bg-red-500/5t"
                       onClick={() => {
                         actualizarEstadoOrden3(orden.id);
                       }}
                     >
-                  <StopIcon />
+                    <span className="max-md:hidden">Terminar</span>
+                    <StopIcon />
                 </Button>
               ) : (
                 <p>La orden está en otro estado</p>
               )}
-
+            
             <DropdownMenu>
             <DropdownMenuTrigger className="max-md:m-auto">
               <BsThreeDotsVertical className=" text-2xl" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <span onClick={(e) => e.stopPropagation()}>
+            <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
                   <DetallesOrden orden={orden} />
-                </span>
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          </section>  
+          </section>
+          <section className="md:hidden">
+            <DetallesOrden orden={orden} />  
+          </section>
         </TableCell>
       </TableRow>
     ))}

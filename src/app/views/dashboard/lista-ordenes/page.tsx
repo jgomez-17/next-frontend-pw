@@ -276,7 +276,7 @@ const OrdenesDashboard = () => {
     <>
         <section className="bg-white rounded w-full p-4">
             <nav className="gap-3 w-full max-md:flex-col flex justify-between items-center mb-5">
-              <h5 className="w-full font-bold text-xl tracking-tight max-md:text-center">Dashboard</h5>
+              <h5 className="w-full font-bold text-xl tracking-tight max-md:text-center">Actividad</h5>
               <article className="w-full flex justify-end max-md:justify-between gap-3">
                 <Button onClick={reloadPage} className="h-9 text-[13px] order-1 max-md:order-2" variant={"ghost"}>
                   <ReloadIcon />
@@ -295,15 +295,15 @@ const OrdenesDashboard = () => {
             totalRecaudado={totalRecaudado}
           />
           
-          <h5 className="font-bold text-lg tracking-tight my-4 flex justify-between px-2">Ordenes <ArrowBi /></h5>
-          <Table className="m-auto bg-slate-500/5">
-            <TableHeader className="font-semibold max-md:text-[0.89rem]">
-              <TableRow className=" text-sm">
-                <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-4">#</TableCell>
-                <TableCell className="md:w-1/5 px-2 max-md:w-28">Cliente</TableCell>
-                <TableCell className="md:w-1/5 px-2 max-md:w-28">Vehículo</TableCell>
-                <TableCell className="md:w-3/5 px-2 max-md:w-24">Servicio</TableCell>
-                <TableCell className="md:w-1/5 max-md:w-14"></TableCell>
+          <h5 className="font-bold text-lg tracking-tigh my-6 flex justify-between">Ordenes <ArrowBi /></h5>
+          <Table className="m-auto">
+            <TableHeader className="font-bold cursor-default tracking-wide text-[15px] max-md:text-[0.89rem]">
+              <TableRow className="">
+                <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-2 border-b border-black/20">#</TableCell>
+                <TableCell className="md:w-1/5 px-2 max-md:w-1/4 border-b border-black/20">Cliente</TableCell>
+                <TableCell className="md:w-1/5 px-2 max-md:w-1/4 border-b border-black/20">Vehículo</TableCell>
+                <TableCell className="md:w-2/5 px-2 max-md:w-1/4 border-b border-black/20">Servicio</TableCell>
+                <TableCell className="md:w-1/5 px-2 max-md:px-4 max-md:text-center border-b border-black/20">Acciones</TableCell>
               </TableRow>
             </TableHeader>
 

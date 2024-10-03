@@ -63,7 +63,7 @@ interface Orden {
   return (
     <>
       <ProtectedRoute>
-        <section className='bg-white w-full h-full p-2 tracking-tighter'>
+        <section className='bg-white w-full h-full p-2 tracking-tigh'>
         <nav className='flex justify-between w-full m-auto gap-3 p-2'>
           <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
             <BackIcon />
@@ -71,9 +71,9 @@ interface Orden {
           <Button onClick={reloadPage} variant={'ghost'} className='h-8 mr-auto'>
             <ReloadIcon />
           </Button>
-          <h1 className='font-bold'>
-            Ordenes de hoy
-          </h1>
+          <h5 className='font-bold text-xl'>
+            Ordenes del dia
+          </h5>
         </nav>
         <Table className="w-full m-auto mt-4 ">
             <TableHeader className="text-[1rem] bg-slate-50 font-bold max-md:text-[0.89rem] ">

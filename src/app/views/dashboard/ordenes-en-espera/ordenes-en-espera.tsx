@@ -55,21 +55,21 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
     {ordenesEnEspera && (
     <TableBody>
       {ordenesEnEspera.map((orden) => (
-        <TableRow key={orden.id} className="text-[12px]">
-          <TableCell className="max-md:hidden px-3 font-medium w-20 py-1 border-b">{orden.id}</TableCell>
-          <TableCell className="p-1 border-b">
-            <section>
-              <p className="font-medium flex flex-col capitalize">
+        <TableRow key={orden.id} className="md:text-[13px] text-xs font-bold">
+          <TableCell className="max-md:hidden px-3 text-sm font-bold w-20 py-1 border-b border-black/20">{orden.id}</TableCell>
+          <TableCell className="p-2 border-b border-black/20">
+            <section className="flex flex-col gap-1 capitalize">
+              <p>
                 {orden.cliente.nombre}
               </p>
-              <p className="text-slate-500">{orden.cliente.celular}</p>
+              <p className="text-gray-500 font-semibold text-xs">{orden.cliente.celular}</p>
             </section>
           </TableCell>
-          <TableCell className="p-1 border-b">
-            <p className="w-full font-semibold">
+          <TableCell className="p-2 border-b border-black/20">
+            <p className="py-0.5">
               {orden.vehiculo.placa}
             </p>
-            <section className="gap-1 md:flex text-slate-500">
+            <section className="gap-1 md:flex text-gray-500 font-medium">
               <p className="max-md:hidden md:hidden"> {orden.vehiculo.tipo} </p>
               <p>{orden.vehiculo.marca}</p>
               <p className="max-md:hidden">{orden.vehiculo.color}</p>
@@ -78,71 +78,67 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
               {orden.vehiculo.llaves} <p>dejó llaves</p>
             </span>
           </TableCell>
-          <TableCell className="p-1 border-b">
-            <section className="flex max-md:flex-col">
-              <p className="font-medium flex flex-col">
+          <TableCell className="p-2 border-b border-black/20">
+            <section className="flex flex-col gap-1">
+              <p className="flex flex-col">
                 {new Intl.NumberFormat("es-CO", {
                   style: "currency",
                   currency: "COP",
                   minimumFractionDigits: 0,
                 }).format(Number(orden.servicio.costo))}
               </p>
+            <p className="max-md:hidden text-gray-500 font-medium">{orden.servicio.nombre_servicios}</p>
             </section>
-            <p className="max-md:hidden text-slate-500 font-sans">{orden.servicio.nombre_servicios}</p>
           </TableCell>
-          <TableCell className="p-1 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b">
-            <section className="gap-4 w-max flex float-end">
-            <Select
-              className=" max-md:hidden"
-              mode="multiple"
-              style={{ width: 160 }}
-              placeholder="Asignar empleados"
-              value={selectedEmployees[orden.id] || []}
-              onChange={(value) => handleEmpleadoChange(orden.id, value)}
-            >
-              {lavadores
-              .filter(lavador => lavador.activo === "1" && !(selectedEmployees[orden.id] || []).includes(lavador.nombre))
-              .map((lavador) => (
-                <Select.Option key={lavador.id} value={lavador.nombre}>
-                  <p className="capitalize">{lavador.nombre}</p>
-                </Select.Option>
-              ))}
-            </Select>
+          <TableCell className="p-2 gap-2 items-center max-md:flex-col max-md:items-start text-xs border-b border-black/20">
+            <section className="gap-4 w-max flex float-end max-md:hidden">
+              <Select
+                className=" max-md:hidden font-medium w-44"
+                mode="multiple"
+                placeholder="Asignar empleados"
+                value={selectedEmployees[orden.id] || []}
+                onChange={(value) => handleEmpleadoChange(orden.id, value)}
+              >
+                {lavadores
+                .filter(lavador => lavador.activo === "1" && !(selectedEmployees[orden.id] || []).includes(lavador.nombre))
+                .map((lavador) => (
+                  <Select.Option key={lavador.id} value={lavador.nombre}>
+                    <p className="capitalize">{lavador.nombre}</p>
+                  </Select.Option>
+                ))}
+              </Select>
               <Button
                 title="Iniciar"
                 variant={"default"}
-                className="flex h-7 bg-transparent hover:bg-transparent text-green-600 items-center text-xs"
+                className="flex gap-2 font-semibold h-8 bg-green-500/5 hover:bg-green-500/5 text-green-600 items-center text-xs"
                 onClick={() => {
                   actualizarEstadoOrden(orden.id, selectedEmployees[orden.id] || []);
                 }}
               >
-                    <PlayOutlineIcon />
+                  <span className="max-md:hidden">Iniciar</span>
+                  <PlayOutlineIcon />
               </Button>
 
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <BsThreeDotsVertical className=" text-2xl" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem className=" max-md:hidden">
+                <DropdownMenuContent className="flex flex-col gap-2" onClick={(e) => e.stopPropagation()}>
                     <Button 
                       onClick={() => cancelarOrden(orden.id)} 
-                      variant={"ghost"}
+                      variant={"destructive"}
                       title="Cancelar orden"
-                      className="text-xs text-red-600 font-medium h-8"
+                      className="text-xs font-medium h-8 max-md:hidden"
                     >
                       Cancelar orden
                     </Button>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <span onClick={(e) => e.stopPropagation()}>
-                      <DetallesOrden orden={orden} />
-                    </span>
-                  </DropdownMenuItem>
+                    <DetallesOrden orden={orden} />
                 </DropdownMenuContent>
               </DropdownMenu>
             </section>
-        
+            <section className="md:hidden" onClick={(e) => e.stopPropagation()}>
+              <DetallesOrden orden={orden} />
+            </section>
           </TableCell>
         </TableRow>
       ))}
