@@ -113,10 +113,10 @@ const OrdenesPorPagar = () => {
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
       <section className='w-full p-2 h-full bg-white tracking-tigh'>
         <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
-          <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+          <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} variant={'ghost'} className='h-8 mr-auto'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto'>
             <ReloadIcon />
           </Button>
           <h5 className='font-bold text-xl'> 
@@ -124,41 +124,41 @@ const OrdenesPorPagar = () => {
           </h5>
         </nav>
         <Table className='w-full m-auto mt-4'>
-          <TableHeader className="font-bold bg-slate-50 text-sm">
+          <TableHeader className="font-bold cursor-default tracking-wide text-[15px] max-md:text-[0.89rem] bg-slate-50">
             <TableRow>
-              <TableCell className="max-md:hidden w-24 px-1 text-center">#</TableCell>
-              <TableCell className="w-36 px-1">Cliente</TableCell>
-              <TableCell className="w-52 px-1">Vehículo</TableCell>
-              <TableCell className="md:w-72 px-1 max-md:text-center max-md:w-80">Servicio</TableCell>
-              <TableCell className=' max-md:hidden'> </TableCell>
-              <TableCell className='w-36'> </TableCell>
+              <TableCell className="w-1/12 max-md:hidden px-3">#</TableCell>
+              <TableCell className="w-1/5 max-md:w-1/4 px-2">Cliente</TableCell>
+              <TableCell className="w-1/5 max-md:w-1/4 px-2">Vehículo</TableCell>
+              <TableCell className="w-2/5 max-md:w-1/4 px-2">Servicio</TableCell>
+              <TableCell className='w-2/5 max-md:w-1/4 px-2 max-md:hidden'> Metodo de pago </TableCell>
+              <TableCell className='md:hidden max-md:w-1/4 px-4 text-center'> Acciones </TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
             {ordenesPorPagar && ordenesPorPagar.map((orden: Orden) => (
-              <TableRow key={orden.id} className="text-[12px]">
-                <TableCell className="max-md:hidden w-16 p-2 font-bold text-center border-b">{orden.id}</TableCell>
-                <TableCell className="p-1 border-b">
-                      <span className="font-semibold flex flex-col capitalize">
-                        {orden.cliente.nombre}
-                      </span>
-                      <span>{orden.cliente.celular}</span>
+              <TableRow key={orden.id} className="md:text-[13px] text-xs font-bold">
+                <TableCell className="max-md:hidden text-sm px-3 font-bold w-20 py-1 border-b">{orden.id}</TableCell>
+                <TableCell className="p-2 border-b">
+                      <section className='flex flex-col gap-1'>
+                        <p className="capitalize">
+                          {orden.cliente.nombre}
+                        </p>
+                        <p className='font-medium text-xs text-gray-500'>{orden.cliente.celular}</p>
+                      </section>
                 </TableCell>
-                <TableCell className="p-1 border-b">
-                    <span className="w-full font-semibold">
-                      {orden.vehiculo.placa}
-                    </span>
-                    <section className="gap-4">
+                <TableCell className="p-2 border-b">
+                    <span>{orden.vehiculo.placa}</span>
+                    <section className='font-medium text-gray-500 my-1'>
                       <span className="max-md:hidden"> {orden.vehiculo.tipo} </span>
                       <span> {orden.vehiculo.marca} </span>
                       <span className="max-md:hidden"> {orden.vehiculo.color} </span>
                     </section>
-                    <span className="hidden">
+                    <span className="font-medium text-gray-500 max-md:hidden">
                       {orden.vehiculo.llaves} <span>dejó llaves</span>
                     </span>
                 </TableCell>
-                <TableCell className="p-1 border-b">
-                    <section className='flex flex-col max-md:items-center'>
+                <TableCell className="p-2 border-b">
+                    <section className='flex flex-col gap-1'>
                       <span className="font-bold  flex flex-col">
                         {new Intl.NumberFormat("es-CO", {
                           style: "currency",
@@ -166,13 +166,13 @@ const OrdenesPorPagar = () => {
                           minimumFractionDigits: 0,
                         }).format(Number(orden.servicio.costo))}
                       </span>
-                      <span className="max-md:text-[0.8rem] max-md:hidden">{orden.servicio.nombre_servicios}</span>
+                      <span className="max-md:hidden font-medium text-gray-500">{orden.servicio.nombre_servicios}</span>
                     </section>
                 </TableCell>
                 <TableCell className="py-1 text-xs border-b max-md:hidden">
                       <section className='flex max-md:flex-col justify-start w-max gap-2 items-center max-md:hidden'>
                       <Select value={metodosPago[orden.id] || ''} onValueChange={(value) => handleMetodoPagoChange(orden.id, value)}>
-                        <SelectTrigger className="w-[150px] h-8 text-xs">
+                        <SelectTrigger className="w-[150px] h-9 font-medium text-xs">
                           <SelectValue placeholder="Metodo de pago" />
                         </SelectTrigger>
                         <SelectContent>
@@ -186,7 +186,7 @@ const OrdenesPorPagar = () => {
                         </SelectContent>
                       </Select>
                             <Button
-                              className='h-8 text-xs'
+                              className='h-9 text-xs'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
                               {loading ? (
@@ -197,23 +197,15 @@ const OrdenesPorPagar = () => {
                                   'Pagar'
                               )}
                             </Button>
+                            <span onClick={(e) => e.stopPropagation()}>
+                                  <DetallesOrden orden={orden} />
+                            </span>          
                       </section>
-                      
-                      <DropdownMenu>
-                        <DropdownMenuTrigger className="max-md:m-auto hidden">
-                          <BsThreeDotsVertical className=" text-2xl" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                        <DropdownMenuItem>
-                          <span onClick={(e) => e.stopPropagation()}>
-                            <DetallesOrden orden={orden} />
-                          </span>
-                        </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
                 </TableCell>
-                <TableCell className='border-b'>
-                  <DetallesOrden orden={orden} />
+                <TableCell className="p-2 text-xs border-b md:hidden">
+                    <span onClick={(e) => e.stopPropagation()}>
+                        <DetallesOrden orden={orden} />
+                    </span> 
                 </TableCell>
               </TableRow>
             ))}

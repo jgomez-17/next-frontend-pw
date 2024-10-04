@@ -75,13 +75,13 @@ const LoginPage = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button className='h-9 w-2/3 m-auto tracking-tight flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
+                <Button className='h-9 w-2/3 m-auto tracking-tigh flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
             </SheetTrigger>
-            <SheetContent className='h-screen' side={'bottom'}>
+            <SheetContent className='h-screen flex' side={'bottom'}>
                 <SheetHeader>
                 </SheetHeader>
-                <form onSubmit={handleLogin} className="flex tracking-tighter items-center justify-center h-screen">
-                    <section className="grid gap-4 py-10 px-10 rounded-lg">
+                <form onSubmit={handleLogin} className="flex w-max tracking-tigh items-center justify-center m-auto">
+                    <section className="grid m-auto gap-4 py-10 px-10 rounded-lg bg-white shadow">
                         <p className='text-center text-xl font-bold'> Acceso al sistema </p>
                         <article className="flex flex-col gap-1">
                             <Label htmlFor="usuario" className="text-gray-500 text-sm">

@@ -178,13 +178,13 @@ const Page: React.FC = () => {
   return (    
     <>
       <ProtectedRoute>
-        <section className='w-full tracking-tighter h-full m-auto rounded-md p-2 bg-white'>
+        <section className='w-full tracking-tigh h-full m-auto rounded-md p-2 bg-white'>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <nav className='flex w-full m-auto p-2 gap-3 justify-between items-center'>
-              <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+            <nav className='flex w-full m-auto gap-3 justify-between items-center p-2'>
+              <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                 <BackIcon />
               </Button>
-              <Button onClick={reloadPage} className='h-8 mr-auto' variant={'ghost'}>
+              <Button onClick={reloadPage} className='h-9 mr-auto' variant={'ghost'}>
                 <ReloadIcon />
               </Button>
               <DialogTrigger asChild>
@@ -193,7 +193,7 @@ const Page: React.FC = () => {
                 <AddUsers2 /> 
                 </Button>
               </DialogTrigger>
-              <h1 className='font-bold text-2xl'>Empleados</h1>
+              <h1 className='font-bold text-xl'>Empleados</h1>
             </nav>
         
           <DialogContent>

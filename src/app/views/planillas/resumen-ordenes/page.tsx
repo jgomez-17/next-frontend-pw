@@ -61,7 +61,7 @@ const ResumenOrdenes = () => {
         </Button>
     </SheetTrigger>
     <SheetContent style={{  maxWidth: '100vw'}} 
-      className='max-md:w-svw overflow-y-auto' >
+      className='max-md:w-svw overflow-y-auto tracking-tigh' >
         <SheetHeader>
         <SheetTitle className='flex items-center gap-2'>
           <Button variant={'ghost'} onClick={reloadPage}>
@@ -73,47 +73,44 @@ const ResumenOrdenes = () => {
 
         </SheetDescription>
         <Table className=" w-full m-auto mt-5 ">
-          <TableHeader className="text-[1rem] font-bold max-md:text-[0.89rem] ">
-            <TableRow className="text-sm">
-              <TableCell className="w-1/6">#</TableCell>
-              <TableCell className="w-1/4">Placa</TableCell>
-              <TableCell className="w-1/4">Servicio</TableCell>
-              <TableCell className="w-1/4">Lavador</TableCell>
+          <TableHeader className="text-[1rem] font-bold max-md:text-[0.9rem] bg-slate-50">
+            <TableRow >
+              <TableCell className="w-1/12 max-md:h-1/4 px-2 border-b border-black/30">#</TableCell>
+              <TableCell className="w-1/5 max-md:h-1/4 px-2 border-b border-black/30">Placa</TableCell>
+              <TableCell className="w-2/5 max-md:h-1/4 px-2 border-b border-black/30">Servicio</TableCell>
+              <TableCell className="w-2/5 max-md:h-1/4 px-2 border-b border-black/30">Lavador/es</TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
             {ordenesTerminadas &&
               ordenesTerminadas.map((orden: Orden) => (
-                <TableRow key={orden.id} className="text-[12px]">
-                  <TableCell className="px-4 font-bold w-20 p-2 border-b">{orden.id}</TableCell>
-                  <TableCell className="p-1 max-md:text-center border-b">
-                      <section className='flex flex-col'>
-                        <span className="w-full font-semibold">
-                        {orden.vehiculo.placa}
-                      </span>
-                      <span> {orden.vehiculo.marca} </span>
+                <TableRow key={orden.id} className="text-[14px] font-bold">
+                  <TableCell className="p-2 text-sm border-b border-black/30">{orden.id}</TableCell>
+                  <TableCell className="p-2 border-b border-black/30">
+                      <section className='flex flex-col gap-1'>
+                        <span>
+                          {orden.vehiculo.placa}
+                        </span>
+                        <span className='text-gray-500 font-semibold'> {orden.vehiculo.marca} </span>
                       <span className="max-md:hidden md:hidden">
                         {orden.vehiculo.llaves} <span>dejó llaves</span>
                       </span>
                       </section>
                   </TableCell>
-                  <TableCell className="px-1 py-3 max-md:text-center border-b">
-                    <section className="flex items-center justify-between max-md:flex-col">
-                      <span className="font-bold flex flex-col">
+                  <TableCell className="p-2 border-b border-black/30">
+                    <section className="flex flex-col gap-2">
+                      <span className="flex flex-col">
                         {new Intl.NumberFormat("es-CO", {
                           style: "currency",
                           currency: "COP",
                           minimumFractionDigits: 0,
                         }).format(Number(orden.servicio.costo))}
                       </span>
-                      <span className="translate-y-3">
-
-                      </span>
+                    <span className="max-md:hidden font-semibold text-gray-600">{orden.servicio.nombre_servicios}</span>
                     </section>
-                    <span className="max-md:hidden">{orden.servicio.nombre_servicios}</span>
                   </TableCell>
-                  <TableCell className="w-24 border-b">
-                    <span className="capitalize text-center text-xs p-1 rounded-md text-black"> 
+                  <TableCell className="p-2 border-b border-black/30">
+                    <span className="capitalize"> 
                       {orden.empleado} 
                     </span>
                   </TableCell>

@@ -5,7 +5,6 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { BackIcon, DownloadIcon, ReloadIcon, Spin1 } from '@/app/components/ui/iconos';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/app/components/protectedRoute';
@@ -34,15 +33,16 @@ const AcumuladosComponent = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados/acumuladosdelmes`; // Cambia la URL según tu configuración de API
+                const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/acumulados/acumuladosdelmes`;
                 const response = await fetch(apiUrl);
+                
 
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos.');
                 }
 
                 const responseData = await response.json();
-
+                console.log(responseData)
                 if (Array.isArray(responseData)) {
                     setData(responseData);
                     setDataLoaded(true);
@@ -103,11 +103,11 @@ const AcumuladosComponent = () => {
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
                     <section className='w-full m-auto rounded-md p-2 bg-white tracking-tighter'>
-                    <nav className='w-full p-2 gap-4 m-auto flex items-center justify-between'>
-                        <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+                    <nav className='w-full gap-4 m-auto flex items-center p-2 justify-between mb-2'>
+                        <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                             <BackIcon />
                         </Button>
-                        <Button onClick={reloadPage} className='h-8' variant={'ghost'}>
+                        <Button onClick={reloadPage} className='h-9' variant={'ghost'}>
                             <ReloadIcon />
                         </Button>
                         <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
@@ -133,10 +133,13 @@ const AcumuladosComponent = () => {
                                 </TableHeader>
                                 <TableBody className='text-xs max-md:text-[9px]'>
                                     {daysArray.map((day) => {
-                                        const record = data.find((item) => {
+                                            const registrosEnElDia: Acumulado[] = data.filter((item) => {
                                             const itemDay = new Date(item.fecha).getDate(); // Obtener el día del mes del registro
                                             return itemDay === day; // Comparar con el día del mes actual iterado
                                         });
+
+                                        const record: Acumulado | null = registrosEnElDia.length > 0 ? registrosEnElDia[registrosEnElDia.length - 1] : null; // Selecciona el último registro del día
+
 
                                         const nombreDiaSemana = record && record.fecha ? obtenerNombreDia(record.fecha) : '';
 

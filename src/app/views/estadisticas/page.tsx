@@ -39,8 +39,8 @@ const EstadisticasPage: React.FC = () => {
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <section className='w-full m-auto rounded-md bg-white p-2'>
-                <nav className='flex tracking-tigh w-full p-2 gap-3 m-auto items-center justify-between'>
-                    <Button onClick={handleBackButton} variant={'secondary'} className="h-8 rounded-full">
+                <nav className='flex tracking-tigh w-full gap-3 p-2 m-auto items-center justify-between'>
+                    <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                         <BackIcon />
                     </Button>
                     <form onSubmit={handleSubmit} className='flex max-md:text-sm mr-auto'>
@@ -71,7 +71,7 @@ const EstadisticasPage: React.FC = () => {
                     {/* <Button onClick={() => router.push('/views/planillas/acumulados')} className="h-8 text-xs">
                         Ver acumulado
                     </Button> */}
-                    <h1 className='font-bold text-xl'>Estadísticas</h1>
+                    <h5 className='font-bold text-xl'>Estadísticas</h5>
                 </nav>
                 <EstadisticasMensuales mes={mesSeleccionado} ano={anoSeleccionado} />
             </section>

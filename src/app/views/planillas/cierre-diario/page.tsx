@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { DownloadIcon, DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save } from "@/app/components/ui/iconos";
+import { DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save } from "@/app/components/ui/iconos";
 import { generarPDF } from "./crearPDF-cierre";
 
 interface Orden {
@@ -117,6 +117,12 @@ const GenerarPlanilla = () => {
   };
 
   const handleDelete = (lavadorNombre: string, ordenId: number) => {
+
+    const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar esta fila?");
+    if (!confirmacion) {
+      return;
+    }
+
     setOrdenesTerminadas(prevOrdenes => {
       const newOrdenes = prevOrdenes.map((orden: Orden) => {
         if (orden.empleado.includes(lavadorNombre) && orden.id === ordenId) {
@@ -253,10 +259,10 @@ const GenerarPlanilla = () => {
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
         <section className="w-full m-auto rounded-md p-2 bg-white tracking-tigh">
         <nav 
-          className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 py-2"
+          className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 p-2"
         >
           <article className="flex gap-2">
-            <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+            <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
               <FlechaIzquierda />
             </Button>
             <ResumenOrdenes />
@@ -281,7 +287,7 @@ const GenerarPlanilla = () => {
         </nav>
         <article id="pdf-content">
 
-        <p className="md:hidden"> Activa el modo escritorio </p>
+        <p className="md:hidden m-auto  text-center mt-3"> Activa el modo escritorio para visualizar... </p>
         <section 
             className="w-full border-b grid grid-cols-6 max-md:grid-cols-2 rounded text-sm max-md:text-xs m-auto mt-4 pb-4 max-md:hidden" 
         >
@@ -372,7 +378,7 @@ const GenerarPlanilla = () => {
 
         </section>
 
-        <main className="w-11/12 m-auto flex flex-wrap gap-4 gap-y-8 mt-4">
+        <main className="w-full flex flex-wrap gap-4 gap-y-8 mt-4">
           {Object.keys(ordenesPorLavador).sort((a, b) => {
             const lavadorA = lavadores.find(l => l.nombre === a);
             const lavadorB = lavadores.find(l => l.nombre === b);
@@ -385,14 +391,14 @@ const GenerarPlanilla = () => {
             const porcentaje = lavador.seccion === 'Satelital' ? 0.45 : 0.30;
             const { totalCosto, totalGanancia, totalRestante } = calcularTotales(ordenes, nombreLavador, porcentaje);
             return (
-              <div key={nombreLavador} className="text-sm tracking-tighter">
-                <div className="flex items-center justify-between mb-1">
-                  <h2 className="font-semibold pl-1 capitalize">{nombreLavador}</h2>
+              <div key={nombreLavador} className="text-sm tracking-tigh rounded shadow bg-white">
+                <div className="flex items-center justify-between my-1 text-lg px-2">
+                  <p className="font-bold ml-1 capitalize">{nombreLavador}</p>
                   <Select
                     defaultValue={lavador.seccion}
                     onValueChange={(value) => handleSectionChange(nombreLavador, value)}
                   >
-                    <SelectTrigger className="w-[100px] text-xs h-6 rounded">
+                    <SelectTrigger className="w-[150px] h-8 rounded">
                       <SelectValue placeholder="" />
                     </SelectTrigger>
                     <SelectContent>
@@ -403,18 +409,18 @@ const GenerarPlanilla = () => {
                 </div>
                 <Table className="border text-xs">
                   <TableHeader>
-                    <TableRow className=" font-medium">
-                      <TableCell className="px-2 w-10 py-1 items-center"> # </TableCell>
-                      <TableCell className="w-24 py-1">Vehículo</TableCell>
-                      <TableCell className="w-22 py-1">Placa</TableCell>
-                      <TableCell className="w-20 py-1">Valor</TableCell>
-                      <TableCell className="py-1"></TableCell>
+                    <TableRow className="font-bold">
+                      <TableCell className="px-2 py-2 items-center"> # Nro </TableCell>
+                      <TableCell className=" py-2">Vehículo</TableCell>
+                      <TableCell className=" py-2">Placa</TableCell>
+                      <TableCell className=" py-2">Valor</TableCell>
+                      <TableCell className=" py-2"></TableCell>
                     </TableRow>
                   </TableHeader>
                   <TableBody className="text-xs">
                     {ordenes.map((orden: Orden) => (
                       <TableRow key={orden.id}>
-                        <TableCell className="py-0 px-2 h-4 text-xs">
+                        <TableCell className="py-0 px-2 font-semibold text-xs">
                           {orden.id}
                         </TableCell>
                         <TableCell className="py-0 h-4">{orden.vehiculo.marca}</TableCell>
@@ -429,7 +435,7 @@ const GenerarPlanilla = () => {
                             className="text-xs border-none bg-transparent"
                           />
                         </TableCell>
-                        <TableCell className="py-0 px-0">
+                        <TableCell className="py-0 px-2">
                           <button
                             onClick={() => handleDelete(nombreLavador, orden.id)}
                             className="p-0 m-0 w-full flex hover:bg-transparent"
