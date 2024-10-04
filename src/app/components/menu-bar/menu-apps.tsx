@@ -1,12 +1,10 @@
 import { useState } from "react"
-import { Acumulado, Ajustes, Grap, Home, Logout, MenuClose1, MenuOpen1, MenuOutline, MultipleUsers, SettingsIcon2, SettingsIcon3, SettingsIcon4, SettingsIcon5, SettingsNeon, UserSettings, UsersIcon, UsersIcon2, UsersIcon4 } from "@/app/components/ui/iconos"
+import { Acumulado, Grap, Home, Logout, MenuClose1, MenuOpen1, UserSettings } from "@/app/components/ui/iconos"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Settings2 } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ProfileMenu } from "../profile-menu"
-import LogoutButton from '@/app/(auth)/login/logoutButton'
+
 
 
 export function MenuApps() {
@@ -77,26 +75,6 @@ export function MenuApps() {
               >
               <Logout />
               <span>Cierre</span>
-            </Link>
-
-            <Link
-                href="/views/dashboard/ordenes-por-pagar"
-                className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-slate-600/5 ${
-                  currentPath === "/views/planillas/cierre-diario" ? "bg-white/10 text-white rounded" : ""
-                }`}
-              >
-              <Logout />
-              <span>Ordenes por pagar</span>
-            </Link>
-
-            <Link
-                href="/views/dashboard/ordenes-terminadas"
-                className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-slate-600/5 ${
-                  currentPath === "/views/planillas/cierre-diario" ? "bg-white/10 text-white rounded" : ""
-                }`}
-              >
-              <Logout />
-              <span>Ordenes terminadas</span>
             </Link>
         </DropdownMenuGroup>
       </DropdownMenuContent>

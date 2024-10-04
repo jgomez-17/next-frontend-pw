@@ -7,7 +7,7 @@ import { ProfileMenu } from '@/app/components/menu-bar/profile-menu';
 import { Grap, Home, UserSettings,  } from "../ui/iconos";
 import { usePathname } from "next/navigation"
 import Image from "next/image";
-import { MenuApps } from "@/app/views/navbar/menu/menu-apps";
+import { MenuApps } from "@/app/components/menu-bar/menu-apps";
   
   export function MenubarDemo() {
     const [menuOpen, setMenuOpen] = useState(false)
