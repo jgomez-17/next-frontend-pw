@@ -1,25 +1,29 @@
-import { ReactNode } from "react";
-import { MenubarDemo } from "../components/menu-bar/menu-bar";
-import Navbar from "../components/menu-bar/menu-bar2";
+import type { Metadata } from "next";
+import dynamic from 'next/dynamic'
 
-interface MainLayoutProps {
-  children?: ReactNode;
-}
+const Navbar = dynamic(() => import('../components/menu-bar/menu-bar2'), {
+  ssr: false,
+});
 
-// Ajustar el layout de la aplicación
-const MainLayout = ({ children }: MainLayoutProps) => {
-  return (
-    <div className="flex min-h-screen pb-3">
-      <section className="flex-1 flex flex-col">
-        <MenubarDemo />
-        {/* <Navbar /> */}
-        {/* Main content */}
-        <main className="flex-1 w-[97%] max-md:w-full m-auto mt-[4rem]">
-          {children }
-        </main>
-      </section>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Prontowash App",
+  description: "homepages",
 };
 
-export default MainLayout;
+
+export default function MainLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+
+  return (
+    <>
+      <main className="h-screen flex">
+        <Navbar />
+        <section className="main w-[96%] max-md:w-full p-2 rounded-md" style={{ minHeight: 'calc(100vh - 100px)', margin: '5rem auto' }}>{children}</section>       
+      </main>
+    </>
+  );
+}
+

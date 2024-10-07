@@ -42,7 +42,6 @@ const AcumuladosComponent = () => {
                 }
 
                 const responseData = await response.json();
-                console.log(responseData)
                 if (Array.isArray(responseData)) {
                     setData(responseData);
                     setDataLoaded(true);
@@ -102,8 +101,8 @@ const AcumuladosComponent = () => {
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-                    <section className='w-full m-auto rounded-md p-2 bg-white tracking-tighter'>
-                    <nav className='w-full gap-4 m-auto flex items-center p-2 justify-between mb-2'>
+                    <section className='w-full m-auto rounded-md tracking-tighter'>
+                    <nav className='w-full gap-4 m-auto flex items-center justify-between mb-2'>
                         <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                             <BackIcon />
                         </Button>
@@ -115,7 +114,7 @@ const AcumuladosComponent = () => {
                             Descargar PDF
                             <DownloadIcon />
                         </Button>
-                        <h1 className='font-bold max-md:hidden'>Acumulado de ventas</h1>
+                        <h5 className='font-bold text-xl max-md:hidden'>Acumulado de ventas</h5>
                     </nav>
                         {dataLoaded && (
                             <Table className='w-full m-auto mt-4'>

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react"
 import { Acumulado, Grap, Home, Logout, MenuClose1, MenuOpen1, UserSettings } from "@/app/components/ui/iconos"
 import { Button } from "@/components/ui/button"
@@ -19,7 +21,7 @@ export function MenuApps() {
   return (
     <DropdownMenu open={menuOpen} onOpenChange={handleMenuToggle}>
       <DropdownMenuTrigger asChild>
-      <Button
+        <Button
           className={`rounded px-12 w-12 h-12 p-0 md:hidden ${
             menuOpen ? "bg-white/10 text-gray-300" : ""
           }`}
@@ -55,7 +57,7 @@ export function MenuApps() {
                 }`}
               >
               <UserSettings />
-              <span>Ajustes</span>
+              Ajustes
             </Link>
             <Link
                 href="/views/planillas/acumulados"
@@ -64,7 +66,7 @@ export function MenuApps() {
                 }`}
               >
               <Acumulado />
-              <span>Acumulado</span>
+              Acumulado
             </Link>
 
             <Link
@@ -74,7 +76,7 @@ export function MenuApps() {
                 }`}
               >
               <Logout />
-              <span>Cierre</span>
+              Cierre
             </Link>
         </DropdownMenuGroup>
       </DropdownMenuContent>

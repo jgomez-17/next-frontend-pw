@@ -48,13 +48,12 @@ const OrdenesDashboard = () => {
   const [lavadores, setLavadores] = useState<Lavador[]>([]);
   const [buttonStates, setButtonStates] = useState<{ [key: number]: boolean }>({});
 
-  const [numeroOrdenesEnEspera, setNumeroOrdenesEnEspera] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
-  const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
-  const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); // Nuevo estado para el número de órdenes terminadas hoy
+  const [numeroOrdenesEnEspera, setNumeroOrdenesEnEspera] = useState<number>(0); 
+  const [numeroOrdenesHoy, setNumeroOrdenesHoy] = useState<number>(0);
+  const [numeroOrdenesPorPagar, setNumeroOrdenesPorPagar] = useState<number>(0); 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter()
-
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -85,13 +84,13 @@ const OrdenesDashboard = () => {
         setNumeroOrdenesEnEspera(data.numeroOrdenesEnEspera || 0);
       })
 
-      // .catch(error => console.error('Error fetching data:', error));
       setNumeroOrdenesEnEspera(0)
   };
 
   useEffect(() => {
-    fetchOrdenesEnEspera();  // Fetch initial data
+    fetchOrdenesEnEspera();
   }, []);
+
 
   const fetchOrdenesEnCurso = () => {
     const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/estados/encurso`; 
@@ -274,7 +273,7 @@ const OrdenesDashboard = () => {
 
   return (
     <>
-        <section className="bg-white rounded w-full p-4">
+        {/* <section className="bg-white rounded w-full p-4"> */}
             <nav className="gap-3 w-full max-md:flex-col flex justify-between items-center mb-5">
               <h5 className="w-full font-bold text-xl tracking-tight max-md:text-center">Actividad</h5>
               <article className="w-full flex justify-end max-md:justify-between gap-3">
@@ -322,7 +321,7 @@ const OrdenesDashboard = () => {
               cancelarOrden={cancelarOrden}
             />
           </Table>
-        </section>
+        {/* </section> */}
     </>
   );
 };

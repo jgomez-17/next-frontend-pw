@@ -1,18 +1,31 @@
-'use client'
-
-import ProtectedRoute from "./components/protectedRoute";
-import PrincipalPage from "./(auth)/principalPage/page";
+import dynamic from 'next/dynamic'
 import LoginPage from "./(auth)/login/page";
+import SeccionClientes from '../app/(auth)/clientes/page'
+import Image from 'next/image';
+
+// Cargar dinámicamente los componentes con SSR deshabilitado
+// const SeccionClientes = dynamic(() => import('../clientes/page'), { ssr: false });
+// const Login = dynamic(() => import('../login/page'), { ssr: false });
 
 
 export default function Home () {
 
   return (
    <>
-   <ProtectedRoute>
-       <PrincipalPage />
-      {/* <LoginPage /> */}
-   </ProtectedRoute>
+    <main className='flex m-auto h-screen'>
+        <section className='w-max flex flex-col gap-4 m-auto'>
+          <Image
+            priority
+            src="/prontowash-img.png"
+            alt='logo'
+            width={400}
+            height={400}
+          />
+          <LoginPage />
+          <SeccionClientes />
+        </section>
+
+    </main>
    </>
   );
 }

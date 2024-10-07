@@ -16,7 +16,7 @@ const LogoutButton = () => {
     Cookies.remove('rol')
     Cookies.remove('username')
     
-    router.replace('/principalPage')
+    router.replace('/')
     setLoading(false);
   };
 

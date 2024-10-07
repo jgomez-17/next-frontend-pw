@@ -257,7 +257,7 @@ const GenerarPlanilla = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-        <section className="w-full m-auto rounded-md p-2 bg-white tracking-tigh">
+        <section className="w-full m-auto rounded-md tracking-tigh">
         <nav 
           className="w-full max-md:w-full m-auto gap-4 max-md:gap-1 flex items-center justify-between max-md:px-1 bg-white z-20 p-2"
         >

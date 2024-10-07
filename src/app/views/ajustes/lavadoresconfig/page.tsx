@@ -178,9 +178,9 @@ const Page: React.FC = () => {
   return (    
     <>
       <ProtectedRoute>
-        <section className='w-full tracking-tigh h-full m-auto rounded-md p-2 bg-white'>
+        <section className='w-full tracking-tigh h-full m-auto rounded-md'>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <nav className='flex w-full m-auto gap-3 justify-between items-center p-2'>
+            <nav className='flex w-full m-auto gap-3 justify-between items-center'>
               <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                 <BackIcon />
               </Button>

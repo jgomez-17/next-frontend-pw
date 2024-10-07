@@ -7,14 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Button } from '@/components/ui/button';
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation';
-import { Spin, UsersIcon2 } from '@/app/components/ui/iconos';
-import { Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
+import { PasswordValidation, Spin, UserLogin, UserLogin2, UsersIcon, UsersIcon2 } from '@/app/components/ui/iconos';
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet"
 
 
 const LoginPage = () => {
@@ -31,12 +25,12 @@ const LoginPage = () => {
     const handleLogin = async (e: any) => {
         e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
         setError('');
-        setLoading(true); // Inicia el estado de carga
+        setLoading(true);
 
 
         if (!usuario || !password) {
             setError('Por favor, ingresa todos los campos.');
-            setLoading(false); // Finaliza el estado de carga
+            setLoading(false);
             return;
         }
 
@@ -56,7 +50,7 @@ const LoginPage = () => {
                 const { token, usuario: user, nombre, rol, activo } = data.token;
 
                 // localStorage.setItem('token', data.token);
-                Cookies.set('token', token, {expires}); // Cookie expira en 7 días
+                Cookies.set('token', token, {expires});
                 Cookies.set('rol', rol, { expires});
                 Cookies.set('username', usuario, { expires});
 
@@ -77,33 +71,38 @@ const LoginPage = () => {
             <SheetTrigger asChild>
                 <Button className='h-9 w-2/3 m-auto tracking-tigh flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
             </SheetTrigger>
-            <SheetContent className='h-screen flex' side={'bottom'}>
+            <SheetContent className='h-screen flex bg-gradient-to-b from-white via-white to-slate-300' side={'top'} >
                 <SheetHeader>
                 </SheetHeader>
                 <form onSubmit={handleLogin} className="flex w-max tracking-tigh items-center justify-center m-auto">
-                    <section className="grid m-auto gap-4 py-10 px-10 rounded-lg bg-white shadow">
-                        <p className='text-center text-xl font-bold'> Acceso al sistema </p>
-                        <article className="flex flex-col gap-1">
-                            <Label htmlFor="usuario" className="text-gray-500 text-sm">
-                                Usuario
+                    <section className="grid border relative m-auto gap-8 p-10 rounded-xl bg-white shadow-lg">
+                        <span className='bg-[#0F172A] shadow-xl text-white w-max p-5 rounded-full absolute top-0 right-0 left-0 m-auto -translate-y-8 outline outline-gray-500/30'>
+                            <UserLogin2 />
+                        </span>
+                        <p className='text-center text-2xl font-bold mt-5'> Acceso </p>
+                        <article className="flex gap-2">
+                            <Label htmlFor="usuario" className="flex bg-[#0F172A] rounded-md text-gray-300 items-center px-2">
+                                <UserLogin />
                             </Label>
                             <Input
                                 id="usuario"
+                                placeholder='Usuario'
                                 value={usuario}
                                 onChange={(e) => setUsuario(e.target.value)}
-                                className="col-span-3 h-9"
+                                className="w-full h-9 placeholder:opacity-50"
                             />
                         </article>
-                        <article className="flex flex-col gap-1">
-                            <Label htmlFor="contraseña" className=" text-gray-500 text-sm">
-                                Contraseña
+                        <article className="flex gap-2">
+                            <Label htmlFor="contraseña" className="flex bg-[#0F172A] rounded-md text-gray-300 items-center px-2.5 justify-between">
+                                <PasswordValidation />
                             </Label>
                             <Input
-                                type='password'
                                 id="contraseña"
+                                type='password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="col-span-3 h-9"
+                                className="col-span-3 h-9 placeholder:opacity-50"
+                                placeholder='Contraseña'
                             />
                         </article>
                         {error && (
@@ -111,7 +110,7 @@ const LoginPage = () => {
                                 {error}
                             </div>
                         )}
-                        <Button type="submit" className='w-[300px] float-right' disabled={loading}>
+                        <Button type="submit" className='w-[200px] m-auto' disabled={loading}>
                             {loading ? (
                                 <span className="flex items-center justify-center gap-3">
                                     <Spin />
@@ -123,9 +122,7 @@ const LoginPage = () => {
                     </section>
                 </form>
             </SheetContent>
-        </Sheet>
-
-        
+        </Sheet> 
     );
 };
 

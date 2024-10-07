@@ -54,7 +54,7 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
       </Button>
       <Modal
         title={``}
-        visible={visible}
+        open={visible}
         onCancel={handleCancel}
         footer={null}
       >
@@ -128,16 +128,6 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
               {orden.estado}
             </p>
           </div>
-
-
-          
-
-
-
-
-
-
-
         </main>
       </Modal>
     </>

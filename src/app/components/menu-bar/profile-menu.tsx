@@ -1,7 +1,9 @@
+'use client'
+
 import { useState, useEffect } from "react"
-import { ArrowBotton, ArrowTop, PerfilIcon2, PerfilIconOutline, ProfileIcon, ProfileIcon2 } from "@/app/components/ui/iconos"
+import { ArrowBotton, ArrowTop, ProfileIcon2 } from "@/app/components/ui/iconos"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import LogoutButton from '@/app/(auth)/login/logoutButton'
 import Cookies from 'js-cookie'
 

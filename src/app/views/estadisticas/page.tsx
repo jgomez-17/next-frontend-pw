@@ -38,8 +38,8 @@ const EstadisticasPage: React.FC = () => {
     return (
         <>
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-            <section className='w-full m-auto rounded-md bg-white p-2'>
-                <nav className='flex tracking-tigh w-full gap-3 p-2 m-auto items-center justify-between'>
+            <section className='w-full m-auto rounded-md'>
+                <nav className='flex tracking-tigh w-full gap-3 m-auto items-center justify-between'>
                     <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
                         <BackIcon />
                     </Button>
