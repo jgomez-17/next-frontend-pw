@@ -74,7 +74,7 @@ const ServiciosSelect: React.FC<ServiciosSelectProps> = ({ tipo, servicioSelecci
             value={servicioSeleccionado}
             onValueChange={(value) => setServicioSeleccionado(value)}
         >
-            <SelectTrigger className="w-[350px] h-9 my-2">
+            <SelectTrigger className="w-[350px] h-9 my-2 rounded-none">
                 <SelectValue placeholder="" />
             </SelectTrigger>
             <SelectContent>

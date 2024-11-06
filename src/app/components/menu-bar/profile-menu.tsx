@@ -29,7 +29,7 @@ export function ProfileMenu() {
   return (
     <DropdownMenu open={menuOpen} onOpenChange={handleMenuToggle}>
       <DropdownMenuTrigger asChild className="">
-        <Button className={`rounded-full bg-white/5 text-gray-300 h-9 px-1 items-center outline outline-slate-500/10 flex gap-2 max-md:gap-1 ${
+        <Button className={`rounded-none h-9 bg-white/5 text-gray-700 px-1 items-center flex gap-2 max-md:gap-1 ${
             menuOpen ? "bg-white/10" : "hover:bg-slate-500/10"
           }`}>
             <ProfileIcon2 />
@@ -37,7 +37,7 @@ export function ProfileMenu() {
             {menuOpen ? <ArrowTop /> : <ArrowBotton />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-36 mt-1.5 z-50 tracking-tight">
+      <DropdownMenuContent className="md:mt-0.5 w-36 mt-1.5 z-50 tracking-tight rounded-none">
         <DropdownMenuLabel className="text-center">Mi cuenta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="m-auto w-max gap-2 flex flex-col">

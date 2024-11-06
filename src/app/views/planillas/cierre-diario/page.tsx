@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save } from "@/app/components/ui/iconos";
+import { DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save, BackIcon } from "@/app/components/ui/iconos";
 import { generarPDF } from "./crearPDF-cierre";
 
 interface Orden {
@@ -263,7 +263,7 @@ const GenerarPlanilla = () => {
         >
           <article className="flex gap-2">
             <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
-              <FlechaIzquierda />
+              <BackIcon />
             </Button>
             <ResumenOrdenes />
 
@@ -292,25 +292,25 @@ const GenerarPlanilla = () => {
             className="w-full border-b grid grid-cols-6 max-md:grid-cols-2 rounded text-sm max-md:text-xs m-auto mt-4 pb-4 max-md:hidden" 
         >
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className=" font-medium">Vendido</span><FlechaDerecha />
+            <span className=" font-medium">Vendido</span>
             <span className="w-24 rounded px-2">
               {formatNumber(totalRecaudado)}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Spa</span><FlechaDerecha />
+            <span className="font-medium">Spa</span>
             <span className="w-24 rounded px-2">
               {formatNumber(totalSpa)}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className=" font-medium">Efectivo</span><FlechaDerecha /> 
+            <span className=" font-medium">Efectivo</span> 
             <span className="w-24 rounded px-2">
               {formatNumber(totalEfectivo)}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Bancolombia</span><FlechaDerecha /> 
+            <span className="font-medium">Bancolombia</span> 
             <span className="w-24 rounded px-2">
               {formatNumber(totalBancolombia)}
             </span>
@@ -330,25 +330,25 @@ const GenerarPlanilla = () => {
             />
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Servicios</span><FlechaDerecha /> 
+            <span className="font-medium">Servicios</span> 
             <span className="w-24 rounded px-2">
               {numeroOrdenesHoy}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Satelital</span><FlechaDerecha /> 
+            <span className="font-medium">Satelital</span> 
             <span className="w-24 rounded px-2">
               {formatNumber(totalSatelital)}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Nequi</span><FlechaDerecha />  
+            <span className="font-medium">Nequi</span>  
             <span className="w-24 rounded px-2">
               {formatNumber(totalNequi)}
             </span>
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1">
-            <span className="font-medium">Daviplata</span><FlechaDerecha />  
+            <span className="font-medium">Daviplata</span>  
             <span className="w-24 rounded px-2">
               {formatNumber(totalDaviplata)}
             </span>
@@ -370,7 +370,7 @@ const GenerarPlanilla = () => {
             />
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1 text-blue-700">
-            <span className="font-medium">Prontowash</span><FlechaDerecha /> 
+            <span className="font-medium">Prontowash</span> 
             <span className="w-24 rounded px-2">
               {formatNumber(totalRestanteGeneral)}
             </span>

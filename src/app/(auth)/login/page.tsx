@@ -71,17 +71,17 @@ const LoginPage = () => {
             <SheetTrigger asChild>
                 <Button className='h-9 w-2/3 m-auto tracking-tigh flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
             </SheetTrigger>
-            <SheetContent className='h-screen flex bg-gradient-to-b from-white via-white to-slate-300' side={'top'} >
+            <SheetContent className='h-screen flex' side={'top'} >
                 <SheetHeader>
                 </SheetHeader>
-                <form onSubmit={handleLogin} className="flex w-max tracking-tigh items-center justify-center m-auto">
-                    <section className="grid border relative m-auto gap-8 p-10 rounded-xl bg-white shadow-lg">
+                <form onSubmit={handleLogin} className="flex w-max tracking-tight items-center justify-center m-auto">
+                    <section className="grid md:border relative m-auto gap-8 p-10 rounded-none bg-white md:shadow-lg">
                         <span className='bg-[#0F172A] shadow-xl text-white w-max p-5 rounded-full absolute top-0 right-0 left-0 m-auto -translate-y-8 outline outline-gray-500/30'>
                             <UserLogin2 />
                         </span>
                         <p className='text-center text-2xl font-bold mt-5'> Acceso </p>
                         <article className="flex gap-2">
-                            <Label htmlFor="usuario" className="flex bg-[#0F172A] rounded-md text-gray-300 items-center px-2">
+                            <Label htmlFor="usuario" className="flex absolute left-0 rounded-md text-gray-300 items-center px-2">
                                 <UserLogin />
                             </Label>
                             <Input
@@ -89,11 +89,11 @@ const LoginPage = () => {
                                 placeholder='Usuario'
                                 value={usuario}
                                 onChange={(e) => setUsuario(e.target.value)}
-                                className="w-full h-9 placeholder:opacity-50"
+                                className="w-full h-9 placeholder:opacity-50 rounded-none"
                             />
                         </article>
                         <article className="flex gap-2">
-                            <Label htmlFor="contraseña" className="flex bg-[#0F172A] rounded-md text-gray-300 items-center px-2.5 justify-between">
+                            <Label htmlFor="contraseña" className="flex absolute left-0 rounded-md text-gray-300 items-center px-2.5 justify-between">
                                 <PasswordValidation />
                             </Label>
                             <Input
@@ -101,7 +101,7 @@ const LoginPage = () => {
                                 type='password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="col-span-3 h-9 placeholder:opacity-50"
+                                className="col-span-3 h-9 placeholder:opacity-50 rounded-none"
                                 placeholder='Contraseña'
                             />
                         </article>
@@ -110,7 +110,7 @@ const LoginPage = () => {
                                 {error}
                             </div>
                         )}
-                        <Button type="submit" className='w-[200px] m-auto' disabled={loading}>
+                        <Button type="submit" className='w-[200px] m-auto rounded-none' disabled={loading}>
                             {loading ? (
                                 <span className="flex items-center justify-center gap-3">
                                     <Spin />

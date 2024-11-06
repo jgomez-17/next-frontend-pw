@@ -101,16 +101,16 @@ const AcumuladosComponent = () => {
     return (
         <>
             <ProtectedRoute allowedRoles={['admin', 'espectador']}>
-                    <section className='w-full m-auto rounded-md tracking-tighter'>
+                    <section className='w-full m-auto rounded-md tracking-tight max-md:tracking-tighter'>
                     <nav className='w-full gap-4 m-auto flex items-center justify-between mb-2'>
-                        <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+                        <Button onClick={handleBackButton} variant={'ghost'} className="h-9 px-3 rounded-full">
                             <BackIcon />
                         </Button>
                         <Button onClick={reloadPage} className='h-9' variant={'ghost'}>
                             <ReloadIcon />
                         </Button>
                         <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
-                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-9'>
+                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-9 rounded-none'>
                             Descargar PDF
                             <DownloadIcon />
                         </Button>
@@ -184,7 +184,7 @@ const AcumuladosComponent = () => {
                             </Table>
                         )}
                         {!dataLoaded && (
-                            <p className='text-center mt-4'> <Spin1 /> </p>
+                            <p className='mt-4 w-max flex m-auto'> <Spin1 /> </p>
                         )}
                     </section>
             </ProtectedRoute>

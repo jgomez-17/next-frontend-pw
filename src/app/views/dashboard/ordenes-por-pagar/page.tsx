@@ -3,11 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { message, Radio } from 'antd';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
-import { DaviplataIcon, NequiIcon, BancolombiaIcon, ReloadIcon, Spin } from '@/app/components/ui/iconos'
-import { GiMoneyStack } from "react-icons/gi";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { ReloadIcon, Spin } from '@/app/components/ui/iconos'
 import DetallesOrden from '../detalles-orden/detallesOrden';
 import ProtectedRoute from '@/app/components/protectedRoute';
 import { BackIcon } from '@/app/components/ui/iconos';
@@ -111,12 +108,12 @@ const OrdenesPorPagar = () => {
   return (
     <>
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
-      <section className='w-full p-2 h-full bg-white tracking-tigh'>
+      <section className='w-full p-2 h-full bg-white tracking-tight'>
         <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
-          <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+          <Button onClick={handleBackButton} variant={'default'} className="h-9 rounded-none">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto rounded-none'>
             <ReloadIcon />
           </Button>
           <h5 className='font-bold text-xl'> 
@@ -127,10 +124,10 @@ const OrdenesPorPagar = () => {
           <TableHeader className="font-bold cursor-default tracking-wide text-[15px] max-md:text-[0.89rem] bg-slate-50">
             <TableRow>
               <TableCell className="w-1/12 max-md:hidden px-3">#</TableCell>
-              <TableCell className="w-1/5 max-md:w-1/4 px-2">Cliente</TableCell>
-              <TableCell className="w-1/5 max-md:w-1/4 px-2">Vehículo</TableCell>
-              <TableCell className="w-2/5 max-md:w-1/4 px-2">Servicio</TableCell>
-              <TableCell className='w-2/5 max-md:w-1/4 px-2 max-md:hidden'> Metodo de pago </TableCell>
+              <TableCell className="w-1/6 max-md:w-1/4 px-2">Cliente</TableCell>
+              <TableCell className="w-1/6 max-md:w-1/4 px-2">Vehículo</TableCell>
+              <TableCell className="w-2/6 max-md:w-1/4 px-2">Servicio</TableCell>
+              <TableCell className='w-1/5 max-md:w-1/4 px-2 max-md:hidden'> Metodo de pago </TableCell>
               <TableCell className='md:hidden max-md:w-1/4 px-4 text-center'> Acciones </TableCell>
             </TableRow>
           </TableHeader>
@@ -172,7 +169,7 @@ const OrdenesPorPagar = () => {
                 <TableCell className="py-1 text-xs border-b max-md:hidden">
                       <section className='flex max-md:flex-col justify-start w-max gap-2 items-center max-md:hidden'>
                       <Select value={metodosPago[orden.id] || ''} onValueChange={(value) => handleMetodoPagoChange(orden.id, value)}>
-                        <SelectTrigger className="w-[150px] h-9 font-medium text-xs">
+                        <SelectTrigger className="w-[150px] h-9 font-medium text-xs rounded-none">
                           <SelectValue placeholder="Metodo de pago" />
                         </SelectTrigger>
                         <SelectContent>
@@ -186,7 +183,7 @@ const OrdenesPorPagar = () => {
                         </SelectContent>
                       </Select>
                             <Button
-                              className='h-9 text-xs'
+                              className='h-8 text-xs rounded-none bg-yellow-500 hover:bg-yellow-600'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
                               {loading ? (

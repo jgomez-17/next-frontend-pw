@@ -47,8 +47,8 @@ const OrdenInfoModal: React.FC<Props> = ({ orden }) => {
     <>
       <Button
         onClick={showModal}
-        className="text-xs h-9 font-medium"
-        variant={"ghost"}
+        className="text-xs bg-gray-500 h-9 font-medium rounded-none"
+        variant={"default"}
       >
         Ver más detalles
       </Button>

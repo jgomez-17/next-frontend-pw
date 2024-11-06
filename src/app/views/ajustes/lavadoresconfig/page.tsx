@@ -188,7 +188,7 @@ const Page: React.FC = () => {
                 <ReloadIcon />
               </Button>
               <DialogTrigger asChild>
-                <Button className='gap-2 h-9'> 
+                <Button className='gap-2 h-9 rounded-none'> 
                   <span className='max-md:hidden'> Añadir </span>
                 <AddUsers2 /> 
                 </Button>

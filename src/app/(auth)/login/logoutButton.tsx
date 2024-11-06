@@ -24,7 +24,7 @@ const LogoutButton = () => {
     <Button 
       onClick={handleLogout}
       variant={'destructive'}
-      className='flex h-9 w-28'
+      className='flex h-9 w-28 rounded-none bg-gray-200 text-black'
       >
         {loading ? (
             <span className="flex items-center justify-center gap-3">
