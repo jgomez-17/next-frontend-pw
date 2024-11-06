@@ -283,7 +283,6 @@ const OrdenesDashboard = () => {
                 </Button>
                 <HideButton visible={visible} toggleVisibility={toggleVisibility} />
                 <Historial />
-                {/* <Link href={'/views/dashboard/formulario'}> New orden </Link> */}
                 <NewForm fetchOrdenesEnEspera={fetchOrdenesEnEspera} />
               </article>
           </nav>
