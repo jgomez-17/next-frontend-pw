@@ -40,7 +40,7 @@ const EstadisticasPage: React.FC = () => {
         <ProtectedRoute allowedRoles={['admin', 'espectador']}>
             <section className='w-full m-auto rounded-md'>
                 <nav className='flex tracking-tigh w-full gap-3 m-auto items-center justify-between'>
-                    <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+                    <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
                         <BackIcon />
                     </Button>
                     <form onSubmit={handleSubmit} className='flex max-md:text-sm mr-auto'>

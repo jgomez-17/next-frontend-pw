@@ -11,7 +11,7 @@ const HideButton: React.FC<HideButtonProps> = ({ visible, toggleVisibility }) =>
   return (
     <Button 
       onClick={toggleVisibility} 
-      className="h-9 order-2 max-md:order-3 rounded-none"
+      className="h-9 order-2 max-md:order-3"
       variant={"secondary"}
     >
       {visible ? <Ocultar /> :  <Mostrar />}

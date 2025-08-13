@@ -105,7 +105,7 @@ const OrdenesPorPlaca: React.FC = () => {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 
             <DialogTrigger className='tracking-tigh text-[13px]' asChild>
-                <Button className="h-9 order-3 max-md:order-1 rounded-none">
+                <Button className="h-9 order-3 max-md:order-1">
                   Consultar vehiculo
                 </Button>
             </DialogTrigger>

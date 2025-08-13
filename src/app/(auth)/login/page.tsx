@@ -74,12 +74,12 @@ const LoginPage = () => {
             <SheetContent className='h-screen flex' side={'top'} >
                 <SheetHeader>
                 </SheetHeader>
-                <form onSubmit={handleLogin} className="flex w-max tracking-tight items-center justify-center m-auto">
-                    <section className="grid md:border relative m-auto gap-8 p-10 rounded-none bg-white md:shadow-lg">
-                        <span className='bg-[#0F172A] shadow-xl text-white w-max p-5 rounded-full absolute top-0 right-0 left-0 m-auto -translate-y-8 outline outline-gray-500/30'>
+                <form onSubmit={handleLogin} className="flex w-max tracking-tight rounded-3xl md:shadow-2xl items-center justify-center m-auto">
+                    <section className="grid md:border relative m-auto gap-8 p-20 bg-white rounded-lg">
+                        <span className='bg-sky-600 text-white w-max p-5 rounded-full absolute top-0 right-0 left-0 m-auto -translate-y-8 outline outline-sky-500/30 md:shadow-lg'>
                             <UserLogin2 />
                         </span>
-                        <p className='text-center text-2xl font-bold mt-5'> Acceso </p>
+                        <p className='text-center text-2xl font-bold mt-5'> Login </p>
                         <article className="flex gap-2">
                             <Label htmlFor="usuario" className="flex absolute left-0 rounded-md text-gray-300 items-center px-2">
                                 <UserLogin />
@@ -89,7 +89,7 @@ const LoginPage = () => {
                                 placeholder='Usuario'
                                 value={usuario}
                                 onChange={(e) => setUsuario(e.target.value)}
-                                className="w-full h-9 placeholder:opacity-50 rounded-none"
+                                className="w-full h-9 placeholder:opacity-50"
                             />
                         </article>
                         <article className="flex gap-2">
@@ -101,7 +101,7 @@ const LoginPage = () => {
                                 type='password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="col-span-3 h-9 placeholder:opacity-50 rounded-none"
+                                className="col-span-3 h-9 placeholder:opacity-50"
                                 placeholder='Contraseña'
                             />
                         </article>
@@ -110,7 +110,7 @@ const LoginPage = () => {
                                 {error}
                             </div>
                         )}
-                        <Button type="submit" className='w-[200px] m-auto rounded-none' disabled={loading}>
+                        <Button type="submit" className='w-[200px] m-auto bg-sky-600 hover:bg-sky-700' disabled={loading}>
                             {loading ? (
                                 <span className="flex items-center justify-center gap-3">
                                     <Spin />

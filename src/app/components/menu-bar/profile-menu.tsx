@@ -29,7 +29,7 @@ export function ProfileMenu() {
   return (
     <DropdownMenu open={menuOpen} onOpenChange={handleMenuToggle}>
       <DropdownMenuTrigger asChild className="">
-        <Button className={`rounded-none h-9 bg-white/5 text-gray-700 px-1 items-center flex gap-2 max-md:gap-1 ${
+        <Button className={`h-9 bg-white/5 text-gray-700 px-1 items-center flex gap-2 max-md:gap-1 ${
             menuOpen ? "bg-white/10" : "hover:bg-slate-500/10"
           }`}>
             <ProfileIcon2 />

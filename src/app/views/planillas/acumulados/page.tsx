@@ -110,8 +110,8 @@ const AcumuladosComponent = () => {
                             <ReloadIcon />
                         </Button>
                         <p className='text-sm max-md:mr-auto capitalize font-semibold'> {mesYAnio} </p>
-                        <Button onClick={GenerarPDF} className='md:ml-auto gap-2 h-9 rounded-none'>
-                            Descargar PDF
+                        <Button variant={'link'} onClick={GenerarPDF} className='md:ml-auto text-white gap-2 h-9 shadow bg-red-700'>
+                            Generar PDF
                             <DownloadIcon />
                         </Button>
                         <h5 className='font-bold text-xl max-md:hidden'>Acumulado de ventas</h5>
@@ -124,8 +124,8 @@ const AcumuladosComponent = () => {
                                         <TableCell className=' max-md:leading-tight max-md:p-1'>Día</TableCell>
                                         <TableCell className=' max-md:leading-tight max-md:p-1'>Venta Diaria</TableCell>
                                         <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Venta Diaria</TableCell>
-                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Prontowash</TableCell>
-                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Prontowash</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Ganancia</TableCell>
+                                        <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Ganancia</TableCell>
                                         <TableCell className=' max-md:leading-tight max-md:p-1'>Servicios</TableCell>
                                         <TableCell className=' max-md:leading-tight max-md:p-1'>Acum. Servicios</TableCell>
                                     </TableRow>

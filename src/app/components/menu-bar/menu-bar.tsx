@@ -28,7 +28,7 @@ const Navbar = () => {
           <div className="hidden md:flex gap-1 order-2">
             <Link
                   href="/views"
-                  className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black ${
+                  className={`w-full rounded-md flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black hover:shadow ${
                     currentPath === "/views" ? "bg-gray-200 text-black" : ""
                   }`}
                 >
@@ -37,7 +37,7 @@ const Navbar = () => {
             </Link>
             <Link
                 href="/views/estadisticas"
-                className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black ${
+                className={`w-full rounded-md flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black hover:shadow ${
                   currentPath === "/views/estadisticas" ? "bg-gray-200 text-black" : ""
                 }`}
               >
@@ -46,7 +46,7 @@ const Navbar = () => {
             </Link>
             <Link
                 href="/views/planillas/acumulados"
-                className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black ${
+                className={`w-full rounded-md flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black hover:shadow ${
                   currentPath === "/views/planillas/acumulados" ? "bg-gray-200 text-black" : ""
                 }`}
               >
@@ -55,7 +55,7 @@ const Navbar = () => {
             </Link>
             <Link
                 href="/views/planillas/cierre-diario"
-                className={`w-full flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black ${
+                className={`w-full rounded-md hover:shadow flex px-6 py-2 items-center gap-2 hover:bg-gray-100 hover:text-black ${
                   currentPath === "/views/planillas/cierre-diario" ? "bg-gray-200 text-black" : ""
                 }`}
               >
@@ -66,7 +66,7 @@ const Navbar = () => {
           <div className="order-3 max-md:order-3 flex items-center gap-4">
             <Link
               href="/views/ajustes"
-              className={`w-full flex px-3 py-1 items-center gap-2 hover:bg-gray-100 hover:text-black max-md:hidden ${
+              className={`w-full rounded-md flex px-3 py-1 items-center gap-2 hover:bg-gray-100 hover:text-black max-md:hidden ${
                 currentPath === "/views/ajustes" ? "bg-gray-200 text-black" : ""
               }`}
             >

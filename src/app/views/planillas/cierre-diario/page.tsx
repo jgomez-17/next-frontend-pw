@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectItem, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import ResumenOrdenes from "../resumen-ordenes/page";
 import ProtectedRoute from "@/app/components/protectedRoute";
-import { DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save, BackIcon } from "@/app/components/ui/iconos";
+import { DeleteIcon2, FlechaDerecha, FlechaIzquierda, Spin, Save, BackIcon, Save2, Save3 } from "@/app/components/ui/iconos";
 import { generarPDF } from "./crearPDF-cierre";
 
 interface Orden {
@@ -268,7 +268,7 @@ const GenerarPlanilla = () => {
             <ResumenOrdenes />
 
             <Button 
-              className="h-9 gap-2"
+              className="h-9 gap-2 bg-green-600 hover:bg-green-700"
               onClick={insertAcumulados}
               >
               {loading ? (
@@ -278,7 +278,7 @@ const GenerarPlanilla = () => {
                     ) : (
                         <span className="flex items-center gap-2">
                           Guardar
-                          <Save />
+                          <Save3 />
                         </span>
                     )}
             </Button>
@@ -287,9 +287,9 @@ const GenerarPlanilla = () => {
         </nav>
         <article id="pdf-content">
 
-        <p className="md:hidden m-auto  text-center mt-3"> Activa el modo escritorio para visualizar... </p>
+        <p className="md:hidden m-auto  text-center mt-3"> ¡Activa el modo escritorio para visualizar! </p>
         <section 
-            className="w-full border-b grid grid-cols-6 max-md:grid-cols-2 rounded text-sm max-md:text-xs m-auto mt-4 pb-4 max-md:hidden" 
+            className="w-full border-b grid grid-cols-6 max-md:grid-cols-2 rounded text-sm max-md:text-xs m-auto mt-4 pb-4 max-md:hidden gap-y-3" 
         >
           <p className="flex items-center justify-end gap-1 col-span-1">
             <span className=" font-medium">Vendido</span>
@@ -370,7 +370,7 @@ const GenerarPlanilla = () => {
             />
           </p>
           <p className="flex items-center justify-end gap-1 col-span-1 text-blue-700">
-            <span className="font-medium">Prontowash</span> 
+            <span className="font-medium">Ganancia</span> 
             <span className="w-24 rounded px-2">
               {formatNumber(totalRestanteGeneral)}
             </span>

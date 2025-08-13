@@ -79,14 +79,14 @@ const OrdenesEnCursoTable: React.FC<OrdenesEnCursoTableProps> = ({
                     onClick={() => cancelarOrden(orden.id)} 
                     title="Cancelar orden"
                     variant={"destructive"}
-                    className="h-8 text-xs rounded-none font-medium max-md:hidden"
+                    className="h-8 text-xs font-medium max-md:hidden"
                   >
                     Cancelar orden
                 </Button>
               {orden.estado === "en curso" ? (
                   <Button
                       title="Terminar"
-                      className="h-8 bg-black text-xs font-semibold flex items-center gap-2 rounded-none"
+                      className="h-8 bg-black text-xs font-semibold flex items-center gap-2"
                       onClick={() => {
                         actualizarEstadoOrden3(orden.id);
                       }}

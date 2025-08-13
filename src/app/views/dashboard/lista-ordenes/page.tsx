@@ -271,14 +271,13 @@ const OrdenesDashboard = () => {
   };
 
 
-
   return (
     <>
         {/* <section className="bg-white rounded w-full p-4"> */}
             <nav className="gap-3 w-full flex justify-between items-center mb-5">
               <h5 className="w-full max-md:hidden font-bold text-xl tracking-tight max-md:text-center">Actividad</h5>
               <article className="w-full flex justify-end max-md:justify-between gap-3">
-                <Button onClick={reloadPage} className="h-9 text-[13px] rounded-none order-1 max-md:order-2" variant={"secondary"}>
+                <Button onClick={reloadPage} className="h-9 text-[13px] order-1 max-md:order-2" variant={"secondary"}>
                   <ReloadIcon />
                 </Button>
                 <HideButton visible={visible} toggleVisibility={toggleVisibility} />
@@ -298,7 +297,7 @@ const OrdenesDashboard = () => {
           <h5 className="font-bold text-lg tracking-tigh my-6 flex justify-between">Ordenes <ArrowBi /></h5>
           <Table className="m-auto">
             <TableHeader className="font-bold cursor-default tracking-wide text-[15px] max-md:text-[0.89rem]">
-              <TableRow className="bg-gray-200">
+              <TableRow className="bg-slate-200">
                 <TableCell className="md:w-1/12 max-md:hidden max-md:justify-center px-2 border-b border-black/20">#</TableCell>
                 <TableCell className="md:w-1/5 px-2 max-md:w-1/4 border-b border-black/20">Cliente</TableCell>
                 <TableCell className="md:w-1/5 px-2 max-md:w-1/4 border-b border-black/20">Vehículo</TableCell>

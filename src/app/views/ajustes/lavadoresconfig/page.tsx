@@ -181,19 +181,19 @@ const Page: React.FC = () => {
         <section className='w-full tracking-tigh h-full m-auto rounded-md'>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <nav className='flex w-full m-auto gap-3 justify-between items-center'>
-              <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+              <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
                 <BackIcon />
               </Button>
               <Button onClick={reloadPage} className='h-9 mr-auto' variant={'ghost'}>
                 <ReloadIcon />
               </Button>
               <DialogTrigger asChild>
-                <Button className='gap-2 h-9 rounded-none'> 
-                  <span className='max-md:hidden'> Añadir </span>
+                <Button className='gap-2 h-9'> 
+                  <span className='max-md:hidden'> Registrar </span>
                 <AddUsers2 /> 
                 </Button>
               </DialogTrigger>
-              <h1 className='font-bold text-xl'>Empleados</h1>
+              <h1 className='font-bold text-xl'>Lavadores</h1>
             </nav>
         
           <DialogContent>

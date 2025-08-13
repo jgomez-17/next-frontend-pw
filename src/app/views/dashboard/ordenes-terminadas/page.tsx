@@ -65,10 +65,10 @@ interface Orden {
       <ProtectedRoute>
         <section className='bg-white w-full h-full p-2 tracking-tigh'>
         <nav className='flex justify-between w-full m-auto gap-3 p-2'>
-          <Button onClick={handleBackButton} variant={'secondary'} className="h-9 rounded-full">
+          <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-9 rounded-full mr-auto'>
             <ReloadIcon />
           </Button>
           <h5 className='font-bold text-xl'>

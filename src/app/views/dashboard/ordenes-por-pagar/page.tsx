@@ -110,10 +110,10 @@ const OrdenesPorPagar = () => {
     <ProtectedRoute allowedRoles={['admin', 'subadmin']}>
       <section className='w-full p-2 h-full bg-white tracking-tight'>
         <nav className='rounded p-2 flex justify-between w-full m-auto gap-2'>
-          <Button onClick={handleBackButton} variant={'default'} className="h-9 rounded-none">
+          <Button onClick={handleBackButton} variant={'ghost'} className="h-9 rounded-full">
             <BackIcon />
           </Button>
-          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto rounded-none'>
+          <Button onClick={reloadPage} variant={'ghost'} className='h-9 mr-auto rounded-full'>
             <ReloadIcon />
           </Button>
           <h5 className='font-bold text-xl'> 
@@ -169,7 +169,7 @@ const OrdenesPorPagar = () => {
                 <TableCell className="py-1 text-xs border-b max-md:hidden">
                       <section className='flex max-md:flex-col justify-start w-max gap-2 items-center max-md:hidden'>
                       <Select value={metodosPago[orden.id] || ''} onValueChange={(value) => handleMetodoPagoChange(orden.id, value)}>
-                        <SelectTrigger className="w-[150px] h-9 font-medium text-xs rounded-none">
+                        <SelectTrigger className="w-[150px] h-9 font-medium text-xs">
                           <SelectValue placeholder="Metodo de pago" />
                         </SelectTrigger>
                         <SelectContent>
@@ -183,7 +183,7 @@ const OrdenesPorPagar = () => {
                         </SelectContent>
                       </Select>
                             <Button
-                              className='h-8 text-xs rounded-none bg-yellow-500 hover:bg-yellow-600'
+                              className='h-8 text-xs bg-sky-600 hover:bg-sky-700'
                               onClick={() => actualizarEstadoOrden(orden.id)}
                               >
                               {loading ? (

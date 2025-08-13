@@ -110,7 +110,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
               <Button
                 title="Iniciar"
                 variant={'default'}
-                className="flex gap-2 font-semibold h-8 bg-green-700 hover:bg-green-800 items-center text-xs rounded-none"
+                className="flex gap-2 font-semibold h-8 bg-green-700 hover:bg-green-800 items-center text-xs"
                 onClick={() => {
                   actualizarEstadoOrden(orden.id, selectedEmployees[orden.id] || []);
                 }}
@@ -128,7 +128,7 @@ const OrdenesEnEspera: React.FC<OrdenesEnEsperaProps> = ({
                       onClick={() => cancelarOrden(orden.id)} 
                       variant={"destructive"}
                       title="Cancelar orden"
-                      className="text-xs font-medium h-8 max-md:hidden rounded-none"
+                      className="text-xs font-medium h-8 max-md:hidden"
                     >
                       Cancelar orden
                     </Button>

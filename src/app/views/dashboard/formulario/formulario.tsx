@@ -314,7 +314,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
     <>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
     <SheetTrigger asChild>
-      <Button className='h-9 text-[13px] gap-2 order-4 rounded-none'> Nueva orden <PlusIcon /> </Button>
+      <Button className='h-9 text-[13px] gap-2 order-4 bg-sky-600 hover:bg-sky-700'> Nueva orden <PlusIcon /> </Button>
     </SheetTrigger>
     <SheetContent
       style={{  maxWidth: '100vw'}} 
@@ -328,11 +328,11 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
 
         {seccion === 1 && (
                     <>
-                    <Form onSubmitCapture={consultarOrden} className='max-md:w-full w-1/2 m-auto p-6 rounded-non bg-gray-100'>
+                    <Form onSubmitCapture={consultarOrden} className='max-md:w-full w-1/2 m-auto p-6 rounded-xl bg-slate-200/30'>
                         <span className='font-semibold text-md'> Ingresar placa </span>
                         <article className='flex items-center gap-2 mt-2'>
                         <Input 
-                            className='uppercase w-36 h-9 rounded-none' 
+                            className='uppercase w-36 h-9' 
                             type="text" 
                             value={verifyplaca} 
                             onChange={(e) => {
@@ -357,7 +357,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             maxLength={7}
                             required 
                         />
-                        <Button className='h-9 rounded-none'>
+                        <Button className='h-9 bg-sky-600 hover:bg-sky-700' type='submit'>
                         {loading ? (
                         <span className="flex items-center justify-center gap-3">
                             <Spin />
@@ -366,7 +366,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         'Verificar'
                     )}
                         </Button>
-                        <Button onClick={handleRefresh} type='button' className='h-9 rounded-none' variant={'secondary'}>
+                        <Button onClick={handleRefresh} type='button' className='h-9' variant={'secondary'}>
                             Limpiar
                         </Button>
                         </article>
@@ -570,7 +570,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                   </fieldset>
 
                   <section className='flex max-w-min m-auto gap-3'>
-                    <Button className='gap-2 rounded-none'
+                    <Button className='gap-2'
                       onClick={retrocederSeccion}
                       variant={'secondary'}
                       type='button'
@@ -579,7 +579,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                       Volver
                     </Button>
                     <Button
-                      className='gap-2 rounded-none' 
+                      className='gap-2' 
                       onClick={avanzarSeccion}
                       type='button'
                     >
@@ -594,7 +594,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                 <>
                   <fieldset className='flex text-sm max-md:flex-col gap-2'>
                     <legend>Datos del Servicio</legend>
-                      <section className='w-max gap-7 mt-0 rounded-md flex flex-col'>
+                      <section className='w-max gap-7 mt-0 flex flex-col'>
                       <Label>
                         <span className='text-zinc-500'> Servicios </span>
                         <div className='flex items-center gap-4'>
@@ -619,7 +619,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                             Aplicar descuento
                           </span>
                           <Input 
-                            className='w-36 h-9 my-2 rounded-none'
+                            className='w-36 h-9 my-2'
                             placeholder='$'
                             type="number" 
                             value={descuento || ''} 
@@ -685,7 +685,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                     </section>
                   </fieldset>
                   <section className='flex max-w-min m-auto gap-3'>
-                      <Button className='gap-2 rounded-none'
+                      <Button className='gap-2'
                         onClick={retrocederSeccion}
                         variant={'secondary'}
                         type='button'
@@ -693,7 +693,7 @@ const NewForm: React.FC<ListaOrdenesProps> = ({ fetchOrdenesEnEspera }) => {
                         <IoChevronBack />
                         Volver
                       </Button>
-                        <Button className='rounded-none'>
+                        <Button>
                         {loading ? (
                             <span className="flex items-center justify-center gap-3">
                                 <Spin />
