@@ -16,10 +16,10 @@ export default function Home () {
         <section className='w-max flex flex-col gap-4 m-auto'>
           <Image
             priority
-            src="/prontowash-img.png"
+            src="/pwlogo.png"
             alt='logo'
-            width={400}
-            height={400}
+            width={300}
+            height={300}
           />
           <LoginPage />
           <SeccionClientes />

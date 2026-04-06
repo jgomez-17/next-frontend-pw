@@ -74,7 +74,7 @@ const ClientesPage = () => {
     };
 
     useEffect(() => {
-      fetchOrdenesEnCurso();  // Fetch initial data
+      fetchOrdenesEnCurso();
     }, []);
 
     const fetchOrdenesPorPagar = () => {
@@ -106,7 +106,7 @@ const ClientesPage = () => {
     };
 
     useEffect(() => {
-      fetchOrdenesTerminadas();  // Fetch initial data
+      fetchOrdenesTerminadas();
     }, []);
 
     const reloadPage = () => {

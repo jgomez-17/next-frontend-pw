@@ -69,7 +69,7 @@ const LoginPage = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button className='h-9 w-2/3 m-auto tracking-tigh flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
+                <Button className='h-9 w-2/3 m-auto tracking-tigh bg-transparent text-black flex items-center gap-2'>Ingresar <UsersIcon2 /></Button>
             </SheetTrigger>
             <SheetContent className='h-screen flex' side={'top'} >
                 <SheetHeader>
